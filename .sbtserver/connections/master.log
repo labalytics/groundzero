@@ -1,0 +1,13 @@
+New log file opened at Mon Feb 06 12:46:06 CST 2017 by 4848@Anarchy
+Taking next connection to: 64362
+New client attempting to connect on port: 64363-64362
+  Address = /172.17.120.242:64362
+This client on port 64363 has uuid 14624b0f-b08a-4678-83b0-32f8d727e2cd configName activator humanReadableName Activator protocolVersion 3 featureTags Vector()
+Connected Clients: activator-14624b0f-b08a-4678-83b0-32f8d727e2cd
+Taking next connection to: 64362
+Checking to see if clients are empty...
+No non-daemon clients connected after 3 min. Shutting down.
+Server socket thread exiting.
+0 clients open, will close them...
+All client sockets have been closed.
+Closing the 4848@Anarchy logs at Mon Feb 06 12:49:06 CST 2017, goodbye.

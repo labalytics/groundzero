@@ -1,0 +1,28 @@
+@(level: String)
+
+@main("login") {
+
+  <h3>THis part is common for Login and Register</h3>
+  <todo-login-app>Loading login</todo-login-app>
+
+  @level match {
+
+    case "A" => {
+      <h1>THis is A</h1>
+    }
+
+    case "B" => {
+      <h1>THis is B</h1>
+    }
+
+    case "C" => {
+      <h1>THis is C</h1>
+    }
+  }
+}
+
+@* @main("Login") {*@
+@*<h1> THIS IS @message</h1>*@
+@*<a href="#">LOGIN</a>*@
+@*<a href="#">REGISTER</a>*@
+@*}*@
