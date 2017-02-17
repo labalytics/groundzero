@@ -1,0 +1,16 @@
+<div class="parent">
+
+  <h1>This is --- component.html</h1>
+
+  <button (click)="toggleChild()">
+    {{isAdmin ? 'Admin' : 'Student'}} Component
+  </button>
+  <button (click)="updateHero()" [hidden]="!isAdmin">Update Hero</button>
+
+ <todo-account-admin *ngIf="isAdmin">Loading Admin....</todo-account-admin>
+
+  <todo-account-student *ngIf="!isAdmin">Loading Student....</todo-account-student>
+
+  <h4>-- Lifecycle Hook Log --</h4>
+  <div *ngFor="let msg of hookLog">{{msg}}</div>
+</div>

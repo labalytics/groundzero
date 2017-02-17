@@ -28,7 +28,7 @@
     /* the following rules are tslint rules */
     "class-name": true,
     "comment-format": [
-      true,
+      false,
       "check-space"
     ],
     "indent": [

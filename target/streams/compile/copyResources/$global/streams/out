@@ -1,0 +1,4 @@
+[debug] Copy resource mappings: 
+[debug] 	(C:\Users\Mahesh\Documents\Project\SEP\Labalytics\conf\application.conf,C:\Users\Mahesh\Documents\Project\SEP\Labalytics\target\scala-2.11\classes\application.conf)
+[debug] 	(C:\Users\Mahesh\Documents\Project\SEP\Labalytics\conf\logback.xml,C:\Users\Mahesh\Documents\Project\SEP\Labalytics\target\scala-2.11\classes\logback.xml)
+[debug] 	(C:\Users\Mahesh\Documents\Project\SEP\Labalytics\conf\routes,C:\Users\Mahesh\Documents\Project\SEP\Labalytics\target\scala-2.11\classes\routes)

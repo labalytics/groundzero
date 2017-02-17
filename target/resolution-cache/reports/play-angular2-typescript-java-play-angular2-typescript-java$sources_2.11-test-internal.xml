@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ivy-report.xsl"?>
+<ivy-report version="1.0">
+	<info
+		organisation="org.scala-sbt.temp"
+		module="temp-resolve-ee4dd224c0f4c5a8b559994e2ffdfc1f16d0a916"
+		revision="1.0"
+		conf="test-internal"
+		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool"
+		date="20170208181145"/>
+	<dependencies>
+		<module organisation="com.typesafe.play" name="play-cache_2.11">
+			<revision name="2.5.3" status="release" pubdate="20160427193140" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://playframework.com" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="0">
+				<license name="Apache-2.0" url="http://www.apache.org/licenses/LICENSE-2.0.html"/>
+				<metadata-artifact status="no" details="" size="3728" time="0" location="C:\Users\Mahesh\.ivy2\cache\com.typesafe.play\play-cache_2.11\ivy-2.5.3.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/typesafe/play/play-cache_2.11/2.5.3/play-cache_2.11-2.5.3.pom"/>
+				<caller organisation="org.scala-sbt.temp" name="temp-resolve-ee4dd224c0f4c5a8b559994e2ffdfc1f16d0a916" conf="test, compile, provided, test-internal, runtime, optional" rev="2.5.3" rev-constraint-default="2.5.3" rev-constraint-dynamic="2.5.3" callerrev="1.0"/>
+				<artifacts>
+					<artifact name="play-cache_2.11" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="12864" time="462" location="C:\Users\Mahesh\.ivy2\cache\com.typesafe.play\play-cache_2.11\srcs\play-cache_2.11-2.5.3-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/typesafe/play/play-cache_2.11/2.5.3/play-cache_2.11-2.5.3-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+	</dependencies>
+</ivy-report>

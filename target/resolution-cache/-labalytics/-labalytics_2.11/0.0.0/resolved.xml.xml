@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0" xmlns:e="http://ant.apache.org/ivy/extra">
+	<info organisation="-labalytics"
+		module="-labalytics_2.11"
+		revision="0.0.0"
+		status="integration"
+		publication="20170216185452"
+	>
+		<description>
+		:Labalytics
+		</description>
+	</info>
+	<configurations>
+		<conf name="compile" visibility="public" description=""/>
+		<conf name="runtime" visibility="public" description="" extends="compile"/>
+		<conf name="test" visibility="public" description="" extends="runtime"/>
+		<conf name="provided" visibility="public" description=""/>
+		<conf name="optional" visibility="public" description=""/>
+		<conf name="compile-internal" visibility="private" description="" extends="compile,optional,provided"/>
+		<conf name="runtime-internal" visibility="private" description="" extends="runtime,optional"/>
+		<conf name="test-internal" visibility="private" description="" extends="test,optional,provided"/>
+		<conf name="plugin" visibility="private" description=""/>
+		<conf name="sources" visibility="public" description=""/>
+		<conf name="docs" visibility="private" description=""/>
+		<conf name="pom" visibility="public" description=""/>
+		<conf name="scala-tool" visibility="private" description=""/>
+	</configurations>
+	<publications>
+		<artifact name="-labalytics_2.11" type="pom" ext="pom" conf="pom"/>
+		<artifact name="-labalytics_2.11" type="jar" ext="jar" conf="compile"/>
+		<artifact name="-labalytics_2.11" type="src" ext="jar" conf="sources" e:classifier="sources"/>
+		<artifact name="-labalytics_2.11" type="doc" ext="jar" conf="docs" e:classifier="javadoc"/>
+	</publications>
+	<dependencies>
+		<dependency org="org.scala-lang" name="scala-compiler" rev="2.11.8" conf="scala-tool->default,optional(default)"/>
+		<dependency org="org.scala-lang" name="scala-library" rev="2.11.8" conf="scala-tool->default,optional(default);compile->default(compile)"/>
+		<dependency org="com.typesafe.play" name="twirl-api_2.11" rev="1.1.1" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.play" name="play-enhancer" rev="1.1.0" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.play" name="play-server_2.11" rev="2.5.12" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.play" name="play-test_2.11" rev="2.5.12" conf="test->default(compile)"/>
+		<dependency org="com.typesafe.play" name="play-omnidoc_2.11" rev="2.5.12" conf="docs->default(compile)"/>
+		<dependency org="com.typesafe.play" name="play-java_2.11" rev="2.5.12" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.play" name="play-netty-server_2.11" rev="2.5.12" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.play" name="play-logback_2.11" rev="2.5.12" conf="compile->default(compile)"/>
+		<dependency org="dom4j" name="dom4j" rev="1.6.1" transitive="false" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.play" name="play-cache_2.11" rev="2.5.12" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="angular__common" rev="2.0.2" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="angular__compiler" rev="2.0.2" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="angular__core" rev="2.0.2" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="angular__forms" rev="2.0.2" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="angular__platform-browser-dynamic" rev="2.0.2" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="angular__platform-browser" rev="2.0.2" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="systemjs" rev="0.19.39" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="todomvc-common" rev="1.0.2" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="rxjs" rev="5.0.0-beta.12" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="es6-promise" rev="3.1.2" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="es6-shim" rev="0.35.1" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="reflect-metadata" rev="0.1.8" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="zone.js" rev="0.6.25" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="core-js" rev="2.4.1" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="symbol-observable" rev="1.0.1" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="typescript" rev="2.0.3" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="tslint-eslint-rules" rev="2.1.0" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="codelyzer" rev="0.0.28" conf="compile->default(compile)"/>
+		<dependency org="org.webjars.npm" name="types__jasmine" rev="2.2.26-alpha" conf="test->default(compile)"/>
+		<dependency org="com.typesafe.play" name="play-java-jdbc_2.11" rev="2.5.12" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.play" name="play-java-jpa_2.11" rev="2.5.12" conf="compile->default(compile)"/>
+		<dependency org="org.mockito" name="mockito-core" rev="2.6.8" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.play" name="play-java-ws_2.11" rev="2.5.12" conf="test->default(compile);compile->default(compile)"/>
+		<dependency org="org.hibernate" name="hibernate-core" rev="5.2.6.Final" conf="compile->default(compile)"/>
+		<dependency org="org.mindrot" name="jbcrypt" rev="0.3m" conf="compile->default(compile)"/>
+		<dependency org="com.typesafe.play" name="play-mailer_2.11" rev="5.0.0" conf="compile->default(compile)"/>
+		<override org="org.webjars.npm" module="minimatch" matcher="exact" rev="3.0.0"/>
+	</dependencies>
+</ivy-module>

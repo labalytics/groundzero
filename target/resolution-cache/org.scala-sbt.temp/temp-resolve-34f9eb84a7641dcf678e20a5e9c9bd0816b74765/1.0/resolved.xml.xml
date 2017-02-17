@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0">
+	<info organisation="org.scala-sbt.temp"
+		module="temp-resolve-34f9eb84a7641dcf678e20a5e9c9bd0816b74765"
+		revision="1.0"
+		status="release"
+		publication="20170208180752"
+	/>
+	<configurations>
+		<conf name="compile" visibility="public" description=""/>
+		<conf name="runtime" visibility="public" description="" extends="compile"/>
+		<conf name="test" visibility="public" description="" extends="runtime"/>
+		<conf name="provided" visibility="public" description=""/>
+		<conf name="optional" visibility="public" description=""/>
+		<conf name="compile-internal" visibility="private" description="" extends="compile,optional,provided"/>
+		<conf name="runtime-internal" visibility="private" description="" extends="runtime,optional"/>
+		<conf name="test-internal" visibility="private" description="" extends="test,optional,provided"/>
+		<conf name="plugin" visibility="private" description=""/>
+		<conf name="sources" visibility="public" description=""/>
+		<conf name="docs" visibility="private" description=""/>
+		<conf name="pom" visibility="public" description=""/>
+		<conf name="scala-tool" visibility="private" description=""/>
+	</configurations>
+	<publications>
+	</publications>
+	<dependencies>
+		<dependency org="org.parboiled" name="parboiled-java" rev="1.1.5" transitive="false" conf="docs->compile,runtime(*),master(compile),runtime,compile(*),master">
+			<artifact name="parboiled-java" type="src" ext="jar" conf="sources" e:classifier="sources"/>
+		</dependency>
+	</dependencies>
+</ivy-module>

@@ -1,0 +1,9 @@
+clean
+clean-files
+run
+clean
+clean-files
+run
+exit
+run
+exit

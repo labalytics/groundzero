@@ -1,0 +1,7 @@
+[error] C:\Users\Mahesh\Documents\Project\SEP\Labalytics\target\web\node-modules\main\webjars\@angular\material\icon\icon-registry.d.ts:1: TS2307 Cannot find module '@angular/http'.
+[error] import { Http } from '@angular/http';
+[error]                      ^
+[error] C:\Users\Mahesh\Documents\Project\SEP\Labalytics\target\web\node-modules\main\webjars\@angular\material\icon\icon.d.ts:1: TS2307 Cannot find module '@angular/http'.
+[error] import { Http } from '@angular/http';
+[error]                      ^
+[error] two errors found

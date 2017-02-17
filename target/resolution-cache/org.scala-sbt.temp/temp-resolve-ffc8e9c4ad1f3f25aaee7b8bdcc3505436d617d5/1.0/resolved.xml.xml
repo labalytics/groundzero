@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ivy-module version="2.0">
+	<info organisation="org.scala-sbt.temp"
+		module="temp-resolve-ffc8e9c4ad1f3f25aaee7b8bdcc3505436d617d5"
+		revision="1.0"
+		status="release"
+		publication="20170216185452"
+	/>
+	<configurations>
+		<conf name="compile" visibility="public" description=""/>
+		<conf name="runtime" visibility="public" description="" extends="compile"/>
+		<conf name="test" visibility="public" description="" extends="runtime"/>
+		<conf name="provided" visibility="public" description=""/>
+		<conf name="optional" visibility="public" description=""/>
+		<conf name="compile-internal" visibility="private" description="" extends="compile,optional,provided"/>
+		<conf name="runtime-internal" visibility="private" description="" extends="runtime,optional"/>
+		<conf name="test-internal" visibility="private" description="" extends="test,optional,provided"/>
+		<conf name="plugin" visibility="private" description=""/>
+		<conf name="sources" visibility="public" description=""/>
+		<conf name="docs" visibility="private" description=""/>
+		<conf name="pom" visibility="public" description=""/>
+		<conf name="scala-tool" visibility="private" description=""/>
+	</configurations>
+	<publications>
+	</publications>
+	<dependencies>
+		<dependency org="com.typesafe.play" name="twirl-api_2.11" rev="1.1.1" conf="compile->default(compile)"/>
+		<override org="org.webjars.npm" module="minimatch" matcher="exact" rev="3.0.0"/>
+	</dependencies>
+</ivy-module>

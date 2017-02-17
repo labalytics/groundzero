@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ivy-report.xsl"?>
+<ivy-report version="1.0">
+	<info
+		organisation="org.scala-sbt.temp"
+		module="temp-resolve-937345311bf4fbfc762aeb194bc7215c64492ecb"
+		revision="1.0"
+		conf="runtime"
+		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool"
+		date="20170208194911"/>
+	<dependencies>
+		<module organisation="oauth.signpost" name="signpost-commonshttp4">
+			<revision name="1.2.1.2" status="release" pubdate="20120226031621" resolver="sbt-chain" artresolver="sbt-chain" homepage="" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="0">
+				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<metadata-artifact status="no" details="" size="3939" time="0" location="C:\Users\Mahesh\.ivy2\cache\oauth.signpost\signpost-commonshttp4\ivy-1.2.1.2.xml" searched="false" origin-is-local="false" origin-location="file://////C:/Users/Mahesh/Documents/Project/RequiredFiles/typesafe-activator-1.3.12/activator-dist-1.3.12/repository/oauth.signpost/signpost-commonshttp4/1.2.1.2/ivys/ivy.xml"/>
+				<caller organisation="org.scala-sbt.temp" name="temp-resolve-937345311bf4fbfc762aeb194bc7215c64492ecb" conf="compile, runtime" rev="1.2.1.2" rev-constraint-default="1.2.1.2" rev-constraint-dynamic="1.2.1.2" callerrev="1.0"/>
+				<artifacts>
+					<artifact name="signpost-commonshttp4" type="src" ext="jar" extra-classifier="sources" status="successful" details="" size="4178" time="395" location="C:\Users\Mahesh\.ivy2\cache\oauth.signpost\signpost-commonshttp4\srcs\signpost-commonshttp4-1.2.1.2-sources.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/oauth/signpost/signpost-commonshttp4/1.2.1.2/signpost-commonshttp4-1.2.1.2-sources.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+	</dependencies>
+</ivy-report>

@@ -1,13 +1,18 @@
 logs
-target
 .idea
+
 /.classpath
+
 /.project
+
 /.settings
+
 /RUNNING_PID
-node_modules
 npm-debug.log
 
+# Do not ignore Target but ignore project/project/target
+project/target
+project/project/target
 
 # Added additional gitignores
 
@@ -18,8 +23,8 @@ npm-debug.log
 /tmp
 
 # dependencies
-/node_modules
-/bower_components
+# /node_modules
+# /bower_components
 
 # IDEs and editors
 /.idea
