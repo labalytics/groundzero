@@ -11,7 +11,7 @@ testOptions += Tests.Argument(TestFrameworks.JUnit, "-v", "-q", "-a")
 libraryDependencies += "dom4j" % "dom4j" % "1.6.1" intransitive()
 
 libraryDependencies ++= {
-  val ngVersion="2.0.2"
+  val ngVersion="2.4.7"
   Seq(
     cache,
 

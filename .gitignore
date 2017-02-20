@@ -1,12 +1,9 @@
 logs
 .idea
-
+target
 /.classpath
-
 /.project
-
 /.settings
-
 /RUNNING_PID
 npm-debug.log
 
