@@ -1,8 +1,11 @@
 package controllers;
 
+import scala.util.parsing.json.JSONObject;
 import views.html.welcome;
 import play.mvc.Controller;
 import play.mvc.Result;
+
+import org.json.simple.JSONObject;
 
 public class Application extends Controller {
 
@@ -14,4 +17,12 @@ public class Application extends Controller {
          */
         return ok(welcome.render());
     }
+
+//    public String GetUserInfo(){
+//      return "THIS IS FROM SERVICE";
+//    }
+
+  public String GetUserInfo() {
+    return JSONObject.quote("Hello World");
+  }
 }

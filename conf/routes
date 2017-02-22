@@ -16,5 +16,7 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 GET     /login                      controllers.account.Signup.login()
 GET     /register                   controllers.account.Signup.register()
 
+GET     /getuserinfo                controllers.Application.GetUserInfo()
+
 #GET     /register                   controllers.Signup.getRegister()
 #POST    /register                   controllers.account.Signup.doRegister()

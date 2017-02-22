@@ -1,0 +1,8 @@
+{
+  "data": [
+    { "id": 1, "name": "Ankur", "email": "ankur@gmail.com" },
+    { "id": 2, "name": "Aniketh", "email": "ankur@outlook.com" },
+    { "id": 3, "name": "Sai", "email": "sai@yahoo.com" },
+    { "id": 4, "name": "Siddhu", "email": "siddu@uiowa.edu" }
+  ]
+}

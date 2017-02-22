@@ -1,19 +1,42 @@
-import {Component} from "@angular/core"
+import {Component, OnInit} from "@angular/core"
+import { LabalyticsService }  from '../../services/data.service';
+import { User } from '../../models/user';
 
 @Component({
   selector: "todo-account",
-  templateUrl: "assets/components/account/account.component.html"
+  templateUrl: "assets/components/account/account.component.html",
+  providers: [ LabalyticsService ],
 })
-export default class AccountComponent {
+export default class AccountComponent implements OnInit {
   isAdmin = false;
   hookLog: string[];
+  allUsers: User[];
+  errorMessage: string;
+  serverResponse: string;
 
   heroName = "Windstorm";
   // private logger: LoggerService;
   //
-  constructor() {
+  constructor (private userService: LabalyticsService) {
     this.hookLog = ["AA","BB","CC"];
     this.isAdmin = false;
+  }
+
+  ngOnInit() { this.getHeroes(); this.getResponseFromServer(); }
+
+  getHeroes() {
+    this.userService.getHeroes()
+      .subscribe(
+        heroes => this.allUsers = heroes,
+        error =>  this.errorMessage = <any>error);
+  }
+
+  getResponseFromServer() {
+    this.userService.getResponseFromServer()
+      .subscribe(
+        heroes => this.serverResponse = heroes,
+        error =>  this.errorMessage = <any>error);
+
   }
 
   toggleChild() {
