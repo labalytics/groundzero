@@ -5,6 +5,8 @@ import play.libs.Json;
 import views.html.welcome;
 import play.mvc.Controller;
 import play.mvc.Result;
+import core.UserCore;
+import java.util.*;
 
 
 public class Application extends Controller {
@@ -29,9 +31,9 @@ public class Application extends Controller {
 //            public String email;
 //            public int age;
 //        }
-        User user = new User();
-        user.fullname= "Siddhartha Kodali";
-        user.email = "kodalisiddhu@gmail.com";
-        return ok(Json.toJson(user));
+
+        UserCore UC = new UserCore();
+        List<User> res =  UC.selectAllFriends();
+        return ok(Json.toJson(res));
     }
 }
