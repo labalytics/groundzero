@@ -37,12 +37,12 @@ public class Signup extends Controller {
 
     public String validate() {
       User user = new User();
-      user = User.authenticate(email, password);
-      if (user == null) {
-        return "Invalid user or password";
-      } else if(!user.validated) {
-        return "Account is not yet confirmed!";
-      }
+//      user = User.authenticate(email, password);
+//      if (user == null) {
+//        return "Invalid user or password";
+//      } else if(!user.validated) {
+//        return "Account is not yet confirmed!";
+//      }
       return null;
     }
   }
