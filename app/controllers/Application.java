@@ -1,11 +1,11 @@
 package controllers;
 
-import scala.util.parsing.json.JSONObject;
+import models.User;
+import play.libs.Json;
 import views.html.welcome;
 import play.mvc.Controller;
 import play.mvc.Result;
 
-import org.json.simple.JSONObject;
 
 public class Application extends Controller {
 
@@ -22,7 +22,16 @@ public class Application extends Controller {
 //      return "THIS IS FROM SERVICE";
 //    }
 
-  public String GetUserInfo() {
-    return JSONObject.quote("Hello World");
-  }
+    public Result GetUserInfo() {
+//        public static class User {
+//            public String firstName;
+//            public String lastName;
+//            public String email;
+//            public int age;
+//        }
+        User user = new User();
+        user.fullname= "Siddhartha Kodali";
+        user.email = "kodalisiddhu@gmail.com";
+        return ok(Json.toJson(user));
+    }
 }
