@@ -13,24 +13,29 @@ import utils.Hash;
 public class User {
 
   @Id
+  @Column(name = "userId")
+  @Formats.NonEmpty
   @GeneratedValue(strategy=GenerationType.AUTO)
   public Long id;
 
+  @Column(name = "emailId", unique = true)
   @Constraints.Required
   @Formats.NonEmpty
-  @Column(unique = true)
   public String email;
 
   @Constraints.Required
   @Formats.NonEmpty
-  @Column(unique = true)
-  public String fullname;
-
-  public String confirmationToken;
+  public String passwordHash;
 
   @Constraints.Required
   @Formats.NonEmpty
-  public String passwordHash;
+  public String firstName;
+
+  @Constraints.Required
+  @Formats.NonEmpty
+  public String lastName;
+
+  public String confirmationToken;
 
   @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
   public Date dateCreation;
