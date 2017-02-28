@@ -50,7 +50,8 @@ libraryDependencies ++= {
     "org.hibernate" % "hibernate-core" % "5.2.6.Final",
     "org.mindrot" % "jbcrypt" % "0.3m",
     "com.typesafe.play" %% "play-mailer" % "5.0.0",
-    javaWs
+    javaWs,
+    "mysql" % "mysql-connector-java" % "6.0.5"
   )
 }
 dependencyOverrides += "org.webjars.npm" % "minimatch" % "3.0.0"
