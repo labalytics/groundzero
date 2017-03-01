@@ -10,36 +10,43 @@ import java.util.Date;
 import utils.Hash;
 
 @Entity
+@Table(name = "USER")
 public class User {
 
   @Id
-  @Column(name = "userId")
+  @Column(name = "user_id")
   @Formats.NonEmpty
   @GeneratedValue(strategy=GenerationType.AUTO)
   public Long id;
 
-  @Column(name = "emailId", unique = true)
+  @Column(name = "email_id", unique = true)
   @Constraints.Required
   @Formats.NonEmpty
   public String email;
 
+  @Column(name = "password_hash")
   @Constraints.Required
   @Formats.NonEmpty
   public String passwordHash;
 
+  @Column(name = "first_name")
   @Constraints.Required
   @Formats.NonEmpty
   public String firstName;
 
+  @Column(name = "last_name")
   @Constraints.Required
   @Formats.NonEmpty
   public String lastName;
 
+  @Column(name = "confirmation_token")
   public String confirmationToken;
 
+  @Column(name = "date_creation")
   @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
   public Date dateCreation;
 
+  @Column(name = "validated")
   @Formats.NonEmpty
   public Boolean validated = false;
 
