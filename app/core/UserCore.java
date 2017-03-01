@@ -24,7 +24,7 @@ public class UserCore {
 
   public void InsertUser(User user)
   {
-      JPA.em().persist(user);
+      //JPA.em().persist(user);
 
   }
 }

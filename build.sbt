@@ -17,6 +17,7 @@ libraryDependencies ++= {
 
     //angular2 dependencies
     "org.webjars.npm" % "angular__common" % ngVersion,
+    "org.webjars.npm" % "angular__router" % "3.2.1",
     "org.webjars.npm" % "angular__compiler" % ngVersion,
     "org.webjars.npm" % "angular__core" % ngVersion,
     "org.webjars.npm" % "angular__forms" % ngVersion,
