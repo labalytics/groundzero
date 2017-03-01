@@ -7,39 +7,25 @@ import { AlertService, AuthenticationService } from "../../services/index";
 
 @Component({
     selector: "todo-login-app",
-    templateUrl: "assets/module/login/login.html",
-    providers: [AuthenticationService]
+    templateUrl: "assets/module/login/login.html"
 })
 
-export default class LoginComponent implements OnInit{
+export default class LoginComponent{
 
   model: any = {};
   loading = false;
   returnUrl: string;
 
-
-  constructor(private authenticationService: AuthenticationService,
-              private alertService: AlertService){
-
-  }
-
-  ngOnInit() {
-    // reset login status
-
-    // get return url from route parameters or default to '/'
-    this.returnUrl = "";
-  }
-
   login() {
     this.loading = true;
-    this.authenticationService.login(this.model.username, this.model.password)
-      .subscribe(
-        data => {
-          ""
-        },
-        error => {
-          this.loading = false;
-        });
+    // this.authenticationService.login(this.model.username, this.model.password)
+    //   .subscribe(
+    //     data => {
+    //       ""
+    //     },
+    //     error => {
+    //       this.loading = false;
+    //     });
   }
 }
 
