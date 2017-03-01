@@ -1,6 +1,7 @@
 package controllers;
 
 import models.User;
+import play.db.jpa.Transactional;
 import play.libs.Json;
 import views.html.welcome;
 import play.mvc.Controller;
@@ -24,6 +25,7 @@ public class Application extends Controller {
 //      return "THIS IS FROM SERVICE";
 //    }
 
+  @Transactional
     public Result GetUserInfo() {
 //        public static class User {
 //            public String firstName;
@@ -33,7 +35,15 @@ public class Application extends Controller {
 //        }
 
         UserCore UC = new UserCore();
+
+        User user = new User();
+        user.email = "dbjfb";
+        user.firstName = "djhg";
+        user.lastName ="dhg";
+        user.passwordHash = "dbgjvn";
         List<User> res =  UC.selectAllFriends();
+        UC.InsertUser(user);
+        //String res = "";
         return ok(Json.toJson(res));
     }
 }

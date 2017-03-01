@@ -1,6 +1,5 @@
 package models;
 
-
 import play.data.format.Formats;
 import play.data.validation.Constraints;
 import play.db.jpa.JPA;
@@ -10,123 +9,117 @@ import java.util.Date;
 
 import utils.Hash;
 
-
-import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import java.io.Serializable;
-/**
- * Created by sai on 2/18/16.
- */
-
 @Entity
-@Table(name = "User")
-public class User{
+@Table(name = "USER")
+public class User {
 
   @Id
-  @Column(name = "id")
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  private long id;
+  @Column(name = "user_id")
+  @Formats.NonEmpty
+  @GeneratedValue(strategy=GenerationType.AUTO)
+  public Long id;
 
-  @Column(name = "fname")
-  private String name;
+  @Column(name = "email_id", unique = true)
+  @Constraints.Required
+  @Formats.NonEmpty
+  public String email;
 
-  @Column(name = "lname")
-  private String lname;
+  @Column(name = "password_hash")
+  @Constraints.Required
+  @Formats.NonEmpty
+  public String passwordHash;
 
-  @Column(name = "email")
-  private String email;
+  @Column(name = "first_name")
+  @Constraints.Required
+  @Formats.NonEmpty
+  public String firstName;
 
-  @Column(name ="password")
-  private  String pwsd;
+  @Column(name = "last_name")
+  @Constraints.Required
+  @Formats.NonEmpty
+  public String lastName;
 
-  public String getPwsd() {
-    return pwsd;
+  @Column(name = "confirmation_token")
+  public String confirmationToken;
+
+  @Column(name = "date_creation")
+  @Formats.DateTime(pattern = "yyyy-MM-dd HH:mm:ss")
+  public Date dateCreation;
+
+  @Column(name = "validated")
+  @Formats.NonEmpty
+  public Boolean validated = false;
+
+  public static User authenticate(String email, String password) {
+    //return find.where().eq("email", email).eq("password", password).findUnique();
+
+    Query q = JPA.em().createQuery("SELECT u FROM User u WHERE u.email = :email");
+    q.setParameter("email", email);
+    try{
+      User user = (User) q.getSingleResult();
+      if(user != null) {
+        if (Hash.checkPassword(password, user.passwordHash)) {
+          return user;
+        }
+      }
+      return null;
+    } catch(Exception e){
+      System.out.println("Exception e = " + e.getMessage());
+      return null;
+    }
   }
 
-  public void setPwsd(String pwsd) {
-    this.pwsd = pwsd;
+  /**
+   * Find user by confirmationToken
+   */
+  public static User findByConfirmationToken(String confirmationToken) {
+    Query q = JPA.em().createQuery("SELECT u FROM User u WHERE u.confirmationToken = :confirmationToken");
+    q.setParameter("confirmationToken", confirmationToken);
+    try{
+      User user = (User) q.getSingleResult();
+      if (user != null) {
+        return user;
+      }
+    } catch(Exception e){
+      System.out.println("Exception e = " + e.getMessage());
+      return null;
+    }
+    return null;
   }
 
-  public Date getDob() {
-    return dob;
+  /**
+   * Find user by email
+   */
+  public static User findByEmail(String email) {
+    Query q = JPA.em().createQuery("SELECT u FROM User u WHERE u.email = :email");
+    q.setParameter("email", email);
+    try{
+      User user = (User) q.getSingleResult();
+      if (user != null) {
+        return user;
+      }
+    } catch(Exception e){
+      System.out.println("Exception e = " + e.getMessage());
+      return null;
+    }
+    return null;
   }
 
-  public void setDob(Date dob) {
-    this.dob = dob;
+  /**
+   * Confirms an account.
+   *
+   * @return true if confirmed, false otherwise.
+   * @throws Exception
+   */
+  public static boolean confirm(User user) throws Exception {
+    if (user == null) {
+      return false;
+    }
+
+    user.confirmationToken = null;
+    user.validated = true;
+    JPA.em().persist(user);
+    return true;
   }
 
-  public void setId(long id) {
-    this.id = id;
-  }
-
-  public String getEmail() {
-
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getLname() {
-
-    return lname;
-  }
-
-  public void setLname(String lname) {
-    this.lname = lname;
-  }
-
-  @Column(name = "dob")
-  private Date dob;
-
-  public String getName() {
-    return name;
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getRole() {
-    return role;
-  }
-
-  public void setRole(String role) {
-    this.role = role;
-  }
-
-  @Column(name = "role")
-  private String role;
-
-  public String getStatus() {
-    return status;
-  }
-
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
-  @Column(name = "status")
-  private String status;
-
-  @Column(name ="gender")
-  private String gender;
-
-  public String getGender() {
-    return gender;
-  }
-
-  public void setGender(String gender) {
-    this.gender = gender;
-  }
 }
