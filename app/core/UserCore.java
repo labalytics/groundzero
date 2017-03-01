@@ -6,6 +6,7 @@ package core;
 
 import models.User;
 import play.db.jpa.JPA;
+import play.db.jpa.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -21,4 +22,9 @@ public class UserCore {
     return result;
   }
 
+  public void InsertUser(User user)
+  {
+      JPA.em().persist(user);
+
+  }
 }
