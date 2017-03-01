@@ -19,17 +19,17 @@
 -- Table structure for table `LabPermissions`
 --
 
-DROP TABLE IF EXISTS `LabPermissions`;
+DROP TABLE IF EXISTS `lab_permissions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `LabPermissions` (
-  `LabPermissionsId` int(11) NOT NULL AUTO_INCREMENT,
-  `currentLabId` int(11) NOT NULL,
-  `requestedLabId` int(11) NOT NULL,
+CREATE TABLE `lab_permissions` (
+  `lab_permissions_id` int(11) NOT NULL AUTO_INCREMENT,
+  `current_lab_id` int(11) NOT NULL,
+  `requested_lab_id` int(11) NOT NULL,
   `status` int(11) DEFAULT NULL,
-  PRIMARY KEY (`LabPermissionsId`),
-  KEY `labId_idx` (`currentLabId`,`requestedLabId`),
-  CONSTRAINT `foreignId` FOREIGN KEY (`currentLabId`) REFERENCES `Labs` (`labId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`lab_permissions_id`),
+  KEY `labId_idx` (`current_lab_id`,`requested_lab_id`),
+  CONSTRAINT `foreignid` FOREIGN KEY (`current_lab_id`) REFERENCES `labs` (`lab_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -37,14 +37,14 @@ CREATE TABLE `LabPermissions` (
 -- Table structure for table `Labs`
 --
 
-DROP TABLE IF EXISTS `Labs`;
+DROP TABLE IF EXISTS `labs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Labs` (
-  `labId` int(11) NOT NULL AUTO_INCREMENT,
-  `labName` varchar(45) NOT NULL,
-  `LabPI` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`labId`)
+CREATE TABLE `labs` (
+  `lab_id` int(11) NOT NULL AUTO_INCREMENT,
+  `lab_name` varchar(45) NOT NULL,
+  `lab_pi` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`lab_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -52,15 +52,15 @@ CREATE TABLE `Labs` (
 -- Table structure for table `Roles`
 --
 
-DROP TABLE IF EXISTS `Roles`;
+DROP TABLE IF EXISTS `roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Roles` (
-  `roleId` int(11) NOT NULL AUTO_INCREMENT,
-  `roleName` varchar(45) NOT NULL,
+CREATE TABLE `roles` (
+  `role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_name` varchar(45) NOT NULL,
   `status` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`roleId`),
-  UNIQUE KEY `roleName_UNIQUE` (`roleName`)
+  PRIMARY KEY (`role_id`),
+  UNIQUE KEY `roleName_UNIQUE` (`role_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -68,19 +68,19 @@ CREATE TABLE `Roles` (
 -- Table structure for table `UserLabRoles`
 --
 
-DROP TABLE IF EXISTS `UserLabRoles`;
+DROP TABLE IF EXISTS `user_lab_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `UserLabRoles` (
-  `userLabRolesId` int(11) NOT NULL AUTO_INCREMENT,
-  `labId` int(11) NOT NULL,
-  `roleId` int(11) NOT NULL,
+CREATE TABLE `user_lab_roles` (
+  `user_lab_roles_id` int(11) NOT NULL AUTO_INCREMENT,
+  `lab_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
   `status` int(11) DEFAULT NULL,
-  PRIMARY KEY (`userLabRolesId`),
-  KEY `roleId_idx` (`roleId`),
-  KEY `labId_idx` (`labId`),
-  CONSTRAINT `labId` FOREIGN KEY (`labId`) REFERENCES `Labs` (`labId`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `roleId` FOREIGN KEY (`roleId`) REFERENCES `Roles` (`roleId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`user_lab_roles_id`),
+  KEY `roleId_idx` (`role_id`),
+  KEY `labId_idx` (`lab_id`),
+  CONSTRAINT `lab_id` FOREIGN KEY (`lab_id`) REFERENCES `labs` (`lab_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -88,18 +88,19 @@ CREATE TABLE `UserLabRoles` (
 -- Table structure for table `Users`
 --
 
-DROP TABLE IF EXISTS `Users`;
+DROP TABLE IF EXISTS `users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `Users` (
-  `userId` int(11) NOT NULL AUTO_INCREMENT,
-  `emailId` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
-  `firstName` varchar(45) NOT NULL,
-  `lastName` varchar(45) NOT NULL,
-  `phoneNo` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`userId`),
-  UNIQUE KEY `emailId_UNIQUE` (`emailId`)
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `email_id` varchar(45) NOT NULL,
+  `password_hash` varchar(256) NOT NULL,
+  `first_name` varchar(45) NOT NULL,
+  `last_name` varchar(45) NOT NULL,
+  `phone_no` varchar(45) DEFAULT NULL,
+  `confirmations_token` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `emailId_UNIQUE` (`email_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
