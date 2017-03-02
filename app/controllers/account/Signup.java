@@ -48,7 +48,7 @@ public class Signup extends Controller {
   }
 
   public Result login() {
-    //Form<Login> loginForm = formFactory.form(Login.class);
+    Form<Login> loginForm = formFactory.form(Login.class);
     return ok(views.html.account.login.render("A"));
   }
 
