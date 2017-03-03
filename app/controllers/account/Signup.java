@@ -1,5 +1,6 @@
 package controllers.account;
 
+  import com.fasterxml.jackson.databind.JsonNode;
   import models.User;
   import play.data.Form;
   import play.data.FormFactory;
@@ -8,6 +9,7 @@ package controllers.account;
   import play.db.jpa.JPAApi;
   import play.db.jpa.Transactional;
   import play.i18n.Messages;
+  import play.libs.Json;
   import play.mvc.Controller;
   import play.mvc.Result;
   import play.mvc.Security;
@@ -15,6 +17,7 @@ package controllers.account;
   import javax.inject.Inject;
   import javax.persistence.*;
   import java.util.List;
+
 
   import static play.libs.Json.toJson;
 
@@ -48,7 +51,14 @@ public class Signup extends Controller {
   }
 
   public Result login() {
-    Form<Login> loginForm = formFactory.form(Login.class);
+    return ok(views.html.account.login.render("A"));
+  }
+
+  @Transactional
+  public Result validateUser(){
+    JsonNode json = request().body().asJson();
+    User u = new User();
+    u.authenticate(json.findPath("email").textValue(),json.findPath("password").textValue());
     return ok(views.html.account.login.render("A"));
   }
 
