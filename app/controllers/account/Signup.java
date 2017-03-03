@@ -1,7 +1,9 @@
 package controllers.account;
 
   import com.fasterxml.jackson.databind.JsonNode;
+  import core.UserCore;
   import models.User;
+  import play.Logger;
   import play.data.Form;
   import play.data.FormFactory;
   import play.data.validation.Constraints;
@@ -25,6 +27,8 @@ public class Signup extends Controller {
 
   private final FormFactory formFactory;
   private final JPAApi jpaApi;
+
+  final Logger.ALogger logger = Logger.of(this.getClass());
 
   @Inject
   public Signup(FormFactory formFactory, JPAApi jpaApi) {
@@ -54,12 +58,24 @@ public class Signup extends Controller {
     return ok(views.html.account.login.render("A"));
   }
 
-  @Transactional
+  @Transactional(readOnly = true)
   public Result validateUser(){
+    logger.debug("Trying to Login");
     JsonNode json = request().body().asJson();
-    User u = new User();
-    u.authenticate(json.findPath("email").textValue(),json.findPath("password").textValue());
-    return ok(views.html.account.login.render("A"));
+    User user = new User();
+
+    UserCore userCore = new UserCore();
+    user = userCore.authenticate(jpaApi, json.findPath("email").textValue(), json.findPath("password").textValue());
+    if (user != null) {
+      //Login success
+      logger.debug("Login successful");
+      return ok(views.html.account.login.render("A"));
+    } else {
+      //Login failed
+      //TODO
+      logger.debug("Login failed");
+      return ok(views.html.account.login.render("A"));
+    }
   }
 
   public Result register() {
@@ -69,8 +85,6 @@ public class Signup extends Controller {
   }
 
 /*
-
-
   @Transactional(readOnly = true)
   public Result authenticate() {
     Form<Login> form = formFactory.form(Login.class).bindFromRequest();

@@ -27,13 +27,6 @@ public class Application extends Controller {
 
   @Transactional
     public Result GetUserInfo() {
-//        public static class User {
-//            public String firstName;
-//            public String lastName;
-//            public String email;
-//            public int age;
-//        }
-
         UserCore UC = new UserCore();
 
         User user = new User();
@@ -41,9 +34,6 @@ public class Application extends Controller {
         user.firstName = "djhg";
         user.lastName ="dhg";
         user.passwordHash = "dbgjvn";
-        List<User> res =  UC.selectAllFriends();
-        UC.InsertUser(user);
-        //String res = "";
-        return ok(Json.toJson(res));
+        return ok(Json.toJson(user));
     }
 }
