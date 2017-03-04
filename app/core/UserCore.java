@@ -1,11 +1,21 @@
 package core;
 
+import controllers.routes;
 import models.User;
+import org.apache.commons.mail.EmailException;
+import play.Configuration;
+import play.Logger;
+import play.data.Form;
 import play.db.jpa.JPAApi;
 import play.db.jpa.Transactional;
+import play.i18n.Messages;
+import play.mvc.Result;
 import utils.Hash;
 
 import javax.persistence.Query;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.UUID;
 
 public class UserCore {
 
@@ -24,7 +34,36 @@ public class UserCore {
       System.out.println("Exception e = " + e.getMessage());
       return null;
     }
+
   }
+
+  @Transactional
+  public User doRegister(JPAApi jpaApi, String email, String password) {
+
+      try {
+        User user = new User();
+        user.email = email;
+        user.firstName = "Aniket";
+        user.lastName = "Chitale";
+        user.passwordHash = Hash.createPassword(password);
+        user.confirmationToken = UUID.randomUUID().toString();
+        jpaApi.em().persist(user);
+        return user;
+        //Send email to user asking for confirmation of account
+      } catch (EmailException e) {
+        Logger.debug("Signup.save Cannot send email", e);
+      } catch (Exception e) {
+        Logger.error("Signup.save error", e);
+      }
+      return null;
+
+  }
+
+
+
+
+
+
 
   /**
    * Find user by confirmationToken
