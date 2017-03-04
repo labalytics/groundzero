@@ -1,30 +1,122 @@
 package core;
 
-/**
- * Created by sai on 2/23/17.
- */
-
+import controllers.routes;
 import models.User;
-import play.db.jpa.JPA;
+import org.apache.commons.mail.EmailException;
+import play.Configuration;
+import play.Logger;
+import play.data.Form;
+import play.db.jpa.JPAApi;
 import play.db.jpa.Transactional;
+import play.i18n.Messages;
+import play.mvc.Result;
+import utils.Hash;
 
-import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import java.util.List;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.UUID;
 
 public class UserCore {
 
-  public List<User> selectAllFriends() {
-    EntityManager em = JPA.em("default");
-    List<User> result = em.createQuery("SELECT u FROM User u").getResultList();
-    em.close();
-    return result;
+  public static User authenticate(JPAApi jpaApi, String email, String password) {
+    Query q = jpaApi.em().createQuery("SELECT u FROM User u WHERE u.email = :email");
+    q.setParameter("email", email);
+    try {
+      User user = (User) q.getSingleResult();
+      if(user != null) {
+        if (Hash.checkPassword(password, user.passwordHash)) {
+          return user;
+        }
+      }
+      return null;
+    } catch(Exception e){
+      System.out.println("Exception e = " + e.getMessage());
+      return null;
+    }
+
   }
 
-  public void InsertUser(User user)
-  {
-      //JPA.em().persist(user);
+  @Transactional
+  public User doRegister(JPAApi jpaApi, String email, String password) {
+
+      try {
+        User user = new User();
+        user.email = email;
+        user.firstName = "Aniket";
+        user.lastName = "Chitale";
+        user.passwordHash = Hash.createPassword(password);
+        user.confirmationToken = UUID.randomUUID().toString();
+        jpaApi.em().persist(user);
+        return user;
+        //Send email to user asking for confirmation of account
+      } catch (EmailException e) {
+        Logger.debug("Signup.save Cannot send email", e);
+      } catch (Exception e) {
+        Logger.error("Signup.save error", e);
+      }
+      return null;
 
   }
+
+
+
+
+
+
+
+  /**
+   * Find user by confirmationToken
+   */
+  public static User findByConfirmationToken(JPAApi jpaApi, String confirmationToken) {
+    Query q = jpaApi.em().createQuery("SELECT u FROM User u WHERE u.confirmationToken = :confirmationToken");
+    q.setParameter("confirmationToken", confirmationToken);
+    try {
+      User user = (User) q.getSingleResult();
+      if (user != null) {
+        return user;
+      }
+    } catch(Exception e){
+      System.out.println("Exception e = " + e.getMessage());
+      return null;
+    }
+    return null;
+  }
+
+  /**
+   * Find user by email
+   */
+  public static User findByEmail(JPAApi jpaApi, String email) {
+    Query q = jpaApi.em().createQuery("SELECT u FROM User u WHERE u.email = :email");
+    q.setParameter("email", email);
+    try {
+      User user = (User) q.getSingleResult();
+      if (user != null) {
+        return user;
+      }
+    } catch(Exception e){
+      System.out.println("Exception e = " + e.getMessage());
+      return null;
+    }
+    return null;
+  }
+
+  /**
+   * Confirms an account.
+   *
+   * @return true if confirmed, false otherwise.
+   * @throws Exception
+   */
+  public static boolean confirm(JPAApi jpaApi, User user) throws Exception {
+    if (user == null) {
+      return false;
+    }
+
+    user.confirmationToken = null;
+    user.validated = true;
+    jpaApi.em().persist(user);
+    return true;
+  }
+
 }
+
