@@ -13,7 +13,7 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 #Register/Signup
 GET     /login                      controllers.account.Signup.login()
-GET     /login                      controllers.account.Signup.login()
+GET     /validate                   controllers.account.Signup.validateUser()
 GET     /register                   controllers.account.Signup.register()
 POST    /validate                   controllers.account.Signup.validateUser()
 

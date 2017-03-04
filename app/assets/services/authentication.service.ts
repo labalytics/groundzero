@@ -14,12 +14,15 @@ export class AuthenticationService {
         let options = new RequestOptions({ headers: headers });
         return this.http.post('/validate', JSON.stringify({ email: username, password: password }), options)
             .map((response: Response) => {
+
+                console.log(response);
+                window.location.href('home')
                 // login successful if there's a jwt token in the response
-                let user = response.json();
-                if (user && user.token) {
-                    // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                }
+                // let user = response.json();
+                // if (user && user.token) {
+                //     // store user details and jwt token in local storage to keep user logged in between page refreshes
+                //     localStorage.setItem('currentUser', JSON.stringify(user));
+                // }
             });
     }
 

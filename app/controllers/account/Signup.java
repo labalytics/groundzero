@@ -58,8 +58,8 @@ public class Signup extends Controller {
   public Result validateUser(){
     JsonNode json = request().body().asJson();
     User u = new User();
-    u.authenticate(json.findPath("email").textValue(),json.findPath("password").textValue());
-    return ok(views.html.account.login.render("A"));
+    //u.authenticate(json.findPath("email").textValue(),json.findPath("password").textValue());
+    return ok(views.html.home.render());
   }
 
   public Result register() {
