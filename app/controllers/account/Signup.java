@@ -84,40 +84,37 @@ public class Signup extends Controller {
       return ok(views.html.account.login.render("A"));
     }
   }
+
   @Transactional
   public Result registration(){
     logger.debug("Trying to Regester");
-    try{
+    try {
+      JsonNode json = request().body().asJson();
+      User user = new User();
 
-
-    JsonNode json = request().body().asJson();
-    User user = new User();
-
-    UserCore userCore = new UserCore();
-    //user = userCore.authenticate(jpaApi, json.findPath("email").textValue(), json.findPath("password").textValue());
+      UserCore userCore = new UserCore();
+      //user = userCore.authenticate(jpaApi, json.findPath("email").textValue(), json.findPath("password").textValue());
       user = userCore.doRegister(jpaApi, json.findPath("email").textValue(), json.findPath("password").textValue());
 
-      //user = userCore.doRegister(jpaApi, "aniketchitale7@gmail.com" , "abc");
-    if (user != null) {
-      //Login success
-      logger.debug("Signup successful");
-      sendMailAskForConfirmation(user);
-      return ok(views.html.account.login.render("A"));
-    } else {
-      //Login failed
-      //TODO
-      logger.debug("Signup failed");
-      return ok(views.html.account.login.render("A"));
+      if (user != null) {
+        //Login success
+        logger.debug("Signup successful");
+        sendMailAskForConfirmation(user);
+        return ok(views.html.account.login.render("A"));
+      } else {
+        //Login failed
+        logger.debug("Signup failed");
+        return ok(views.html.account.login.render("A"));
+      }
+    } catch(EmailException e) {
+      logger.debug("Signup.save Cannot send email", e);
+      flash("error", Messages.get("error.sending.email"));
+    } catch(Exception e) {
+      logger.error("Signup.save error", e);
+      flash("error", Messages.get("error.technical"));
     }
-  } catch(EmailException e) {
-    Logger.debug("Signup.save Cannot send email", e);
-    flash("error", Messages.get("error.sending.email"));
-  } catch(Exception e) {
-    Logger.error("Signup.save error", e);
-    flash("error", Messages.get("error.technical"));
+      return ok(views.html.account.login.render("A"));
   }
-    return ok(views.html.account.login.render("A"));
-}
 
   /**
    * Send the welcome Email with the link to confirm.
@@ -141,8 +138,8 @@ public class Signup extends Controller {
    *
    * @param token a token attached to the user we're confirming.
    * @return Confirmationpage */
-
-  @Transactional public Result confirm(String confirmToken) {
+  @Transactional
+  public Result confirm(String confirmToken) {
     User user = User.findByConfirmationToken(confirmToken);
     if (user == null) {
       flash("error", Messages.get("error.unknown.email"));
@@ -156,15 +153,15 @@ public class Signup extends Controller {
         flash("success", Messages.get("account.successfully.validated"));
        // return ok(views.html.confirm.render());
       } else {
-        Logger.debug("Login.confirm cannot confirm user");
+        logger.debug("Login.confirm cannot confirm user");
         flash("error", Messages.get("error.confirm"));
         //return badRequest(views.html.confirm.render());
       }
     } catch (EmailException e) {
-      Logger.debug("Cannot send email", e);
+      logger.debug("Cannot send email", e);
       flash("error", Messages.get("error.sending.confirm.email"));
     } catch (Exception e) {
-      Logger.error("Cannot signup", e);
+      logger.error("Cannot signup", e);
       flash("error", Messages.get("error.technical"));
     }
     return badRequest(views.html.home.render());
