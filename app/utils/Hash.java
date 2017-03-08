@@ -13,7 +13,7 @@ public class Hash {
    *
    * @param clearString the clear string
    * @return an encrypted password of the clear string
-   * @throws AppException APP Exception, from NoSuchAlgorithmException
+   * @throws Exception APP Exception, from NoSuchAlgorithmException
    */
   public static String createPassword(String clearString) throws Exception {
     if (clearString == null) {
@@ -23,7 +23,7 @@ public class Hash {
   }
 
   /**
-   * @param candidate         the clear text
+   * @param candidate the clear text
    * @param encryptedPassword the encrypted password string to check.
    * @return true if the candidate matches, false otherwise.
    */
