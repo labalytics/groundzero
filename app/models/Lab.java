@@ -10,22 +10,22 @@ import java.util.Date;
 import utils.Hash;
 
 @Entity
-@Table(name = "ROLES")
-public class Role {
+@Table(name = "LABS")
+public class Lab {
 
   @Id
-  @Column(name = "role_id")
+  @Column(name = "lab_id")
   @Formats.NonEmpty
   @GeneratedValue(strategy=GenerationType.AUTO)
   public Long id;
 
-  @Column(name = "role_name", unique = true)
+  @Column(name = "lab_name")
   @Constraints.Required
   @Formats.NonEmpty
-  public String roleName;
+  public String labName;
 
-  @Column(name = "status")
+  @Column(name = "lab_pi")
   @Constraints.Required
-  public String status;
-
+  @Formats.NonEmpty
+  public String labPi;
 }
