@@ -65,6 +65,11 @@ public class Signup extends Controller {
     return ok(views.html.account.login.render("A"));
   }
 
+
+  public Result signup() {
+    return ok(views.html.account.signup.render());
+  }
+
   @Transactional(readOnly = true)
   public Result validateUser(){
     logger.debug("Trying to Login");
