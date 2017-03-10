@@ -10,26 +10,28 @@ import java.util.Date;
 import utils.Hash;
 
 @Entity
-@Table(name = "USERLABROLE")
+@Table(name = "USERLABROLES")
 public class UserLabRole {
 
   @Id
-  @Column(name = "userlabrole_id")
+  @Column(name = "user_lab_role_id")
   @Formats.NonEmpty
   @GeneratedValue(strategy=GenerationType.AUTO)
   public Long id;
+
+  @Column(name = "lab_id")
+  @Constraints.Required
+  @Formats.NonEmpty
+  public String labId;
 
   @Column(name = "role_id")
   @Constraints.Required
   @Formats.NonEmpty
   public String roleId;
 
-  @Column(name = "user_id")
-  @Constraints.Required
-  @Formats.NonEmpty
-  public String userId;
-
   @Column(name = "status")
-  @Constraints.Required
   public String status;
+
+  //TODO
+  //Foreign key relationships
 }
