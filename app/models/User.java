@@ -10,7 +10,7 @@ import java.util.Date;
 import utils.Hash;
 
 @Entity
-@Table(name = "users")
+@Table(name = "USER")
 public class User {
 
   @Id

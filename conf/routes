@@ -17,6 +17,9 @@ GET     /register                   controllers.account.Signup.register()
 POST    /validate                   controllers.account.Signup.validateUser()
 POST    /registration                   controllers.account.Signup.registration()
 
+# Accessed when the user confirms the registration.
+GET     /confirm/:confirmToken      controllers.account.Signup.confirm(confirmToken:String)
+
 
 GET     /getuserinfo                controllers.Application.GetUserInfo()
 
