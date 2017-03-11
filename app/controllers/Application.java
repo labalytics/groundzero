@@ -3,6 +3,7 @@ package controllers;
 import models.User;
 import play.db.jpa.Transactional;
 import play.libs.Json;
+import views.html.home;
 import views.html.welcome;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -19,6 +20,11 @@ public class Application extends Controller {
      * index2() :    add the option -DtsCompileMode=stage to your sbt task . F.i. 'sbt ~run -DtsCompileMode=stage' this will produce the app as one single js file.
      */
     return ok(welcome.render());
+  }
+
+
+  public Result home(){
+    return ok(home.render());
   }
 
   @Transactional

@@ -1,6 +1,7 @@
 import {Component} from "@angular/core"
 import {GreeterStore} from "../../services/greeter.store"
 import { OnInit } from '@angular/core';
+import {AfterViewInit} from 'angular2/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { AlertService, AuthenticationService } from "../../services/index";
@@ -10,6 +11,15 @@ import { AlertService, AuthenticationService } from "../../services/index";
   templateUrl: "assets/module/home/home.html"
 })
 
-export default class HomeComponent{
+export default class HomeComponent implements AfterViewInit{
+
+
+  currentUser: any = {};
+
+  ngAfterViewInit() {
+    console.log("KAKj");
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    console.log(this.currentUser);
+  }
 }
 

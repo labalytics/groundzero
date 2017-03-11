@@ -16,6 +16,7 @@ import { AlertService, AuthenticationService } from "../../services/index";
 export default class LoginComponent{
 
   model: any = {};
+  currentUser: any = {};
   loading = false;
   returnUrl: string;
 
@@ -26,6 +27,8 @@ export default class LoginComponent{
     this.loading = true;
     this.authenticationService.login(this.model.username, this.model.password)
       .subscribe();
+
+
   }
 }
 

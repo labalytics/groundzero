@@ -9,7 +9,6 @@ import 'rxjs/Rx';
 export class AuthenticationService {
     constructor(public http: Http) { }
 
-
     login(username: string, password: string) {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
@@ -17,7 +16,8 @@ export class AuthenticationService {
         //return this.http.post('/registration', JSON.stringify({ email: username, password: password }), options)
             .map((response: Response) => {
 
-                console.log(response);
+                //console.log(response.json());
+                localStorage.setItem('currentUser', JSON.stringify(response.json()));
                 //window.location.href('home')
                 // login successful if there's a jwt token in the response
                 // let user = response.json();
@@ -37,6 +37,7 @@ export class AuthenticationService {
       .map((response: Response) => {
 
         console.log(response);
+        localStorage.setItem('currentUser', JSON.stringify(response));
         //window.location.href('home')
         // login successful if there's a jwt token in the response
         // let user = response.json();

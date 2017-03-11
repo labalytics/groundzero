@@ -2,6 +2,7 @@ package core;
 
 import controllers.routes;
 import models.User;
+import models.UserLabRole;
 import org.apache.commons.mail.EmailException;
 import play.Configuration;
 import play.Logger;
@@ -19,14 +20,17 @@ import java.util.UUID;
 
 public class UserCore {
 
-  public static User authenticate(JPAApi jpaApi, String email, String password) {
+  public static UserLabRole authenticate(JPAApi jpaApi, String email, String password) {
     Query q = jpaApi.em().createQuery("SELECT u FROM User u WHERE u.email = :email");
     q.setParameter("email", email);
     try {
       User user = (User) q.getSingleResult();
       if(user != null) {
         if (Hash.checkPassword(password, user.passwordHash)) {
-          return user;
+          Query q1 = jpaApi.em().createQuery("SELECT r FROM UserLabRole r WHERE r.userId.id = :userId");
+          q1.setParameter("userId", user.id);
+          UserLabRole userLabRole = (UserLabRole) q1.getSingleResult();
+          return  userLabRole;
         }
       }
       return null;
