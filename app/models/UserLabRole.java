@@ -10,7 +10,7 @@ import java.util.Date;
 import utils.Hash;
 
 @Entity
-@Table(name = "USERLABROLES")
+@Table(name = "user_lab_roles")
 public class UserLabRole {
 
   @Id
@@ -19,15 +19,23 @@ public class UserLabRole {
   @GeneratedValue(strategy=GenerationType.AUTO)
   public Long id;
 
-  @Column(name = "lab_id")
+  @ManyToOne
+  @JoinColumn(name = "lab_id")
   @Constraints.Required
   @Formats.NonEmpty
-  public String labId;
+  public Lab labId;
 
-  @Column(name = "role_id")
+  @ManyToOne
+  @JoinColumn(name = "role_id")
   @Constraints.Required
   @Formats.NonEmpty
-  public String roleId;
+  public Role roleId;
+
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  @Constraints.Required
+  @Formats.NonEmpty
+  public User userId;
 
   @Column(name = "status")
   public String status;

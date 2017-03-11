@@ -6,7 +6,7 @@ import play.data.validation.Constraints;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "LABPERMISSIONS")
+@Table(name = "lab_permissions")
 public class LabPermission {
 
   @Id
@@ -15,15 +15,18 @@ public class LabPermission {
   @GeneratedValue(strategy=GenerationType.AUTO)
   public Long id;
 
-  @Column(name = "current_lab_id")
+  @ManyToOne
+  @JoinColumn(name = "current_lab_id")
   @Constraints.Required
   @Formats.NonEmpty
-  public String currentLabId;
+  public Lab currentLab;
 
-  @Column(name = "requested_lab_id")
+  @ManyToOne
+  @JoinColumn(name = "requested_lab_id")
   @Constraints.Required
   @Formats.NonEmpty
-  public String requestedLabId;
+  public Lab requestedLab;
+
 
   @Column(name = "status")
   @Constraints.Required

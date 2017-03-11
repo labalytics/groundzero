@@ -42,16 +42,22 @@
         <input type="text" name="labname" id="lname" class="form-control " placeholder="Lab Name" tabindex="7" [(ngModel)]="model.lname" #lname="ngModel" required>
         <div *ngIf="f.submitted && !lname.valid" class="help-block">Lab name is required</div>
       </div>
+
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !piname.valid }">
+        <input type="text" name="piname" id="piname" class="form-control " placeholder="Principle investigator" tabindex="8" [(ngModel)]="model.piname" #piname="ngModel" required>
+        <div *ngIf="f.submitted && !piname.valid" class="help-block">Principle investigator is required</div>
+      </div>
+
       <div class="row" [ngClass]="{ 'has-error': f.submitted && !first_name.valid }">
         <div class="col-xs-12 col-sm-6 col-md-6">
           <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !university.valid }">
-            <input type="text" name="university" id="university" class="form-control" placeholder="University" tabindex="8" [(ngModel)]="model.university" #university="ngModel" required>
+            <input type="text" name="university" id="university" class="form-control" placeholder="University" tabindex="9" [(ngModel)]="model.university" #university="ngModel" required>
             <div *ngIf="f.submitted && !university.valid" class="help-block">University is required</div>
           </div>
         </div>
         <div class="col-xs-12 col-sm-6 col-md-6">
           <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !department.valid }">
-            <input type="text" name="department" id="department" class="form-control" placeholder="Department" tabindex="9" [(ngModel)]="model.department" #department="ngModel" required>
+            <input type="text" name="department" id="department" class="form-control" placeholder="Department" tabindex="10" [(ngModel)]="model.department" #department="ngModel" required>
             <div *ngIf="f.submitted && !department.valid" class="help-block">Department is required</div>
           </div>
         </div>
@@ -59,7 +65,7 @@
 
       <hr class="colorgraph">
       <div class="row">
-        <div class="col-xs-12 col-md-6"><input type="submit" value="Signup" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
+        <div class="col-xs-12 col-md-6"><input type="submit" value="Signup" class="btn btn-primary btn-block btn-lg" tabindex="11"></div>
         <div class="col-xs-12 col-md-6"><a href="#" class="btn btn-success btn-block btn-lg">Sign In</a></div>
       </div>
     </form>
