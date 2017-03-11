@@ -37,21 +37,16 @@ public class UserCore {
 
   }
 
-  @Transactional
-  public User doRegister(JPAApi jpaApi, String email, String password) {
+  public static User doRegister(JPAApi jpaApi, User user) {
 
+    Query q = jpaApi.em().createQuery("SELECT u FROM User u WHERE u.email = :email");
+    q.setParameter("email", user.email);
       try {
-        User user = new User();
-        user.email = email;
-        user.firstName = "Aniket";
-        user.lastName = "Chitale";
-        user.passwordHash = Hash.createPassword(password);
-        user.confirmationToken = UUID.randomUUID().toString();
+        user = (User) q.getSingleResult();
+        if(user != null)
+            return null;
         jpaApi.em().persist(user);
         return user;
-        //Send email to user asking for confirmation of account
-      } catch (EmailException e) {
-        Logger.debug("Signup.save Cannot send email", e);
       } catch (Exception e) {
         Logger.error("Signup.save error", e);
       }

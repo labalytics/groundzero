@@ -24,6 +24,8 @@ package controllers.account;
   import java.net.MalformedURLException;
   import java.net.URL;
   import java.util.List;
+
+  import service.UserService;
   import utils.Mail;
 
 
@@ -95,25 +97,8 @@ public class Signup extends Controller {
     logger.debug("Trying to Regester");
     try {
       JsonNode json = request().body().asJson();
-      User user = new User();
-
-      UserCore userCore = new UserCore();
-      //user = userCore.authenticate(jpaApi, json.findPath("email").textValue(), json.findPath("password").textValue());
-      user = userCore.doRegister(jpaApi, json.findPath("email").textValue(), json.findPath("password").textValue());
-
-      if (user != null) {
-        //Login success
-        logger.debug("Signup successful");
-        sendMailAskForConfirmation(user);
-        return ok(views.html.account.login.render("A"));
-      } else {
-        //Login failed
-        logger.debug("Signup failed");
-        return ok(views.html.account.login.render("A"));
-      }
-    } catch(EmailException e) {
-      logger.debug("Signup.save Cannot send email", e);
-      flash("error", Messages.get("error.sending.email"));
+      UserService userService = new UserService();
+      return ok(userService.registerUser(jpaApi, json));
     } catch(Exception e) {
       logger.error("Signup.save error", e);
       flash("error", Messages.get("error.technical"));
