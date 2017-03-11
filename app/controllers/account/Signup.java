@@ -3,6 +3,7 @@ package controllers.account;
   import com.fasterxml.jackson.databind.JsonNode;
   import core.UserCore;
   import models.User;
+  import models.UserLabRole;
   import org.apache.commons.mail.EmailException;
   import play.Configuration;
   import play.Logger;
@@ -79,11 +80,11 @@ public class Signup extends Controller {
     User user = new User();
 
     UserCore userCore = new UserCore();
-    user = userCore.authenticate(jpaApi, json.findPath("email").textValue(), json.findPath("password").textValue());
+    UserLabRole userLabRole = userCore.authenticate(jpaApi, json.findPath("email").textValue(), json.findPath("password").textValue());
     if (user != null) {
       //Login success
       logger.debug("Login successful");
-      return ok(views.html.account.login.render("A"));
+      return ok(Json.toJson(userLabRole));
     } else {
       //Login failed
       //TODO

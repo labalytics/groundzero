@@ -24,5 +24,8 @@ GET     /confirm/:confirmToken      controllers.account.Signup.confirm(confirmTo
 
 GET     /getuserinfo                controllers.Application.GetUserInfo()
 
+
+GET     /home                      controllers.Application.home()
+
 #GET     /register                   controllers.Signup.getRegister()
 #POST    /register                   controllers.account.Signup.doRegister()
