@@ -1,8 +1,10 @@
--- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
+CREATE DATABASE  IF NOT EXISTS `labalytics` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `labalytics`;
+-- MySQL dump 10.13  Distrib 5.7.9, for osx10.9 (x86_64)
 --
--- Host: 127.0.0.1    Database: Labalytics
+-- Host: 127.0.0.1    Database: labalytics
 -- ------------------------------------------------------
--- Server version	5.7.17
+-- Server version	5.7.9
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -16,7 +18,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `LabPermissions`
+-- Table structure for table `hibernate_sequence`
+--
+
+DROP TABLE IF EXISTS `hibernate_sequence`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `hibernate_sequence` (
+  `next_val` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `hibernate_sequence`
+--
+
+LOCK TABLES `hibernate_sequence` WRITE;
+/*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
+INSERT INTO `hibernate_sequence` VALUES (9),(9),(9),(9),(9);
+/*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `lab_permissions`
 --
 
 DROP TABLE IF EXISTS `lab_permissions`;
@@ -28,13 +52,26 @@ CREATE TABLE `lab_permissions` (
   `requested_lab_id` int(11) NOT NULL,
   `status` int(11) DEFAULT NULL,
   PRIMARY KEY (`lab_permissions_id`),
-  KEY `labId_idx` (`current_lab_id`,`requested_lab_id`),
-  CONSTRAINT `foreignid` FOREIGN KEY (`current_lab_id`) REFERENCES `labs` (`lab_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `labId_idx` (`current_lab_id`),
+  KEY `forif_idx` (`requested_lab_id`),
+  CONSTRAINT `FK2a55n24ls0fa6feii59wlcp9q` FOREIGN KEY (`requested_lab_id`) REFERENCES `labs` (`lab_id`),
+  CONSTRAINT `FK5yf09xlw46jtynwdp5ndo0g8o` FOREIGN KEY (`current_lab_id`) REFERENCES `labs` (`lab_id`),
+  CONSTRAINT `foreignid` FOREIGN KEY (`current_lab_id`) REFERENCES `labs` (`lab_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `forif` FOREIGN KEY (`requested_lab_id`) REFERENCES `labs` (`lab_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `Labs`
+-- Dumping data for table `lab_permissions`
+--
+
+LOCK TABLES `lab_permissions` WRITE;
+/*!40000 ALTER TABLE `lab_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `lab_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `labs`
 --
 
 DROP TABLE IF EXISTS `labs`;
@@ -45,11 +82,49 @@ CREATE TABLE `labs` (
   `lab_name` varchar(45) NOT NULL,
   `lab_pi` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`lab_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `Roles`
+-- Dumping data for table `labs`
+--
+
+LOCK TABLES `labs` WRITE;
+/*!40000 ALTER TABLE `labs` DISABLE KEYS */;
+INSERT INTO `labs` VALUES (5,'Testing','Kalyan');
+/*!40000 ALTER TABLE `labs` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `role_access`
+--
+
+DROP TABLE IF EXISTS `role_access`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `role_access` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_menu_id` int(11) NOT NULL,
+  `menu_name` varchar(45) NOT NULL,
+  `status` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKn4kfy7i55cucsytjftqb3kj5d` (`role_menu_id`),
+  CONSTRAINT `FKn4kfy7i55cucsytjftqb3kj5d` FOREIGN KEY (`role_menu_id`) REFERENCES `roles` (`role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `role_access`
+--
+
+LOCK TABLES `role_access` WRITE;
+/*!40000 ALTER TABLE `role_access` DISABLE KEYS */;
+INSERT INTO `role_access` VALUES (1,1,'Labs','Active'),(2,1,'Students','Active'),(3,1,'Equipments','Active');
+/*!40000 ALTER TABLE `role_access` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `roles`
 --
 
 DROP TABLE IF EXISTS `roles`;
@@ -61,11 +136,21 @@ CREATE TABLE `roles` (
   `status` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`role_id`),
   UNIQUE KEY `roleName_UNIQUE` (`role_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `UserLabRoles`
+-- Dumping data for table `roles`
+--
+
+LOCK TABLES `roles` WRITE;
+/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
+INSERT INTO `roles` VALUES (1,'Manager','Active'),(2,'Stutent','Active'),(3,'Admin',NULL);
+/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `user_lab_roles`
 --
 
 DROP TABLE IF EXISTS `user_lab_roles`;
@@ -76,16 +161,32 @@ CREATE TABLE `user_lab_roles` (
   `lab_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
   `status` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `user_lab_role_id` bigint(20) NOT NULL,
   PRIMARY KEY (`user_lab_roles_id`),
   KEY `roleId_idx` (`role_id`),
   KEY `labId_idx` (`lab_id`),
+  KEY `FKhlnibwx9jv3oo8curmoi8ykxr` (`user_id`),
+  CONSTRAINT `FKae7ek0qm5m5pis7uorq4w8dn3` FOREIGN KEY (`lab_id`) REFERENCES `labs` (`lab_id`),
+  CONSTRAINT `FKfw6ydbegobjkkudsumu40mal` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`),
+  CONSTRAINT `FKhlnibwx9jv3oo8curmoi8ykxr` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
   CONSTRAINT `lab_id` FOREIGN KEY (`lab_id`) REFERENCES `labs` (`lab_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `Users`
+-- Dumping data for table `user_lab_roles`
+--
+
+LOCK TABLES `user_lab_roles` WRITE;
+/*!40000 ALTER TABLE `user_lab_roles` DISABLE KEYS */;
+INSERT INTO `user_lab_roles` VALUES (1,5,1,NULL,4,7);
+/*!40000 ALTER TABLE `user_lab_roles` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `users`
 --
 
 DROP TABLE IF EXISTS `users`;
@@ -99,10 +200,27 @@ CREATE TABLE `users` (
   `last_name` varchar(45) NOT NULL,
   `phone_no` varchar(45) DEFAULT NULL,
   `confirmations_token` varchar(45) DEFAULT NULL,
+  `confirmation_token` varchar(255) DEFAULT NULL,
+  `date_creation` datetime DEFAULT NULL,
+  `validated` bit(1) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `emailId_UNIQUE` (`email_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `users`
+--
+
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` VALUES (1,'msaikalyan@yahoo.com','kkkkk','Sai','Kalyan',NULL,NULL,NULL,NULL,NULL),(4,'kalyansaim@gmail.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Sai','Kalyan Moguloju',NULL,NULL,'1487515e-c2dd-4ddc-a16b-4298e2bd3577','2017-03-10 18:54:14','\0');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping events for database 'labalytics'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -113,4 +231,4 @@ CREATE TABLE `users` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-02-28 17:48:49
+-- Dump completed on 2017-03-11 18:53:55
