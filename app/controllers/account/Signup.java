@@ -109,27 +109,29 @@ public class Signup extends Controller {
       JsonNode json = request().body().asJson();
       UserService userService = new UserService();
       User user = userService.registerUser(jpaApi, json);
+
       if (user != null) {
         //Login success
         logger.debug("Signup successful");
         sendMailAskForConfirmation(user);
-        return ok(views.html.account.login.render("A"));
+        return ok(Json.toJson(user));
       } else {
-        //Login failed
-        //TODO
         logger.debug("Signup failed");
-        return ok(views.html.account.login.render("A"));
+        return badRequest("SignUp Failed");
+
       }
     }
     catch(EmailException e) {
       Logger.debug("Signup.save Cannot send email", e);
       flash("error", Messages.get("error.sending.email"));
+      return badRequest(e.getMessage());
     }
     catch(Exception e) {
       logger.error("Signup.save error", e);
       flash("error", Messages.get("error.technical"));
+      return badRequest(e.getMessage());
     }
-      return ok(views.html.account.login.render("A"));
+
   }
 
   /**

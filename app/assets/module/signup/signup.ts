@@ -1,8 +1,4 @@
 import {Component} from "@angular/core"
-import {GreeterStore} from "../../services/greeter.store"
-import { OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-
 import { AlertService, AuthenticationService } from "../../services/index";
 
 
