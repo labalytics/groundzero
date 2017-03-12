@@ -16,6 +16,7 @@ import utils.Hash;
 import javax.persistence.Query;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class UserCore {
@@ -46,8 +47,8 @@ public class UserCore {
     Query q = jpaApi.em().createQuery("SELECT u FROM User u WHERE u.email = :email");
     q.setParameter("email", user.email);
       try {
-        user = (User) q.getSingleResult();
-        if(user != null)
+        ArrayList<User> users= (ArrayList<User>) q.getResultList();
+        if(users.size() > 0)
             return null;
         jpaApi.em().persist(user);
         return user;
