@@ -1,7 +1,9 @@
 package controllers.account;
 
   import com.fasterxml.jackson.databind.JsonNode;
+  import core.RoleCore;
   import core.UserCore;
+  import models.RoleAccess;
   import models.User;
   import models.UserLabRole;
   import org.apache.commons.mail.EmailException;
@@ -24,6 +26,8 @@ package controllers.account;
   import javax.persistence.*;
   import java.net.MalformedURLException;
   import java.net.URL;
+  import java.util.ArrayList;
+  import java.util.HashSet;
   import java.util.List;
 
   import service.UserService;
@@ -81,10 +85,15 @@ public class Signup extends Controller {
 
     UserCore userCore = new UserCore();
     UserLabRole userLabRole = userCore.authenticate(jpaApi, json.findPath("email").textValue(), json.findPath("password").textValue());
+    HashSet hash = new HashSet();
     if (user != null) {
       //Login success
       logger.debug("Login successful");
-      return ok(Json.toJson(userLabRole));
+      RoleCore roleCore = new RoleCore();
+      ArrayList<RoleAccess> roleAccess = roleCore.GetMenu(jpaApi, userLabRole.roleId.id);
+      hash.add(userLabRole);
+      hash.add(roleAccess);
+      return ok(Json.toJson(hash));
     } else {
       //Login failed
       //TODO
@@ -176,6 +185,7 @@ public class Signup extends Controller {
     //return ok(views.html.account.register.render());
     return ok(views.html.account.login.render("B"));
   }
+
 
 /*
   @Transactional(readOnly = true)
