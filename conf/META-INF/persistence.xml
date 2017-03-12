@@ -10,6 +10,7 @@
     <class>models.Lab</class>
     <class>models.Role</class>
     <class>models.UserLabRole</class>
+    <class>models.RoleAccess</class>
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
       <property name="hibernate.hbm2ddl.auto" value="update"/>

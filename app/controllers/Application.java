@@ -38,4 +38,5 @@ public class Application extends Controller {
     user.passwordHash = "dbgjvn";
     return ok(Json.toJson(user));
   }
+
 }
