@@ -14,7 +14,7 @@ import { AlertService, AuthenticationService } from "../../services/index";
 
 })
 
-export default class MenuComponent implements AfterViewInit{
+export default class MenuComponent{
 
 
   currentUser: any = {};
@@ -25,14 +25,14 @@ export default class MenuComponent implements AfterViewInit{
   returnUrl: string;
 
   constructor(public authenticationService: AuthenticationService)
-  {}
-
-  ngAfterViewInit() {
+  {
     console.log("KAKj");
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-    console.log(this.currentUser);
-    this.menu = this.currentUser[0];
+    this.menu = this.currentUser[1];
+
   }
+
+
 
 }
 

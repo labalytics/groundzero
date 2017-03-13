@@ -26,6 +26,10 @@ GET     /getuserinfo                controllers.Application.GetUserInfo()
 
 
 GET     /home                      controllers.Application.home()
+GET     /students                     controllers.Application.student()
+POST    /getstudents                   controllers.Application.getstudent()
+
+
 
 #GET     /register                   controllers.Signup.getRegister()
 #POST    /register                   controllers.account.Signup.doRegister()
