@@ -3,8 +3,8 @@ package controllers;
 import models.User;
 import play.db.jpa.Transactional;
 import play.libs.Json;
-import views.html.home;
-import views.html.welcome;
+import views.html.home.home;
+import views.html.app.welcome;
 import play.mvc.Controller;
 import play.mvc.Result;
 import core.UserCore;
@@ -22,6 +22,10 @@ public class Application extends Controller {
     return ok(welcome.render());
   }
 
+
+//  public Result home(String subroute){
+//    return ok(home.render());
+//  }
 
   public Result home(){
     return ok(home.render());

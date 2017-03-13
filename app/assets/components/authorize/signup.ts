@@ -1,19 +1,18 @@
 import {Component} from "@angular/core"
-import {GreeterStore} from "../../services/greeter.store"
 import { OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import {Location} from '@angular/common';
 
 import { AlertService, AuthenticationService } from "../../services/index";
 
 
 @Component({
-    selector: "todo-header",
-    templateUrl: "assets/module/header/header.html",
+    selector: "todo-signup-app",
+    templateUrl: "assets/components/authorize/signup.html",
     providers: [AuthenticationService]
-
 })
 
-export default class HeadComponent{
+export class SignupComponent{
 
   model: any = {};
   loading = false;
@@ -22,6 +21,10 @@ export default class HeadComponent{
   constructor(public authenticationService: AuthenticationService)
   {}
 
-
+  signup() {
+    this.loading = true;
+    this.authenticationService.signup(this.model)
+      .subscribe();
+  }
 }
 

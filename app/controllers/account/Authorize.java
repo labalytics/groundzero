@@ -36,7 +36,7 @@ package controllers.account;
 
   import static play.libs.Json.toJson;
 
-public class Signup extends Controller {
+public class Authorize extends Controller {
 
   private final FormFactory formFactory;
   private final JPAApi jpaApi;
@@ -44,7 +44,7 @@ public class Signup extends Controller {
   final Logger.ALogger logger = Logger.of(this.getClass());
 
   @Inject
-  public Signup(FormFactory formFactory, JPAApi jpaApi , MailerClient mailerClient) {
+  public Authorize(FormFactory formFactory, JPAApi jpaApi , MailerClient mailerClient) {
     this.formFactory = formFactory;
     this.jpaApi = jpaApi;
     this.mailerClient = mailerClient;
@@ -68,13 +68,8 @@ public class Signup extends Controller {
     }
   }
 
-  public Result login() {
-    return ok(views.html.account.login.render("A"));
-  }
-
-
-  public Result signup() {
-    return ok(views.html.account.signup.render());
+  public Result GetAuthorizeView() {
+    return ok(views.html.authorize.authorize.render("A"));
   }
 
   @Transactional(readOnly = true)
@@ -98,7 +93,7 @@ public class Signup extends Controller {
       //Login failed
       //TODO
       logger.debug("Login failed");
-      return ok(views.html.account.login.render("A"));
+      return ok(views.html.authorize.authorize.render("A"));
     }
   }
 
@@ -110,10 +105,10 @@ public class Signup extends Controller {
       UserService userService = new UserService();
       return ok(userService.registerUser(jpaApi, json));
     } catch(Exception e) {
-      logger.error("Signup.save error", e);
+      logger.error("Authorize.save error", e);
       flash("error", Messages.get("error.technical"));
     }
-      return ok(views.html.account.login.render("A"));
+      return ok(views.html.authorize.authorize.render("A"));
   }
 
   /**
@@ -164,7 +159,7 @@ public class Signup extends Controller {
       logger.error("Cannot signup", e);
       flash("error", Messages.get("error.technical"));
     }
-    return badRequest(views.html.home.render());
+    return badRequest(views.html.home.home.render());
   }
 
   /**
@@ -181,9 +176,7 @@ public class Signup extends Controller {
 
 
   public Result register() {
-    // Form<Login> loginForm = formFactory.form(Login.class);
-    //return ok(views.html.account.register.render());
-    return ok(views.html.account.login.render("B"));
+    return ok(views.html.authorize.authorize.render("B"));
   }
 
 
@@ -193,7 +186,7 @@ public class Signup extends Controller {
     Form<Login> form = formFactory.form(Login.class).bindFromRequest();
 
     if (form.hasErrors()) {
-      return badRequest(views.html.login.render(form));
+      return badRequest(views.html.authorize.render(form));
     } else {
       session().clear();
       session("email", form.get().email);
@@ -204,7 +197,7 @@ public class Signup extends Controller {
   public Result logout() {
     session().clear();
     flash("success", Messages.get("you.have.been.logged.out"));
-    return redirect(routes.Application.login());
+    return redirect(routes.Application.authorize());
   }
 */
 }

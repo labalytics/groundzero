@@ -4,6 +4,6 @@ import {Component} from "@angular/core"
   selector: "todo-account-developer",
   templateUrl: "assets/components/account/developer.component.html"
 })
-export default class DeveloperComponent {
+export class DeveloperComponent {
 
 }

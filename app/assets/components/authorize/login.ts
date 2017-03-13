@@ -1,5 +1,4 @@
 import {Component} from "@angular/core"
-import {GreeterStore} from "../../services/greeter.store"
 import { OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -7,25 +6,29 @@ import { AlertService, AuthenticationService } from "../../services/index";
 
 
 @Component({
-    selector: "todo-signup-app",
-    templateUrl: "assets/module/signup/signup.html",
+    selector: "todo-login-app",
+    templateUrl: "assets/components/authorize/login.html",
     providers: [AuthenticationService]
-
 })
 
-export default class SignupComponent{
+export class LoginComponent{
 
   model: any = {};
+  currentUser: any = {};
   loading = false;
   returnUrl: string;
 
   constructor(public authenticationService: AuthenticationService)
   {}
 
-  signup() {
+  login() {
     this.loading = true;
-    this.authenticationService.signup(this.model)
-      .subscribe();
+    // Window.location needs to be called in the subscribe
+    window.location.href = window.location.origin + "/home";;//'http://localhost:9000/home';
+    //this.authenticationService.authorize(this.model.username, this.model.password);
+      //.subscribe();
+
+
   }
 }
 
