@@ -11,20 +11,8 @@ import { AlertService, AuthenticationService } from "../../services/index";
   templateUrl: "assets/module/home/home.html"
 })
 
-export default class HomeComponent implements AfterViewInit{
+export default class HomeComponent{
 
 
-  currentUser: any = {};
-  menu: any ={};
-
-  ngAfterViewInit() {
-    console.log("KAKj");
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-    console.log(this.currentUser);
-    this.menu = this.currentUser[0];
-    console.log(this.menu);
-
-
-  }
 }
 
