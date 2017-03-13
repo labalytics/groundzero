@@ -29,7 +29,6 @@ export default class MenuComponent{
     console.log("KAKj");
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     this.menu = this.currentUser[1];
-
   }
 
 
