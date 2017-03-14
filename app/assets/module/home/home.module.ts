@@ -14,6 +14,7 @@ import {AdminComponent} from "../../components/account/admin.component"
 import {StudentComponent} from "../../components/account/student.component"
 import {LabComponent} from "../../components/account/lab.component"
 import {DeveloperComponent} from "../../components/account/developer.component"
+import {NewLabComponent} from "../../components/account/newlab.component"
 
 const routes: Routes = [
   {path: 'admin', pathMatch: 'full', component: AdminComponent},
@@ -30,7 +31,7 @@ const routes: Routes = [
     , HttpModule
     , RouterModule.forRoot(routes)
   ],
-  declarations: [HomeComponent, HeadComponent, MenuComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent],
+  declarations: [HomeComponent, HeadComponent, MenuComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, NewLabComponent],
   bootstrap: [HomeComponent],
   providers: [
     {provide: APP_BASE_HREF, useValue: ''},

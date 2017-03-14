@@ -6,40 +6,33 @@ import { AlertService, AuthenticationService } from "../../services/index";
 
 
 @Component({
-  selector: "todo-account-lab",
-  templateUrl: "assets/components/account/lab.component.html",
+  selector: "todo-account-newlab",
+  templateUrl: "assets/components/account/newlab.component.html",
   providers: [AuthenticationService]
 })
 
 @Injectable()
-export class LabComponent implements OnInit{
+export class NewLabComponent implements OnInit{
 
-  currentUser: any = {};
-  menu: any =[];
-  labs: any = [];
+
+  lab: any = {};
   loading = false;
   returnUrl: string;
 
   constructor(public http: Http)
   {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-
     console.log("here");
-    this.getLabs(this.currentUser[0].labId.id).subscribe();
-    //this.getStudents();
   }
 
-  getLabs(labid: string) {
+  insertlab() {
     console.log("here");
-    console.log(labid);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     console.log("here");
-    return this.http.post('/getAllLabs', options)
+    return this.http.post('/insert', JSON.stringify({ this.lab }), options)
       .map((response: Response) => {
 
         console.log(response.json());
-        this.labs = response.json();
       });
   }
 

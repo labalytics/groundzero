@@ -19,6 +19,7 @@ export class StudentComponent implements OnInit{
   //student:any = {}
   newstudents: any = [];
   studentsBCKP: any = [];
+  students: any = [];
   loading = false;
   returnUrl: string;
 
@@ -55,7 +56,7 @@ export class StudentComponent implements OnInit{
 
 
 
-  editStudent(student){
+  editStudent(student: any){
     console.log(student);
   }
 

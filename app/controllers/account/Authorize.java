@@ -103,40 +103,12 @@ public class Authorize extends Controller {
     try {
       JsonNode json = request().body().asJson();
       UserService userService = new UserService();
-<<<<<<< HEAD:app/controllers/account/Authorize.java
       return ok(userService.registerUser(jpaApi, json));
     } catch(Exception e) {
       logger.error("Authorize.save error", e);
-=======
-      User user = userService.registerUser(jpaApi, json);
-
-      if (user != null) {
-        //Login success
-        logger.debug("Signup successful");
-        sendMailAskForConfirmation(user);
-        return ok(Json.toJson(user));
-      } else {
-        logger.debug("Signup failed");
-        return badRequest("SignUp Failed");
-
-      }
-    }
-    catch(EmailException e) {
-      Logger.debug("Signup.save Cannot send email", e);
-      flash("error", Messages.get("error.sending.email"));
-      return badRequest(e.getMessage());
-    }
-    catch(Exception e) {
-      logger.error("Signup.save error", e);
->>>>>>> master:app/controllers/account/Signup.java
       flash("error", Messages.get("error.technical"));
-      return badRequest(e.getMessage());
     }
-<<<<<<< HEAD:app/controllers/account/Authorize.java
       return ok(views.html.authorize.authorize.render("A"));
-=======
-
->>>>>>> master:app/controllers/account/Signup.java
   }
 
   /**

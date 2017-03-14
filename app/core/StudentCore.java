@@ -26,7 +26,3 @@ public  class StudentCore {
   }
 
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> master

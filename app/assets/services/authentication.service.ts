@@ -46,26 +46,8 @@ export class AuthenticationService {
     return this.http.post('/registration', JSON.stringify({ info }), options)
       .map((response: Response) => {
         console.log(response);
-<<<<<<< HEAD
         this.authenticated = true;
         localStorage.setItem('currentUser', JSON.stringify(response));
-        //window.location.href = window.location.host + "/authorize";
-        //this.location.go('/home');
-        //window.location.href('home')
-        // authorize successful if there's a jwt token in the response
-        // let user = response.json();
-        // if (user && user.token) {
-        //     // store user details and jwt token in local storage to keep user logged in between page refreshes
-        //     localStorage.setItem('currentUser', JSON.stringify(user));
-        // }
-=======
-       // login successful if there's a jwt token in the response
-        let user = response.json();
-        if (user && user.token) {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('currentUser', JSON.stringify(user));
-        }
->>>>>>> master
       });
   }
 
