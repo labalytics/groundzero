@@ -26,14 +26,7 @@ GET     /getuserinfo                controllers.Application.GetUserInfo()
 
 #GET     /home/$subroute<[0-9a-z]*>                      controllers.Application.home(subroute:String)
 GET     /home                      controllers.Application.home()
-<<<<<<< HEAD
 POST    /getstudents                   controllers.Application.getstudent()
-=======
-GET     /students                     controllers.Application.student()
-POST    /getstudents                   controllers.Application.getstudent()
-
-
->>>>>>> master
 
 #GET     /register                   controllers.Authorize.getRegister()
 #POST    /register                   controllers.account.Authorizeize.doRegister()

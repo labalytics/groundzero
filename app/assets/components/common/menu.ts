@@ -11,11 +11,7 @@ import { AlertService, AuthenticationService } from "../../services/index";
     providers: [AuthenticationService]
 })
 
-<<<<<<< HEAD:app/assets/components/common/menu.ts
 export class MenuComponent implements OnInit{
-=======
-export default class MenuComponent{
->>>>>>> master:app/assets/module/menu/menu.ts
 
 
   currentUser: any = {};
@@ -26,19 +22,13 @@ export default class MenuComponent{
   returnUrl: string;
 
   constructor(public authenticationService: AuthenticationService)
-<<<<<<< HEAD:app/assets/components/common/menu.ts
   {}
 
   ngOnInit() {
-=======
-  {
-    console.log("KAKj");
->>>>>>> master:app/assets/module/menu/menu.ts
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    console.log(this.currentUser);
     this.menu = this.currentUser[1];
   }
-
-
 
 }
 

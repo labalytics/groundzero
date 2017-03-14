@@ -1,11 +1,8 @@
 import {Component} from "@angular/core"
-<<<<<<< HEAD:app/assets/components/authorize/signup.ts
 import { OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {Location} from '@angular/common';
 
-=======
->>>>>>> master:app/assets/module/signup/signup.ts
 import { AlertService, AuthenticationService } from "../../services/index";
 
 

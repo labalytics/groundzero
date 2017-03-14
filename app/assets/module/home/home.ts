@@ -11,7 +11,6 @@ import { AuthenticationService } from  "../../services/authentication.service"
   providers: [AuthenticationService]
 })
 
-<<<<<<< HEAD
 export class HomeComponent implements OnInit{
 
   constructor(private authService: AuthenticationService) {
@@ -31,10 +30,5 @@ export class HomeComponent implements OnInit{
     this.menu = this.currentUser[0];
     console.log(this.menu);
   }
-=======
-export default class HomeComponent{
-
-
->>>>>>> master
 }
 
