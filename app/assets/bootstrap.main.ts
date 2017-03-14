@@ -1,7 +1,7 @@
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic"
-import { TodoAppModule } from "./module/app/app.module"
-import {enableProdMode} from '@angular/core'
+import { LabalyticsModule } from "./module/app/app.module"
+
+platformBrowserDynamic().bootstrapModule(LabalyticsModule)
 
 
-// enableProdMode();
-platformBrowserDynamic().bootstrapModule(TodoAppModule)
+

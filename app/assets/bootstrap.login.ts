@@ -1,10 +1,5 @@
 import { platformBrowserDynamic } from "@angular/platform-browser-dynamic"
-import { LoginModule } from "./module/login/login.module"
-import { HttpModule } from '@angular/http';
-import {enableProdMode} from '@angular/core'
+import { AuthorizeModule } from "./module/authorize/authorize.module"
 
-
-//enableProdMode();
-
-platformBrowserDynamic().bootstrapModule(LoginModule)
+platformBrowserDynamic().bootstrapModule(AuthorizeModule)
 

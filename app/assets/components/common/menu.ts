@@ -1,6 +1,4 @@
-import {Component} from "@angular/core"
-import {GreeterStore} from "../../services/greeter.store"
-import { OnInit } from '@angular/core';
+import {Component, OnInit} from "@angular/core"
 import { Router, ActivatedRoute } from '@angular/router';
 import {AfterViewInit} from '@angular/core';
 
@@ -9,12 +7,11 @@ import { AlertService, AuthenticationService } from "../../services/index";
 
 @Component({
     selector: "todo-menu",
-    templateUrl: "assets/module/menu/menu.html",
+    templateUrl: "assets/components/common/menu.html",
     providers: [AuthenticationService]
-
 })
 
-export default class MenuComponent{
+export class MenuComponent implements OnInit{
 
 
   currentUser: any = {};
@@ -25,13 +22,13 @@ export default class MenuComponent{
   returnUrl: string;
 
   constructor(public authenticationService: AuthenticationService)
-  {
-    console.log("KAKj");
+  {}
+
+  ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    console.log(this.currentUser);
     this.menu = this.currentUser[1];
   }
-
-
 
 }
 

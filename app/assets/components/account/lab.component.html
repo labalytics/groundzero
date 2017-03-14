@@ -30,7 +30,7 @@
                       </div>
                     </td>
                     <td align="center">
-                      <a href="newlab.html" style="height: 30px; font-size: medium" class = "btn btn-primary btn-xs"><b>+</b> Add new student</a>
+                      <a href="newlab.html" style="height: 30px; font-size: medium" class = "btn btn-primary btn-xs"><b>+</b> Add new lab</a>
                     </td>
                   </tr>
                 </table>
@@ -40,24 +40,29 @@
                   <thead>
 
                   <th>Name</th>
+                  <th>Manager</th>
                   <th>Email</th>
                   <th>Mobile Number</th>
-                  <th></th>
-                  <th></th>
+
+
                   <th>Delete</th>
                   <th></th>
                   </thead>
-                  <tbody *ngFor="let student of students">
+                  <tbody *ngFor="let lab of labs">
 
                   <tr>
-                    <td>{{student.userId.firstName}}</td>
-                    <td>{{student.userId.email}}</td>
+                    <td>{{lab.labId.labName}}</td>
+                    <td>{{lab.userId.firstName}}</td>
+                    <td>{{lab.userId.email}}</td>
                     <td>+923335586757</td>
-                    <td><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-primary btn-xs" data-title="Details" data-toggle="modal" data-target="#edit" ><span style="font-size: small"> Details</span></button></p></td>
-                    <td><p data-placement="top" data-toggle="tooltip" title="Schedule"><button class="btn btn-primary btn-xs" data-title="Schedule" data-toggle="modal" data-target="#edit" ><span style="font-size: small"> Schedule</span></button></p></td>
                     <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
                     <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
                   </tr>
+
+
+
+
+
 
 
                   </tbody>

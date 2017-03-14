@@ -26,7 +26,7 @@ public class UserService {
 
 
 
-  public User registerUser(JPAApi jpaApi ,JsonNode json ){
+  public String registerUser(JPAApi jpaApi ,JsonNode json ){
 
     User user = new User();
     Lab lab = new Lab();
@@ -48,23 +48,21 @@ public class UserService {
     user.confirmationToken = UUID.randomUUID().toString();
     user = UserCore.doRegister(jpaApi, user);
 
-    if(user != null) {
-      lab.labName = json.findPath("lname").textValue();
-      lab.labPi = json.findPath("piname").textValue();
-      lab = LabCore.insert(jpaApi, lab);
+    if(user==null)
+      return "User Exits";
 
-      UserLabRole userLabRole1 = new UserLabRole();
-      userLabRole.labId = lab;
-      userLabRole.roleId = RoleCore.GetRole(jpaApi, 1);
-      userLabRole.userId = user;
-      userLabRole = LabCore.insertRoleMapper(jpaApi, userLabRole);
-    }
+    lab.labName = json.findPath("lname").textValue();
+    lab.labPi = json.findPath("piname").textValue();
+    lab = LabCore.insert(jpaApi, lab);
 
-    return user;
+    UserLabRole userLabRole1 = new UserLabRole();
+    userLabRole.labId = lab;
+    userLabRole.roleId = RoleCore.GetRole(jpaApi, 1);
+    userLabRole.userId = user;
+    userLabRole =  LabCore.insertRoleMapper(jpaApi, userLabRole);
+
+
+    return "Complete";
   }
-
-
-
-
 
 }

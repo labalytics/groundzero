@@ -1,23 +1,22 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.google.inject.Inject;
+import core.LabCore;
 import core.StudentCore;
 import models.User;
 import models.UserLabRole;
 import play.Logger;
+import play.api.libs.mailer.MailerClient;
 import play.data.FormFactory;
 import play.db.jpa.JPAApi;
 import play.db.jpa.Transactional;
 import play.libs.Json;
-import play.libs.mailer.MailerClient;
-import views.html.home;
-import views.html.student;
-import views.html.welcome;
+import views.html.home.home;
+import views.html.app.welcome;
 import play.mvc.Controller;
 import play.mvc.Result;
 import core.UserCore;
-
-import javax.inject.Inject;
 import java.util.*;
 
 
@@ -35,6 +34,7 @@ public class Application extends Controller {
     this.mailerClient = mailerClient;
   }
 
+
   public Result index() {
     /** change the template here to use a different way of compilation and loading of the ts ng2 app.
      * index()  :    does no ts compilation in advance. the ts files are download by the browser and compiled there to js.
@@ -45,29 +45,13 @@ public class Application extends Controller {
   }
 
 
+//  public Result home(String subroute){
+//    return ok(home.render());
+//  }
+
   public Result home(){
     return ok(home.render());
   }
-
-  @Transactional
-  public Result student(){
-
-    StudentCore studentCore = new StudentCore();
-    //studentCore.GetStudents(jpaApi, 5);
-
-    return ok(student.render());
-  }
-
-  @Transactional
-  public Result getstudent(){
-    JsonNode json = request().body().asJson();
-    StudentCore studentCore = new StudentCore();
-
-    ArrayList<UserLabRole> students =  studentCore.GetStudents(jpaApi,  json.findPath("labid").asLong());
-
-    return ok(Json.toJson(students));
-  }
-
 
   @Transactional
   public Result GetUserInfo() {
@@ -79,6 +63,24 @@ public class Application extends Controller {
     user.lastName ="dhg";
     user.passwordHash = "dbgjvn";
     return ok(Json.toJson(user));
+  }
+
+  @Transactional
+  public Result getstudent(){
+    JsonNode json = request().body().asJson();
+    StudentCore studentCore = new StudentCore();
+
+    ArrayList<UserLabRole> students =  studentCore.GetStudents(jpaApi,  json.findPath("labid").asLong());
+
+    return ok(Json.toJson(students));
+  }
+  @Transactional
+  public Result getAllLabs(){
+    JsonNode json = request().body().asJson();
+
+    ArrayList<UserLabRole> labs =  LabCore.GetAllLabs(jpaApi);
+
+    return ok(Json.toJson(labs));
   }
 
 }
