@@ -11,7 +11,7 @@ export class AuthenticationService {
       this.authenticated = false;
     }
 
-    login(username: string, password: string) {
+    authorize(username: string, password: string) {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         return this.http.post('/validate', JSON.stringify({ email: username, password: password }), options)
@@ -21,6 +21,7 @@ export class AuthenticationService {
                 console.log(response.json());
                 this.authenticated = true;
                 localStorage.setItem('currentUser', JSON.stringify(response.json()));
+                window.location.href = window.location.origin + "/home";;//'http://localhost:9000/home';
             });
     }
 

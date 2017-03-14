@@ -1,6 +1,14 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.google.inject.Inject;
+import core.StudentCore;
 import models.User;
+import models.UserLabRole;
+import play.Logger;
+import play.api.libs.mailer.MailerClient;
+import play.data.FormFactory;
+import play.db.jpa.JPAApi;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import views.html.home.home;
@@ -12,6 +20,19 @@ import java.util.*;
 
 
 public class Application extends Controller {
+
+  private final FormFactory formFactory;
+  private final JPAApi jpaApi;
+  private final MailerClient mailerClient;
+  final Logger.ALogger logger = Logger.of(this.getClass());
+
+  @Inject
+  public Application(FormFactory formFactory, JPAApi jpaApi , MailerClient mailerClient) {
+    this.formFactory = formFactory;
+    this.jpaApi = jpaApi;
+    this.mailerClient = mailerClient;
+  }
+
 
   public Result index() {
     /** change the template here to use a different way of compilation and loading of the ts ng2 app.
@@ -42,5 +63,16 @@ public class Application extends Controller {
     user.passwordHash = "dbgjvn";
     return ok(Json.toJson(user));
   }
+
+  @Transactional
+  public Result getstudent(){
+    JsonNode json = request().body().asJson();
+    StudentCore studentCore = new StudentCore();
+
+    ArrayList<UserLabRole> students =  studentCore.GetStudents(jpaApi,  json.findPath("labid").asLong());
+
+    return ok(Json.toJson(students));
+  }
+
 
 }

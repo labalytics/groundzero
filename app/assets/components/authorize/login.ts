@@ -24,9 +24,8 @@ export class LoginComponent{
   login() {
     this.loading = true;
     // Window.location needs to be called in the subscribe
-    window.location.href = window.location.origin + "/home";;//'http://localhost:9000/home';
-    //this.authenticationService.authorize(this.model.username, this.model.password);
-      //.subscribe();
+
+    this.authenticationService.authorize(this.model.username, this.model.password).subscribe();
 
 
   }

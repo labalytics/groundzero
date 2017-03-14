@@ -6,13 +6,13 @@ import { AlertService, AuthenticationService } from "../../services/index";
 
 
 @Component({
-  selector: "todo-account-student",
-  templateUrl: "assets/components/account/student.component.html",
+  selector: "todo-account-lab",
+  templateUrl: "assets/components/account/lab.component.html",
   providers: [AuthenticationService]
 })
 
 @Injectable()
-export class StudentComponent implements OnInit{
+export class LabComponent implements OnInit{
 
   currentUser: any = {};
   menu: any =[];
@@ -27,17 +27,17 @@ export class StudentComponent implements OnInit{
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
 
     console.log("here");
-    this.getStudents(this.currentUser[0].labId.id).subscribe();
+    this.getLabs(this.currentUser[0].labId.id).subscribe();
     //this.getStudents();
   }
 
-  getStudents(labid: string) {
+  getLabs(labid: string) {
     console.log("here");
     console.log(labid);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     console.log("here");
-    return this.http.post('/getstudents', JSON.stringify({ labid: labid}), options)
+    return this.http.post('/getlabs', JSON.stringify({ labid: labid}), options)
       .map((response: Response) => {
         console.log("FInall");
         console.log(response.json());
