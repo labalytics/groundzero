@@ -11,25 +11,29 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 # Added externally
 
 
-#Register/Signup
-GET     /login                      controllers.account.Signup.login()
-GET     /signup                      controllers.account.Signup.signup()
-GET     /register                   controllers.account.Signup.register()
-POST    /validate                   controllers.account.Signup.validateUser()
-POST    /registration                   controllers.account.Signup.registration()
+#Register/Authorize
+GET     /authorize                      controllers.account.Authorize.GetAuthorizeView()
+GET     /register                   controllers.account.Authorize.register()
+POST    /validate                   controllers.account.Authorize.validateUser()
+POST    /registration                   controllers.account.Authorize.registration()
 
 # Accessed when the user confirms the registration.
-GET     /confirm/:confirmToken      controllers.account.Signup.confirm(confirmToken:String)
+GET     /confirm/:confirmToken      controllers.account.Authorize.confirm(confirmToken:String)
 
 
 GET     /getuserinfo                controllers.Application.GetUserInfo()
 
 
+#GET     /home/$subroute<[0-9a-z]*>                      controllers.Application.home(subroute:String)
 GET     /home                      controllers.Application.home()
+<<<<<<< HEAD
+POST    /getstudents                   controllers.Application.getstudent()
+=======
 GET     /students                     controllers.Application.student()
 POST    /getstudents                   controllers.Application.getstudent()
 
 
+>>>>>>> master
 
-#GET     /register                   controllers.Signup.getRegister()
-#POST    /register                   controllers.account.Signup.doRegister()
+#GET     /register                   controllers.Authorize.getRegister()
+#POST    /register                   controllers.account.Authorizeize.doRegister()

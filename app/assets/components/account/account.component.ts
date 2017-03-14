@@ -3,11 +3,11 @@ import { LabalyticsService }  from '../../services/data.service';
 import { User } from '../../models/user';
 
 @Component({
-  selector: "todo-account",
+  selector: "account",
   templateUrl: "assets/components/account/account.component.html",
   providers: [ LabalyticsService ],
 })
-export default class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit {
   isAdmin = false;
   hookLog: string[];
   allUsers: User[];

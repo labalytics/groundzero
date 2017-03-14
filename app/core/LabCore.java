@@ -17,7 +17,7 @@ public class LabCore {
         return lab;
         //Send email to user asking for confirmation of account
       } catch (Exception e) {
-        Logger.error("Signup.save error", e);
+        Logger.error("Authorize.save error", e);
       }
       return null;
 
@@ -30,7 +30,7 @@ public class LabCore {
       return userLabRole;
       //Send email to user asking for confirmation of account
     } catch (Exception e) {
-      Logger.error("Signup.save error", e);
+      Logger.error("Authorize.save error", e);
     }
     return null;
 

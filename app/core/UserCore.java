@@ -53,7 +53,7 @@ public class UserCore {
         jpaApi.em().persist(user);
         return user;
       } catch (Exception e) {
-        Logger.error("Signup.save error", e);
+        Logger.error("Authorize.save error", e);
       }
       return null;
 

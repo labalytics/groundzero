@@ -1,34 +1,33 @@
 import {Component} from "@angular/core"
-import {GreeterStore} from "../../services/greeter.store"
+<<<<<<< HEAD:app/assets/components/authorize/signup.ts
 import { OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import {Location} from '@angular/common';
 
+=======
+>>>>>>> master:app/assets/module/signup/signup.ts
 import { AlertService, AuthenticationService } from "../../services/index";
 
 
 @Component({
-    selector: "todo-login-app",
-    templateUrl: "assets/module/login/login.html",
+    selector: "todo-signup-app",
+    templateUrl: "assets/components/authorize/signup.html",
     providers: [AuthenticationService]
-
 })
 
-export default class LoginComponent{
+export class SignupComponent{
 
   model: any = {};
-  currentUser: any = {};
   loading = false;
   returnUrl: string;
 
   constructor(public authenticationService: AuthenticationService)
   {}
 
-  login() {
+  signup() {
     this.loading = true;
-    this.authenticationService.login(this.model.username, this.model.password)
+    this.authenticationService.signup(this.model)
       .subscribe();
-
-
   }
 }
 

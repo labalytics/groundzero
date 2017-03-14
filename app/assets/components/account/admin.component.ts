@@ -4,6 +4,6 @@ import {Component} from "@angular/core"
   selector: "todo-account-admin",
   templateUrl: "assets/components/account/admin.component.html"
 })
-export default class AdminComponent {
+export class AdminComponent {
 
 }
