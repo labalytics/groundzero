@@ -21,7 +21,7 @@ export class AuthenticationService {
       .map((response: Response) => {
         this.authenticated = true;
         localStorage.setItem('currentUser', JSON.stringify(response));
-        this.result = response;
+        this.result = JSON.parse(response._body);
         return this.result;
       });
   }
@@ -48,7 +48,7 @@ export class AuthenticationService {
       .map((response: Response) => {
         this.authenticated = true;
         localStorage.setItem('currentUser', JSON.stringify(response));
-        this.result = response;
+        this.result = JSON.parse(response._body);
         return this.result;
       });
   }

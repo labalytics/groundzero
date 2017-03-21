@@ -33,7 +33,9 @@ package controllers.account;
   import service.UserService;
   import utils.Mail;
 
+  import core.ResponseCore;
 
+  import static play.libs.Json.newObject;
   import static play.libs.Json.toJson;
 
 public class Authorize extends Controller {
@@ -76,6 +78,7 @@ public class Authorize extends Controller {
   public Result validateUser(){
     logger.debug("Trying to Login");
     JsonNode json = request().body().asJson();
+    ResponseCore oResponse = new ResponseCore();
     User user = new User();
 
     UserCore userCore = new UserCore();
@@ -88,7 +91,12 @@ public class Authorize extends Controller {
       ArrayList<RoleAccess> roleAccess = roleCore.GetMenu(jpaApi, userLabRole.roleId.id);
       hash.add(userLabRole);
       hash.add(roleAccess);
-      return ok(Json.toJson(hash));
+
+      oResponse.status = "success";
+      oResponse.message = "user added successfully";
+      oResponse.response = hash;
+
+      return ok(Json.toJson(oResponse));
     } else {
       //Login failed
       //TODO

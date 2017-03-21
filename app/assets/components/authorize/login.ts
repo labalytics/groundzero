@@ -31,8 +31,8 @@ export class LoginComponent{
     this.authenticationService.authorize(this.model.username, this.model.password)
       .subscribe((result) => {
           console.log(result);
-          this.router.navigate(['/signup']);
-          //window.location.href = window.location.origin + "/home";
+          //this.router.navigate(['/signup']);
+          window.location.href = window.location.origin + "/home";
         }
       );
 
