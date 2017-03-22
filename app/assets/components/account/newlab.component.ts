@@ -24,17 +24,17 @@ export class NewLabComponent implements OnInit{
     console.log("here");
   }
 
-  insertlab() {
-    console.log("here");
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    console.log("here");
-    return this.http.post('/insert', JSON.stringify({ this.lab }), options)
-      .map((response: Response) => {
-
-        console.log(response.json());
-      });
-  }
+  // insertlab() {
+  //   console.log("here");
+  //   let headers = new Headers({ 'Content-Type': 'application/json' });
+  //   let options = new RequestOptions({ headers: headers });
+  //   console.log("here");
+  //   return this.http.post('/insert', JSON.stringify({ this.lab }), options)
+  //     .map((response: Response) => {
+  //
+  //       console.log(response.json());
+  //     });
+  // }
 
   ngOnInit() {
 

@@ -157,13 +157,11 @@ DROP TABLE IF EXISTS `user_lab_roles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_lab_roles` (
-  `user_lab_roles_id` int(11) NOT NULL AUTO_INCREMENT,
   `lab_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
   `status` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `user_lab_role_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`user_lab_roles_id`),
   KEY `roleId_idx` (`role_id`),
   KEY `labId_idx` (`lab_id`),
   KEY `FKhlnibwx9jv3oo8curmoi8ykxr` (`user_id`),
@@ -172,7 +170,7 @@ CREATE TABLE `user_lab_roles` (
   CONSTRAINT `FKhlnibwx9jv3oo8curmoi8ykxr` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
   CONSTRAINT `lab_id` FOREIGN KEY (`lab_id`) REFERENCES `labs` (`lab_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `role_id` FOREIGN KEY (`role_id`) REFERENCES `roles` (`role_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -181,7 +179,7 @@ CREATE TABLE `user_lab_roles` (
 
 LOCK TABLES `user_lab_roles` WRITE;
 /*!40000 ALTER TABLE `user_lab_roles` DISABLE KEYS */;
-INSERT INTO `user_lab_roles` VALUES (1,5,1,NULL,4,7);
+INSERT INTO `user_lab_roles` VALUES (5,1,NULL,4,7),(5,2,NULL,5,8),(5,2,NULL,6,9),(5,2,NULL,7,10),(5,2,NULL,8,11);
 /*!40000 ALTER TABLE `user_lab_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -205,7 +203,7 @@ CREATE TABLE `users` (
   `validated` bit(1) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `emailId_UNIQUE` (`email_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -214,13 +212,9 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'msaikalyan@yahoo.com','kkkkk','Sai','Kalyan',NULL,NULL,NULL,NULL,NULL),(4,'kalyansaim@gmail.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Sai','Kalyan Moguloju',NULL,NULL,'1487515e-c2dd-4ddc-a16b-4298e2bd3577','2017-03-10 18:54:14','\0');
+INSERT INTO `users` VALUES (1,'msaikalyan@yahoo.com','kkkkk','Sai','Kalyan',NULL,NULL,NULL,NULL,NULL),(4,'kalyansaim@gmail.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Sai','Kalyan Moguloju',NULL,NULL,'1487515e-c2dd-4ddc-a16b-4298e2bd3577','2017-03-10 18:54:14','\0'),(5,'abc.gmal.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Test','Test',NULL,NULL,NULL,NULL,NULL),(6,'abc1.gmal.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Test1','Test1',NULL,NULL,NULL,NULL,NULL),(7,'abc2.gmal.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Test2','Test2',NULL,NULL,NULL,NULL,NULL),(8,'abc3.gmal.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Test3','Test3',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'labalytics'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -231,4 +225,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-11 18:53:55
+-- Dump completed on 2017-03-22 15:27:21
