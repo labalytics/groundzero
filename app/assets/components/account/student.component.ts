@@ -26,21 +26,18 @@ export class StudentComponent implements OnInit{
   constructor(public http: Http)
   {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-
+    let res = JSON.parse(this.currentUser._body);
     console.log("here");
-    this.getStudents(this.currentUser[0].labId.id).subscribe();
+    this.getStudents(res.response["userDetails"].labId.id).subscribe();
     //this.getStudents();
   }
 
   getStudents(labid: string) {
-    console.log("here");
-    console.log(labid);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     console.log("here");
     return this.http.post('/getstudents', JSON.stringify({ labid: labid}), options)
       .map((response: Response) => {
-        console.log("FInall");
         console.log(response.json());
         this.students = response.json();
         localStorage.setItem('students', JSON.stringify(this.students));
@@ -62,7 +59,6 @@ export class StudentComponent implements OnInit{
 
   reset()
   {
-    console.log("here");
     this.students = JSON.parse(localStorage.getItem('students'));
     console.log(this.students);
   }

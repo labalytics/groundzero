@@ -27,7 +27,7 @@ package controllers.account;
   import java.net.MalformedURLException;
   import java.net.URL;
   import java.util.ArrayList;
-  import java.util.HashSet;
+  import java.util.*;
   import java.util.List;
 
   import service.UserService;
@@ -83,19 +83,19 @@ public class Authorize extends Controller {
 
     UserCore userCore = new UserCore();
     UserLabRole userLabRole = userCore.authenticate(jpaApi, json.findPath("email").textValue(), json.findPath("password").textValue());
-    HashSet hash = new HashSet();
+    HashMap<String,Object> hash = new HashMap();
     if (user != null) {
       //Login success
       logger.debug("Login successful");
       RoleCore roleCore = new RoleCore();
       ArrayList<RoleAccess> roleAccess = roleCore.GetMenu(jpaApi, userLabRole.roleId.id);
-      hash.add(userLabRole);
-      hash.add(roleAccess);
+      hash.put("userDetails",userLabRole);
+      hash.put("navItems" , roleAccess);
 
       oResponse.status = "success";
       oResponse.message = "user added successfully";
       oResponse.response = hash;
-
+      System.out.println("Value of Map " + oResponse.response);
       return ok(Json.toJson(oResponse));
     } else {
       //Login failed

@@ -18,9 +18,8 @@ import {NewLabComponent} from "../../components/account/newlab.component"
 
 const routes: Routes = [
   {path: 'admin', pathMatch: 'full', component: AdminComponent},
-  //{path: 'student', pathMatch: 'full', component: StudentComponent},
-  // {path: 'students', pathMatch: 'full', component: StudentComponent},
-  // {path: 'labs', pathMatch: 'full', component: LabComponent},
+  {path: 'Students', pathMatch: 'full', component: StudentComponent},
+  {path: 'Labs', pathMatch: 'full', component: LabComponent},
   {path: '', redirectTo: 'admin', pathMatch: 'full'},
   {path: 'dev', pathMatch: 'full', component: DeveloperComponent}
 ];
@@ -32,8 +31,7 @@ const routes: Routes = [
     , HttpModule
     , RouterModule.forRoot(routes)
   ],
-  //declarations: [HomeComponent, HeadComponent, MenuComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, NewLabComponent],
-  declarations: [HomeComponent, HeadComponent, MenuComponent, AdminComponent, DeveloperComponent],
+  declarations: [HomeComponent, HeadComponent, MenuComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, NewLabComponent],
   bootstrap: [HomeComponent],
   providers: [
     {provide: APP_BASE_HREF, useValue: ''},

@@ -8,10 +8,10 @@ import play.libs.Json;
 
 import javax.persistence.Query;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 
 public class ResponseCore {
   public String status;
   public String message;
-  public HashSet response;
+  public HashMap<String,Object> response;
 }

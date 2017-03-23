@@ -22,16 +22,13 @@ export class LabComponent implements OnInit{
 
   constructor(public http: Http)
   {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-
-    console.log("here");
-    this.getLabs(this.currentUser[0].labId.id).subscribe();
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    let res = JSON.parse(this.currentUser._body);
+    this.getLabs(res.response["userDetails"].labId.id).subscribe();
     //this.getStudents();
   }
 
   getLabs(labid: string) {
-    console.log("here");
-    console.log(labid);
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     console.log("here");
