@@ -22,13 +22,22 @@ export class StudentComponent implements OnInit{
   students: any = [];
   loading = false;
   returnUrl: string;
+  searchTerm: string;
+  studentCopy: any = [];
 
-  constructor(public http: Http)
+  constructor(public http: Http , private authService: AuthenticationService)
   {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    console.log(this.currentUser);
     let res = JSON.parse(this.currentUser._body);
-    console.log("here");
-    this.getStudents(res.response["userDetails"].labId.id).subscribe();
+    let username = res.response["email"];
+    this.authService.getRoleandMenuData(username)
+      .subscribe((result) => {
+          let response = result["response"];
+        this.getStudents(response["userDetails"].labId.id).subscribe();
+        }
+      );
+
     //this.getStudents();
   }
 
@@ -42,8 +51,16 @@ export class StudentComponent implements OnInit{
         this.students = response.json();
         localStorage.setItem('students', JSON.stringify(this.students));
         this.studentsBCKP = this.students;
+        this.studentCopy = this.students;
 
       });
+  }
+
+  search(): void {
+    let term = this.searchTerm;
+    this.students = this.studentCopy.filter(function(tag) {
+      return tag.userId.firstName.indexOf(term) >= 0;
+    });
   }
 
   ngOnInit() {

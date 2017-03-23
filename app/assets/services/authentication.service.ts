@@ -25,6 +25,16 @@ export class AuthenticationService {
         return this.result;
       });
   }
+  getRoleandMenuData(username: string) {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    return this.http.post('/getMenuAndRoleItems', JSON.stringify({email: username}), options)
+    //return this.http.post('/registration', JSON.stringify({ email: username, password: password }), options)
+      .map((response: Response) => {
+        this.result = JSON.parse(response._body);
+        return this.result;
+      });
+  }
 
   private CheckIfAuthenticated() {
     if (localStorage.getItem('currentUser') === null) {

@@ -18,21 +18,40 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.UUID;
+import utils.Constants;
 
 public class UserCore {
 
-  public static UserLabRole authenticate(JPAApi jpaApi, String email, String password) {
+  public static String authenticate(JPAApi jpaApi, String email, String password) {
     Query q = jpaApi.em().createQuery("SELECT u FROM User u WHERE u.email = :email");
     q.setParameter("email", email);
     try {
       User user = (User) q.getSingleResult();
       if(user != null) {
         if (Hash.checkPassword(password, user.passwordHash)) {
-          Query q1 = jpaApi.em().createQuery("SELECT r FROM UserLabRole r WHERE r.userId.id = :userId");
+         return Constants.SUCCESS;
+        }
+        else
+          return Constants.INCORRECT_PASSWORD;
+      }
+      return Constants.USER_NOT_FOUND;
+    } catch(Exception e){
+      System.out.println("Exception e = " + e.getMessage());
+      return Constants.LOGIN_EXCEPTION;
+    }
+
+  }
+
+  public static UserLabRole getUserLabRole(JPAApi jpaApi, String email) {
+    Query q = jpaApi.em().createQuery("SELECT u FROM User u WHERE u.email = :email");
+    q.setParameter("email", email);
+    try {
+      User user = (User) q.getSingleResult();
+      if(user != null) {
+       Query q1 = jpaApi.em().createQuery("SELECT r FROM UserLabRole r WHERE r.userId.id = :userId");
           q1.setParameter("userId", user.id);
           UserLabRole userLabRole = (UserLabRole) q1.getSingleResult();
           return  userLabRole;
-        }
       }
       return null;
     } catch(Exception e){
@@ -41,6 +60,7 @@ public class UserCore {
     }
 
   }
+
 
   public static User doRegister(JPAApi jpaApi, User user) {
 

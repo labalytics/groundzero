@@ -17,15 +17,22 @@ export class LabComponent implements OnInit{
   currentUser: any = {};
   menu: any =[];
   labs: any = [];
+  labsCopy: any =[];
   loading = false;
   returnUrl: string;
 
-  constructor(public http: Http)
+  constructor(public http: Http , private authService: AuthenticationService)
   {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    console.log(this.currentUser);
     let res = JSON.parse(this.currentUser._body);
-    this.getLabs(res.response["userDetails"].labId.id).subscribe();
-    //this.getStudents();
+    let username = res.response["email"];
+    this.authService.getRoleandMenuData(username)
+      .subscribe((result) => {
+          let response = result["response"];
+          this.getLabs(response["userDetails"].labId.id).subscribe();
+        }
+      );
   }
 
   getLabs(labid: string) {
@@ -37,8 +44,17 @@ export class LabComponent implements OnInit{
 
         console.log(response.json());
         this.labs = response.json();
+        this.labsCopy = this.labs;
       });
   }
+
+  search(): void {
+    let term = this.searchTerm;
+    this.labs = this.labsCopy.filter(function(tag) {
+      return tag.labId.labName.indexOf(term) >= 0;
+    });
+  }
+
 
   ngOnInit() {
 
