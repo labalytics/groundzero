@@ -20,12 +20,18 @@ export class LabComponent implements OnInit{
   loading = false;
   returnUrl: string;
 
-  constructor(public http: Http)
+  constructor(public http: Http , private authService: AuthenticationService)
   {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+    console.log(this.currentUser);
     let res = JSON.parse(this.currentUser._body);
-    this.getLabs(res.response["userDetails"].labId.id).subscribe();
-    //this.getStudents();
+    let username = res.response["email"];
+    this.authService.getRoleandMenuData(username)
+      .subscribe((result) => {
+          let response = result["response"];
+          this.getLabs(response["userDetails"].labId.id).subscribe();
+        }
+      );
   }
 
   getLabs(labid: string) {

@@ -31,6 +31,7 @@ package controllers.account;
   import java.util.List;
 
   import service.UserService;
+  import utils.Constants;
   import utils.Mail;
 
   import core.ResponseCore;
@@ -82,28 +83,81 @@ public class Authorize extends Controller {
     User user = new User();
 
     UserCore userCore = new UserCore();
-    UserLabRole userLabRole = userCore.authenticate(jpaApi, json.findPath("email").textValue(), json.findPath("password").textValue());
+    String email = json.findPath("email").textValue();
     HashMap<String,Object> hash = new HashMap();
-    if (user != null) {
-      //Login success
-      logger.debug("Login successful");
-      RoleCore roleCore = new RoleCore();
-      ArrayList<RoleAccess> roleAccess = roleCore.GetMenu(jpaApi, userLabRole.roleId.id);
-      hash.put("userDetails",userLabRole);
-      hash.put("navItems" , roleAccess);
+    String sStatus = userCore.authenticate(jpaApi, email, json.findPath("password").textValue());
+     if(sStatus.equals(Constants.SUCCESS))
+     {
 
-      oResponse.status = "success";
-      oResponse.message = "user added successfully";
-      oResponse.response = hash;
-      System.out.println("Value of Map " + oResponse.response);
-      return ok(Json.toJson(oResponse));
-    } else {
-      //Login failed
-      //TODO
-      logger.debug("Login failed");
-      return ok(views.html.authorize.authorize.render("A"));
-    }
+       oResponse.status = Constants.RESPONSE_SUCCESS;
+       oResponse.message =  sStatus;
+       hash.put("email", email);
+       oResponse.response =  hash;
+     }
+     else
+     {
+       oResponse.status = Constants.RESPONSE_FAILURE;
+       oResponse.message =  sStatus;
+     }
+
+//    if (user != null) {
+//      //Login success
+//      logger.debug("Login successful");
+//      RoleCore roleCore = new RoleCore();
+//      ArrayList<RoleAccess> roleAccess = roleCore.GetMenu(jpaApi, userLabRole.roleId.id);
+//      hash.put("userDetails",userLabRole);
+//      hash.put("navItems" , roleAccess);
+//
+//      oResponse.status = "success";
+//      oResponse.message = "user added successfully";
+//      oResponse.response = hash;
+//      System.out.println("Value of Map " + oResponse.response);
+//      return ok(Json.toJson(oResponse));
+//    } else {
+//      //Login failed
+//      //TODO
+//      logger.debug("Login failed");
+//      return ok(views.html.authorize.authorize.render("A"));
+//    }
+    return ok(Json.toJson(oResponse));
   }
+  @Transactional(readOnly = true)
+  public UserLabRole getRoleAccess(String email)
+  {
+    User user = new User();
+    UserCore userCore = new UserCore();
+    UserLabRole userLabRole = userCore.getUserLabRole(jpaApi, email);
+    return userLabRole;
+  }
+
+  @Transactional(readOnly = true)
+  public ArrayList<RoleAccess> getMenuItems(UserLabRole userLabRole)
+  {
+    RoleCore roleCore = new RoleCore();
+    ArrayList<RoleAccess> roleAccessList = roleCore.GetMenu(jpaApi, userLabRole.roleId.id);
+    return roleAccessList;
+  }
+  @Transactional(readOnly = true)
+  public Result getRoleAndMenuItems()
+  {
+    logger.debug("Get Role Access");
+    JsonNode json = request().body().asJson();
+    String email = json.findPath("email").textValue();
+    HashMap<String,Object> hash = new HashMap();
+    UserLabRole userLabRole = getRoleAccess(email);
+    hash.put("userDetails" , userLabRole);
+    if(userLabRole != null)
+    {
+      ArrayList<RoleAccess> roleAccessList = getMenuItems(userLabRole);
+      hash.put("navItems" , roleAccessList);
+    }
+    ResponseCore oResponse = new ResponseCore();
+    oResponse.status = Constants.RESPONSE_SUCCESS;
+    oResponse.message =  "Role Retrieved Successfully";
+    oResponse.response =  hash;
+    return ok(Json.toJson(oResponse));
+  }
+
 
   @Transactional
   public Result registration(){

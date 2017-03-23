@@ -17,6 +17,10 @@ GET     /register                   controllers.account.Authorize.register()
 POST    /validate                   controllers.account.Authorize.validateUser()
 POST    /registration                   controllers.account.Authorize.registration()
 
+#get userData and Dynamic Menu Items based on UserRole
+
+POST    /getMenuAndRoleItems                   controllers.account.Authorize.getRoleAndMenuItems()
+
 # Accessed when the user confirms the registration.
 GET     /confirm/:confirmToken      controllers.account.Authorize.confirm(confirmToken:String)
 

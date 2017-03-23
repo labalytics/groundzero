@@ -23,13 +23,20 @@ export class HomeComponent implements OnInit{
 
   currentUser: any = {};
   menu: any ={};
+  username: string;
 
   ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     console.log(this.currentUser);
     let res = JSON.parse(this.currentUser._body);
-    this.menu = res.response["userDetails"];
-    console.log(this.menu);
+    this.username = res.response["email"];
+    console.log(this.username);
+    this.authService.getRoleandMenuData(this.username)
+      .subscribe((result) => {
+       let response = result["response"];
+        this.menu = response["navItems"];
+        }
+      );
   }
 }
 
