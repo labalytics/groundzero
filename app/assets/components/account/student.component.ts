@@ -22,6 +22,8 @@ export class StudentComponent implements OnInit{
   students: any = [];
   loading = false;
   returnUrl: string;
+  searchTerm: string;
+  studentCopy: any = [];
 
   constructor(public http: Http , private authService: AuthenticationService)
   {
@@ -49,8 +51,16 @@ export class StudentComponent implements OnInit{
         this.students = response.json();
         localStorage.setItem('students', JSON.stringify(this.students));
         this.studentsBCKP = this.students;
+        this.studentCopy = this.students;
 
       });
+  }
+
+  search(): void {
+    let term = this.searchTerm;
+    this.students = this.studentCopy.filter(function(tag) {
+      return tag.userId.firstName.indexOf(term) >= 0;
+    });
   }
 
   ngOnInit() {

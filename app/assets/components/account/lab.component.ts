@@ -17,6 +17,7 @@ export class LabComponent implements OnInit{
   currentUser: any = {};
   menu: any =[];
   labs: any = [];
+  labsCopy: any =[];
   loading = false;
   returnUrl: string;
 
@@ -43,8 +44,17 @@ export class LabComponent implements OnInit{
 
         console.log(response.json());
         this.labs = response.json();
+        this.labsCopy = this.labs;
       });
   }
+
+  search(): void {
+    let term = this.searchTerm;
+    this.labs = this.labsCopy.filter(function(tag) {
+      return tag.labId.labName.indexOf(term) >= 0;
+    });
+  }
+
 
   ngOnInit() {
 
