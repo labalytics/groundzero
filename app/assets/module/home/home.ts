@@ -7,8 +7,8 @@ import { AuthenticationService } from  "../../services/authentication.service"
 
 @Component({
   selector: "home",
-  templateUrl: "assets/module/home/home.html",
-  providers: [AuthenticationService]
+  templateUrl: "assets/module/home/home.html"
+  //providers: [AuthenticationService]
 })
 
 export class HomeComponent implements OnInit{
