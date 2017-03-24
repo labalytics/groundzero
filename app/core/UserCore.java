@@ -37,7 +37,7 @@ public class UserCore {
       return Constants.USER_NOT_FOUND;
     } catch(Exception e){
       System.out.println("Exception e = " + e.getMessage());
-      return Constants.LOGIN_EXCEPTION;
+      return Constants.RESPONSE_EXCEPTION;
     }
 
   }
