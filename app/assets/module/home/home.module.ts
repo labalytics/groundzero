@@ -20,7 +20,7 @@ const routes: Routes = [
   {path: 'admin', pathMatch: 'full', component: AdminComponent},
   {path: 'Students', pathMatch: 'full', component: StudentComponent},
   {path: 'Labs', pathMatch: 'full', component: LabComponent},
-  {path: '', redirectTo: 'admin', pathMatch: 'full'},
+  {path: '', redirectTo: 'Labs', pathMatch: 'full'},
   {path: 'dev', pathMatch: 'full', component: DeveloperComponent}
 ];
 
