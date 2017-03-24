@@ -47,14 +47,14 @@ public class ApplicationTest extends WithApplication {
     assertTrue(contentAsString(result).contains("Login"));
   }
 
-//  @Test
-//  public void testGetstudent() {
-//
-//  }
-//
-//  @Test
-//  public void testGetAllLabs() {
-//
-//  }
+  @Test
+  public void testGetstudent() {
+
+  }
+
+  @Test
+  public void testGetAllLabs() {
+
+  }
 
 }
