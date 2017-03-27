@@ -18,7 +18,7 @@ h4,
 h5,
 h6 {
     font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-weight: 700;
+    /*font-weight: 700;*/
 }
 
 .topnav {
@@ -169,13 +169,23 @@ p.copyright {
   margin-top: 50px;
 }
 
+/*footer {*/
+  /*!*position: absolute;*!*/
+  /*padding: 5px 0;*/
+  /*bottom: 0;*/
+  /*height: 20px;*/
+  /*width: 100%;*/
+/*}*/
+
 footer {
   /*position: absolute;*/
   padding: 5px 0;
   bottom: 0;
-  height: 20px;
+  /* height: 20px; */
   width: 100%;
+  overflow: auto;
 }
+
 
 footer .footerContainer{
   background: #f0f0f0;

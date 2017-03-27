@@ -6,7 +6,7 @@ import {AlertService, AuthenticationService} from "../../services/index";
 
 
 @Component({
-  selector: "todo-menu",
+  selector: "sidebar-menu",
   templateUrl: "assets/components/common/menu.html"
   //,providers: [AuthenticationService]
 })

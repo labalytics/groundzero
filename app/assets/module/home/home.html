@@ -1,15 +1,16 @@
 <div>
   <div>
-    <todo-header></todo-header>
+    <header></header>
   </div>
-  <table>
-    <tr>
-      <td valign="top" style="vertical-align: top">
-        <todo-menu></todo-menu>
-      </td>
-      <td>
-        <div class="container">
-          <div class="row">
+  <div>
+    <div class="col-sm-3 col-md-2 Padding_lr_zero">
+      <sidebar-menu></sidebar-menu>
+    </div>
+    <div class="col-sm-9 col-md-10 Padding_lr_zero">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
             <!--<div class="col-sm-4 col-md-3 sidebar">-->
               <!--<div class="mini-submenu">-->
                 <!--<span class="icon-bar"></span>-->
@@ -41,9 +42,7 @@
               <!--</div>-->
             <!--</div>-->
             <!--<div class="col-sm-8 col-md-9 sidebar">-->
-              <router-outlet></router-outlet>
-            </div>
-          </div>
+
         <!--<table>-->
         <!--<tr>-->
         <!--<td valign="top">-->
@@ -625,7 +624,4 @@
         <!--</td>-->
         <!--</tr>-->
         <!--</table>-->
-      </td>
-    </tr>
-  </table>
-</div>
+

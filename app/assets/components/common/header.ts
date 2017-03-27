@@ -6,7 +6,7 @@ import { AlertService, AuthenticationService } from "../../services/index";
 
 
 @Component({
-    selector: "todo-header",
+    selector: "header",
     templateUrl: "assets/components/common/header.html",
     providers: [AuthenticationService]
 
