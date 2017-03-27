@@ -30,10 +30,10 @@ export class StudentComponent implements OnInit {
     let username = res.response["email"];
     this.authService.getRoleandMenuData(username)
       .subscribe((result) => {
-         //this.getStudents(result.userDetails);
-        this.students = result.userDetails;
-        this.studentsBCKP = result.userDetails;
-        this.studentCopy = result.userDetails;
+         this.getStudents(result.userDetails);
+        // this.students = result.userDetails;
+        // this.studentsBCKP = result.userDetails;
+        // this.studentCopy = result.userDetails;
         }
       );
   }

@@ -46,6 +46,7 @@
                   <th>Last Name</th>
                   <th>Role</th>
                   <th>Email</th>
+                  <th>Lab</th>
                   <th></th>
                   <th>Delete</th>
                   <th></th>
@@ -57,6 +58,7 @@
                     <td>{{student.userId.lastName}}</td>
                     <td>{{student.roleId.roleName}}</td>
                     <td>{{student.userId.email}}</td>
+                    <td>{{student.labId.labName}}</td>
                     <td><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-primary btn-xs" data-title="Details" data-toggle="modal" attr.data-target="#edit_{{student.userId.id}}"><span style="font-size: small"> Details</span></button></p>
 
                       <div class="modal fade" id="edit_{{student.userId.id}}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">

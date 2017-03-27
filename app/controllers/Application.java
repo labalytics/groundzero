@@ -69,16 +69,19 @@ public class Application extends Controller {
 
   @Transactional
   public Result getstudent(){
+    ArrayList<Integer> labList = new ArrayList<>();
     JsonNode json = request().body().asJson();
     StudentCore studentCore = new StudentCore();
     JsonNode node = (JsonNode)json.findPath("labid");
     ArrayNode arr = (ArrayNode)node;
-    Iterator<JsonNode> it = arr.iterator();
-
-   // ArrayList<UserLabRole> students =  studentCore.GetStudents(jpaApi,  json.withArray("labid"));
-
-    //return ok(Json.toJson(students));
-    return ok();
+    for (int i = 0; i < arr.size(); i++) {
+      JsonNode mynode = arr.get(i);
+      JsonNode cur =  mynode.get("labId");
+      int labId = cur.get("id").asInt();
+      labList.add(labId);
+    }
+   ArrayList<UserLabRole> students =  studentCore.GetStudents(jpaApi, labList);
+    return ok(Json.toJson(students));
   }
   @Transactional
   public Result getAllLabs(){
