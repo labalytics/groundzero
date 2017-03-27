@@ -25,17 +25,7 @@ export class StudentComponent implements OnInit {
   studentCopy: any = [];
 
   constructor(public http: Http, private authService: AuthenticationService) {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-    let res = JSON.parse(this.currentUser._body);
-    let username = res.response["email"];
-    this.authService.getRoleandMenuData(username)
-      .subscribe((result) => {
-         this.getStudents(result.userDetails);
-        // this.students = result.userDetails;
-        // this.studentsBCKP = result.userDetails;
-        // this.studentCopy = result.userDetails;
-        }
-      );
+
   }
 
   getStudents(userDetails: Array<Object>) {
@@ -55,7 +45,13 @@ export class StudentComponent implements OnInit {
   }
 
   ngOnInit() {
-    //console.log(this.ev); // Has NO value
+    this.authService.getRoleandMenuData(this.authService.username)
+      .subscribe((result) => {
+        // let labId = result.userDetails.labId.id;
+        console.log(result);
+        this.getStudents(result.userDetails)
+        //this.getLabs(labId);
+      });
   }
 
 
