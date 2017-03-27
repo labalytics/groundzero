@@ -1,6 +1,8 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+
 import com.google.inject.Inject;
 import core.LabCore;
 import core.StudentCore;
@@ -67,18 +69,26 @@ public class Application extends Controller {
 
   @Transactional
   public Result getstudent(){
+    ArrayList<Integer> labList = new ArrayList<>();
     JsonNode json = request().body().asJson();
     StudentCore studentCore = new StudentCore();
-
-    ArrayList<UserLabRole> students =  studentCore.GetStudents(jpaApi,  json.findPath("labid").asLong());
-
+    JsonNode node = (JsonNode)json.findPath("labid");
+    ArrayNode arr = (ArrayNode)node;
+    for (int i = 0; i < arr.size(); i++) {
+      JsonNode mynode = arr.get(i);
+      JsonNode cur =  mynode.get("labId");
+      int labId = cur.get("id").asInt();
+      labList.add(labId);
+    }
+   ArrayList<UserLabRole> students =  studentCore.GetStudents(jpaApi, labList);
     return ok(Json.toJson(students));
   }
   @Transactional
   public Result getAllLabs(){
     JsonNode json = request().body().asJson();
-
-    ArrayList<UserLabRole> labs =  LabCore.GetAllLabs(jpaApi);
+    String email = json.findPath("email").textValue();
+    System.out.println("Value of Email is" + email);
+    ArrayList<UserLabRole> labs =  LabCore.GetAllLabsForManager(jpaApi , email);
 
     return ok(Json.toJson(labs));
   }

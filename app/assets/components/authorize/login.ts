@@ -18,15 +18,23 @@ export class LoginComponent{
   loading = false;
   returnUrl: string;
 
-  constructor(public authenticationService: AuthenticationService)
+  constructor(protected router: Router, public authenticationService: AuthenticationService)
   {}
 
   login() {
     this.loading = true;
     // Window.location needs to be called in the subscribe
 
-    this.authenticationService.authorize(this.model.username, this.model.password).subscribe();
+    //this.authenticationService.authorize(this.model.username, this.model.password).subscribe();
 
+
+    this.authenticationService.authorize(this.model.username, this.model.password)
+      .subscribe((result) => {
+          console.log(result);
+          //this.router.navigate(['/signup']);
+          window.location.href = window.location.origin + "/home";
+        }
+      );
 
   }
 }

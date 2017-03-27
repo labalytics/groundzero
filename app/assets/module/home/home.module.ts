@@ -10,6 +10,8 @@ import {HomeComponent} from "./home";
 import {HeadComponent} from "../../components/common/header";
 import {MenuComponent} from "../../components/common/menu";
 
+import { AuthenticationService } from  "../../services/authentication.service"
+
 import {AdminComponent} from "../../components/account/admin.component"
 import {StudentComponent} from "../../components/account/student.component"
 import {LabComponent} from "../../components/account/lab.component"
@@ -20,7 +22,7 @@ const routes: Routes = [
   {path: 'admin', pathMatch: 'full', component: AdminComponent},
   {path: 'Students', pathMatch: 'full', component: StudentComponent},
   {path: 'Labs', pathMatch: 'full', component: LabComponent},
-  {path: '', redirectTo: 'admin', pathMatch: 'full'},
+  {path: '', redirectTo: 'Labs', pathMatch: 'full'},
   {path: 'dev', pathMatch: 'full', component: DeveloperComponent}
 ];
 
@@ -34,6 +36,7 @@ const routes: Routes = [
   declarations: [HomeComponent, HeadComponent, MenuComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, NewLabComponent],
   bootstrap: [HomeComponent],
   providers: [
+    AuthenticationService,
     {provide: APP_BASE_HREF, useValue: ''},
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ]

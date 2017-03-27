@@ -18,7 +18,7 @@ h4,
 h5,
 h6 {
     font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-weight: 700;
+    /*font-weight: 700;*/
 }
 
 .topnav {
@@ -160,23 +160,35 @@ h6 {
     }
 }
 
-footer {
-    padding: 50px 0;
-    background-color: #f8f8f8;
-}
-
 p.copyright {
     margin: 15px 0 0;
 }
 
 /* Overrides */
+#wrap {
+  margin-top: 50px;
+}
+
+/*footer {*/
+  /*!*position: absolute;*!*/
+  /*padding: 5px 0;*/
+  /*bottom: 0;*/
+  /*height: 20px;*/
+  /*width: 100%;*/
+/*}*/
 
 footer {
-  position: absolute;
+  /*position: absolute;*/
+  padding: 5px 0;
   bottom: 0;
-  height: 20px;
-  background: #f0f0f0;
+  /* height: 20px; */
   width: 100%;
+  overflow: auto;
+}
+
+
+footer .footerContainer{
+  background: #f0f0f0;
 }
 
 loading{
