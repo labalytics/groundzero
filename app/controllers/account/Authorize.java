@@ -120,10 +120,10 @@ public class Authorize extends Controller {
 
 
   @Transactional(readOnly = true)
-  public UserLabRole getRoleAccess(String email) {
+  public ArrayList<UserLabRole> getRoleAccess(String email) {
     User user = new User();
     UserCore userCore = new UserCore();
-    UserLabRole userLabRole = userCore.getUserLabRole(jpaApi, email);
+    ArrayList<UserLabRole> userLabRole = userCore.getUserLabRole(jpaApi, email);
     return userLabRole;
   }
 
@@ -140,10 +140,11 @@ public class Authorize extends Controller {
     JsonNode json = request().body().asJson();
     String email = json.findPath("email").textValue();
     HashMap<String, Object> hash = new HashMap();
-    UserLabRole userLabRole = getRoleAccess(email);
+    ArrayList<UserLabRole> userLabRole = getRoleAccess(email);
     hash.put("userDetails", userLabRole);
     if (userLabRole != null) {
-      ArrayList<RoleAccess> roleAccessList = getMenuItems(userLabRole);
+      UserLabRole role = userLabRole.get(0);
+      ArrayList<RoleAccess> roleAccessList = getMenuItems(role);
       hash.put("navItems", roleAccessList);
     }
     ResponseCore oResponse = new ResponseCore();

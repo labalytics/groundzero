@@ -31,7 +31,7 @@ export class LabComponent implements OnInit, OnDestroy {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
     //this.oServiceCall_GetAllLab =
-    this.authService.getAllLabs(labid)
+    this.authService.getAllLabs(labid, this.authService.username)
       .subscribe((result) => {
         this.labs = result;
         this.labsCopy = this.labs;
@@ -48,8 +48,10 @@ export class LabComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.authService.getRoleandMenuData(this.authService.username)
       .subscribe((result) => {
-        let labId = result.userDetails.labId.id;
-        this.getLabs(labId);
+       // let labId = result.userDetails.labId.id;
+        this.labs = result.userDetails;
+        this.labsCopy = this.labs;
+        //this.getLabs(labId);
       });
   }
 

@@ -15,5 +15,6 @@ public class Constants {
   public static final String REGISTRATION_FAILURE = "Failed to register";
   public static final String REGISTRATION_SUCCESS = "Registered successfully";
   public static final String REGISTRATION_USER_EXISTS = "User already exists";
+  public static final String LAB_EXISTS = "Lab already exists";
 
 }

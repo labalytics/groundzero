@@ -30,13 +30,16 @@ export class StudentComponent implements OnInit {
     let username = res.response["email"];
     this.authService.getRoleandMenuData(username)
       .subscribe((result) => {
-          this.getStudents(result.userDetails.labId.id);
+         //this.getStudents(result.userDetails);
+        this.students = result.userDetails;
+        this.studentsBCKP = result.userDetails;
+        this.studentCopy = result.userDetails;
         }
       );
   }
 
-  getStudents(labid: string) {
-    this.authService.getStudents(labid)
+  getStudents(userDetails: Array<Object>) {
+    this.authService.getStudents(userDetails)
       .subscribe((result) => {
         this.students = result;
         this.studentsBCKP = result;

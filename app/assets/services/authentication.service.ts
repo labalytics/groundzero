@@ -52,8 +52,9 @@ export class AuthenticationService {
     }
   }
 
-  getAllLabs(labid: string) {
-    return this.http.post('/getAllLabs', this.options)
+  getAllLabs(labid: string , managerEmail: string) {
+    //this.http.post('/addLabs', JSON.stringify({email: managerEmail}), this.options)
+    return this.http.post('/getAllLabs', JSON.stringify({email: managerEmail}), this.options)
       .map((response: Response) => {
         let result: Object;
         result = JSON.parse(response._body);
@@ -61,7 +62,10 @@ export class AuthenticationService {
       });
   }
 
-  getStudents(labid: string) {
+
+
+
+  getStudents(labid: Array<Object>) {
     return this.http.post('/getstudents', JSON.stringify({ labid: labid}), this.options)
       .map((response: Response) => {
         let result: Object;

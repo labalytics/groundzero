@@ -41,8 +41,26 @@ public class UserCore {
     }
 
   }
+  public static boolean userExists(JPAApi jpaApi, String email) {
+    Query q = jpaApi.em().createQuery("SELECT u FROM User u WHERE u.email = :email");
+    q.setParameter("email", email);
+    try {
+      User user = (User) q.getSingleResult();
+      if(user != null) {
+        return true;
+        }
+        else{
+          return false;
+      }
 
-  public static UserLabRole getUserLabRole(JPAApi jpaApi, String email) {
+    } catch(Exception e){
+      System.out.println("Exception e = " + e.getMessage());
+     return false;
+    }
+
+  }
+
+  public static ArrayList<UserLabRole> getUserLabRole(JPAApi jpaApi, String email) {
     Query q = jpaApi.em().createQuery("SELECT u FROM User u WHERE u.email = :email");
     q.setParameter("email", email);
     try {
@@ -50,8 +68,9 @@ public class UserCore {
       if(user != null) {
        Query q1 = jpaApi.em().createQuery("SELECT r FROM UserLabRole r WHERE r.userId.id = :userId");
           q1.setParameter("userId", user.id);
-          UserLabRole userLabRole = (UserLabRole) q1.getSingleResult();
-          return  userLabRole;
+        ArrayList<UserLabRole> res = new ArrayList<UserLabRole>();
+        res = (ArrayList<UserLabRole>) q1.getResultList();
+          return  res;
       }
       return null;
     } catch(Exception e){
