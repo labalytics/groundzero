@@ -77,10 +77,15 @@ public class AuthorizeTest {
 
   @Test
   public void testConfirm() {
+    Result result = authorize.confirm("hfhf");
+
   }
 
   @Test
   public void testRegister() {
+
+    Result result = authorize.register();
+    assertEquals(OK, result.status());
   }
 
 }
