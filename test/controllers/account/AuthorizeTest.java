@@ -1,37 +1,28 @@
 package controllers.account;
 
-import static org.junit.Assert.*;
-import com.google.inject.Inject;
+import core.UserCore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import play.Application;
-import play.Mode;
 import play.api.libs.mailer.MailerClient;
 import play.data.FormFactory;
 import play.db.jpa.JPAApi;
-import play.i18n.Lang;
-import play.inject.guice.GuiceApplicationBuilder;
-import play.mvc.Http;
 import play.mvc.Result;
-import play.test.WithApplication;
-
-import java.io.File;
+import utils.Constants;
 
 import static org.junit.Assert.*;
-import static play.inject.Bindings.bind;
-import static play.mvc.Http.Status.OK;
-import static play.test.Helpers.*;
 import static org.mockito.Mockito.*;
-
+import static play.mvc.Http.Status.OK;
 
 /**
- * Created by ankurshrivastava on 3/27/17.
+ * Created by siddhujz on 3/23/2017.
  */
-@RunWith(MockitoJUnitRunner.class)
 
+// @RunWith attaches a runner with the test class to initialize the test data
+@RunWith(MockitoJUnitRunner.class)
 public class AuthorizeTest {
 
   @Mock
@@ -41,19 +32,55 @@ public class AuthorizeTest {
   @Mock
   private MailerClient mailerClient;
 
+  //@InjectMocks annotation is used to create and inject the mock object
   @InjectMocks
-  controllers.Application application;
+  Authorize authorize = new Authorize(formFactory, jpaApi, mailerClient);
 
   @Test
-  public void testIndex() {
-    Result result = application.index();
+  public void testGetAuthorizeView() {
+    Result result = authorize.GetAuthorizeView();
     assertEquals(OK, result.status());
-    assertEquals("text/html", result.contentType().get());
-    assertEquals("utf-8", result.charset().get());
-    assertTrue(contentAsString(result).contains("Login"));
   }
 
+  @Test
+  public void testValidateUser() {
+    UserCore userCore = mock(UserCore.class);
 
+    //mock the behavior of stock service to return the value of various stocks
+    //when(stockService.getPrice(googleStock)).thenReturn(50.00);
 
+    //mock the behavior of user service to return the user
+    when(userCore.authenticate(jpaApi, "siddhujz@gmail.com", "welcome123")).thenReturn(Constants.SUCCESS);
+    when(userCore.authenticate(jpaApi, "siddhujz@gmail.com", "incorrect")).thenReturn(Constants.INCORRECT_PASSWORD);
+    when(userCore.authenticate(jpaApi, "incorrect@gmail.com", "incorrect")).thenReturn(Constants.USER_NOT_FOUND);
+
+    assertEquals(userCore.authenticate(jpaApi, "siddhujz@gmail.com", "welcome123"), Constants.SUCCESS);
+    assertEquals(userCore.authenticate(jpaApi, "siddhujz@gmail.com", "incorrect"), Constants.INCORRECT_PASSWORD);
+    assertEquals(userCore.authenticate(jpaApi, "incorrect@gmail.com", "incorrect"), Constants.USER_NOT_FOUND);
+  }
+
+  @Test
+  public void testGetRoleAccess() {
+  }
+
+  @Test
+  public void testGetMenuItems() {
+  }
+
+  @Test
+  public void testGetRoleAndMenuItems() {
+  }
+
+  @Test
+  public void testRegistration() {
+  }
+
+  @Test
+  public void testConfirm() {
+  }
+
+  @Test
+  public void testRegister() {
+  }
 
 }

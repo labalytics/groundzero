@@ -6,33 +6,67 @@ import 'rxjs/Rx';
 
 @Injectable()
 export class AuthenticationService {
-  private authenticated: boolean;
-  private result: Object;
+  private authenticated: boolean = false;
+  public username: string = null;
+  private oRoleAndMenu: Object = null;
+  private oRoleAndMenuObservable: Observable<any> = null;
+
+  private headers = new Headers({'Content-Type': 'application/json'});
+  private options = new RequestOptions({headers: this.headers});
 
   constructor(public http: Http) {
-    this.authenticated = false;
+    let sUserEmail = localStorage.getItem('userEmail');
+    if (sUserEmail) {
+      this.username = sUserEmail;
+    }
   }
 
   authorize(username: string, password: string) {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    return this.http.post('/validate', JSON.stringify({email: username, password: password}), options)
-    //return this.http.post('/registration', JSON.stringify({ email: username, password: password }), options)
+    return this.http.post('/validate', JSON.stringify({email: username, password: password}), this.options)
       .map((response: Response) => {
         this.authenticated = true;
-        localStorage.setItem('currentUser', JSON.stringify(response));
-        this.result = JSON.parse(response._body);
-        return this.result;
+        //localStorage.setItem('currentUser', JSON.stringify(response));
+        let result: Object;
+        result = JSON.parse(response._body);
+        localStorage.setItem('userEmail', result.response.email);
+        return result;
       });
   }
+
   getRoleandMenuData(username: string) {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    return this.http.post('/getMenuAndRoleItems', JSON.stringify({email: username}), options)
-    //return this.http.post('/registration', JSON.stringify({ email: username, password: password }), options)
+    if (this.oRoleAndMenu) {
+      return Observable.of(this.oRoleAndMenu);
+    } else if (this.oRoleAndMenuObservable) {
+      return this.oRoleAndMenuObservable;
+    } else {
+      this.oRoleAndMenuObservable = this.http.post('/getMenuAndRoleItems', JSON.stringify({email: username}), this.options)
+        .map((response: Response) => {
+          this.oRoleAndMenuObservable = null;
+          let result: Object;
+          result = JSON.parse(response._body);
+          this.oRoleAndMenu = result.response;
+          return result.response;
+        })
+        .share();
+      return this.oRoleAndMenuObservable;
+    }
+  }
+
+  getAllLabs(labid: string) {
+    return this.http.post('/getAllLabs', this.options)
       .map((response: Response) => {
-        this.result = JSON.parse(response._body);
-        return this.result;
+        let result: Object;
+        result = JSON.parse(response._body);
+        return result;
+      });
+  }
+
+  getStudents(labid: string) {
+    return this.http.post('/getstudents', JSON.stringify({ labid: labid}), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse(response._body);
+        return result;
       });
   }
 
@@ -49,21 +83,18 @@ export class AuthenticationService {
   }
 
 
-  signup(info: any = {}) {
-    let headers = new Headers({'Content-Type': 'application/json'});
-    let options = new RequestOptions({headers: headers});
-    console.log(info);
-    // return this.http.post('/validate', JSON.stringify({ email: info, password: password }), options)
-    return this.http.post('/registration', JSON.stringify({info}), options)
+  public signup(info: any = {}) {
+    return this.http.post('/registration', JSON.stringify({info}), this.options)
       .map((response: Response) => {
-        this.authenticated = true;
-        localStorage.setItem('currentUser', JSON.stringify(response));
-        this.result = JSON.parse(response._body);
-        return this.result;
+        //this.authenticated = true;
+        //localStorage.setItem('currentUser', JSON.stringify(response));
+        let result: Object;
+        result = JSON.parse(response._body);
+        return result;
       });
   }
 
-  logout() {
+  public logout() {
     // remove user from local storage to log user out
     //this.authenticated = false;
     localStorage.removeItem('currentUser');
