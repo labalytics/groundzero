@@ -63,7 +63,16 @@ export class AuthenticationService {
   }
 
 
-
+  addlabs(info: any = {}) {
+    return this.http.post('/addlabs', JSON.stringify({info}), this.options)
+      .map((response: Response) => {
+        //this.authenticated = true;
+        //localStorage.setItem('currentUser', JSON.stringify(response));
+        let result: Object;
+        result = JSON.parse(response._body);
+        return result;
+      });
+  }
 
   getStudents(labid: Array<Object>) {
     return this.http.post('/getstudents', JSON.stringify({ labid: labid}), this.options)

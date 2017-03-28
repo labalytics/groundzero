@@ -1,4 +1,85 @@
 <div id="header"></div>
+<style type="text/css">
+
+  .form-control{
+    background: transparent;
+  }
+  form {
+    margin: 20px;
+  }
+  form > div {
+    position: relative;
+    overflow: hidden;
+  }
+  form input, form textarea {
+    width: 100%;
+    border: 2px solid gray;
+    background: none;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    padding: 8px 12px;
+    outline: 0;
+  }
+  form input:valid, form textarea:valid {
+    background: white;
+  }
+  form input:focus, form textarea:focus {
+    border-color: #357EBD;
+  }
+  form input:focus + label, form textarea:focus + label {
+    background: #357EBD;
+    color: white;
+    font-size: 70%;
+    padding: 1px 6px;
+    z-index: 2;
+    text-transform: uppercase;
+  }
+  form label {
+    -webkit-transition: background 0.2s, color 0.2s, top 0.2s, bottom 0.2s, right 0.2s, left 0.2s;
+    transition: background 0.2s, color 0.2s, top 0.2s, bottom 0.2s, right 0.2s, left 0.2s;
+    position: absolute;
+    color: rgba(153, 153, 153, 0);;
+    padding: 7px 6px;
+    font-weight: normal;
+    width: 1px;
+  }
+  form textarea {
+    display: block;
+    resize: vertical;
+  }
+  form.go-bottom input, form.go-bottom textarea {
+    padding: 12px 12px 12px 12px;
+  }
+  form.go-bottom label {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+  form.go-bottom input:focus, form.go-bottom textarea:focus {
+    padding: 4px 6px 20px 6px;
+  }
+  form.go-bottom input:focus + label, form.go-bottom textarea:focus + label {
+    top: 100%;
+    margin-top: -16px;
+  }
+  form.go-right label {
+    border-radius: 0 5px 5px 0;
+    height: 100%;
+    top: 0;
+    right: 100%;
+    width: 100%;
+    margin-right: -100%;
+  }
+  form.go-right input:focus + label, form.go-right textarea:focus + label {
+    right: 0;
+    margin-right: 0;
+    width: 40%;
+    padding-top: 5px;
+  }
+</style>
+
 <!--Remaining section-->
 <table>
   <tr>
@@ -9,7 +90,7 @@
       <div id="page-wrapper" >
         <div class="container">
           <div class="row">
-            <form role="form" class="col-md-9 go-right">
+            <form role="form" class="col-md-9 go-right" (ngSubmit)="f.form.valid && insertlab()" #f="ngForm" novalidate>
               <h2>Add Lab</h2>
 
               <table>
@@ -19,29 +100,39 @@
                   </td>
                 </tr>
               </table>
-              <div class="form-group">
-                <input id="lname" name="lname" type="text" class="form-control" required placeholder="Lab Name">
-                <label for="lname">Lab Name</label>
+
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !lab_name.valid }">
+                <input id="lab_name" name="lab_name" type="text" class="form-control" required placeholder="Lab Name" [(ngModel)]="model.lab_name" #lab_name="ngModel" required>
+                <div *ngIf="f.submitted && !lab_name.valid" class="help-block">Lab name is required</div>
+                <label for="lab_name">Lab Name</label>
               </div>
-              <div class="form-group">
-                <input id="mname" name="mname" type="text" class="form-control" required placeholder="Manager Name">
-                <label for="mname">Manager Name</label>
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !manager_name.valid }">
+                <input id="manager_name" name="manager_name" type="text" class="form-control" required placeholder="Manager Name" [(ngModel)]="model.manager_name" #manager_name="ngModel" required>
+                <div *ngIf="f.submitted && !manager_name.valid" class="help-block">Lab manager is required</div>
+                <label for="manager_name">Manager Name</label>
               </div>
-              <div class="form-group">
-                <input id="email" name="email" type="text" class="form-control" required placeholder="Email ID">
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+                <input id="email" name="email" type="text" class="form-control" required placeholder="Email ID" [(ngModel)]="model.email" #email="ngModel" required>
+                <div *ngIf="f.submitted && !email.valid" class="help-block">Email id is required</div>
                 <label for="email">Email ID</label>
               </div>
-              <div class="form-group">
-                <input id="phone" name="name" type="text" class="form-control" required placeholder="Phone Number">
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !phone.valid }">
+                <input id="phone" name="phone" type="text" class="form-control" required placeholder="Phone Number" [(ngModel)]="model.phone" #phone="ngModel" required>
+                <div *ngIf="f.submitted && !phone.valid" class="help-block">Lab name is required</div>
                 <label for="phone">Phone Number</label>
               </div>
-              <div class="form-group">
-                <input id="address" name="name" type="text" class="form-control" required placeholder="Address">
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !address.valid }">
+                <input id="address" name="address" type="text" class="form-control" required placeholder="Address" [(ngModel)]="model.address" #address="ngModel" required>
+                <div *ngIf="f.submitted && !address.valid" class="help-block">Lab name is required</div>
                 <label for="address">Address</label>
               </div>
-              <div class="form-group">
-                <textarea id="message" name="phone" class="form-control" required placeholder="Lab Details"></textarea>
+              <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !message.valid }">
+                <textarea id="message" name="message" class="form-control" required placeholder="Lab Details" [(ngModel)]="model.message" #message="ngModel" required></textarea>
+                <div *ngIf="f.submitted && !message.valid" class="help-block">Lab name is required</div>
 
+              </div>
+              <div class="row">
+                <div ><input type="submit" value="Submit" class = "btn btn-primary btn-xs" tabindex="11"></div>
               </div>
             </form>
           </div>
