@@ -23,7 +23,8 @@ const routes: Routes = [
   {path: 'Students', pathMatch: 'full', component: StudentComponent},
   {path: 'Labs', pathMatch: 'full', component: LabComponent},
   {path: '', redirectTo: 'admin', pathMatch: 'full'},
-  {path: 'dev', pathMatch: 'full', component: DeveloperComponent}
+  {path: 'dev', pathMatch: 'full', component: DeveloperComponent},
+  {path: 'newlab', pathMatch: 'full', component: NewLabComponent}
 ];
 
 @NgModule({
