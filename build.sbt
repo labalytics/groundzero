@@ -7,6 +7,7 @@ incOptions := incOptions.value.withNameHashing(true)
 updateOptions := updateOptions.value.withCachedResolution(cachedResoluton = true)
 
 // Added externally
+unmanagedResourceDirectories in Test <+= baseDirectory ( _ /"target/web/public/test" )
 testOptions += Tests.Argument(TestFrameworks.JUnit, "-v", "-q", "-a")
 libraryDependencies += "dom4j" % "dom4j" % "1.6.1" intransitive()
 
@@ -46,7 +47,7 @@ libraryDependencies ++= {
     // Added externally
     javaJdbc,
     javaJpa,
-    "org.mockito" % "mockito-core" % "2.6.8",
+    "org.mockito" % "mockito-core" % "2.7.19",
     javaWs % "test",
     "org.hibernate" % "hibernate-core" % "5.2.6.Final",
     "org.mindrot" % "jbcrypt" % "0.3m",
@@ -55,6 +56,11 @@ libraryDependencies ++= {
     "mysql" % "mysql-connector-java" % "5.1.39"
   )
 }
+// https://mvnrepository.com/artifact/org.powermock/powermock-module-junit4
+libraryDependencies += "org.powermock" % "powermock-module-junit4" % "1.7.0RC4"
+// https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito2
+libraryDependencies += "org.powermock" % "powermock-api-mockito2" % "1.7.0RC4"
+
 dependencyOverrides += "org.webjars.npm" % "minimatch" % "3.0.0"
 
 // the typescript typing information is by convention in the typings directory

@@ -1,11 +1,14 @@
 package controllers.account;
 
 import core.UserCore;
+import models.User;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import play.api.libs.mailer.MailerClient;
 import play.data.FormFactory;
@@ -34,7 +37,13 @@ public class AuthorizeTest {
 
   //@InjectMocks annotation is used to create and inject the mock object
   @InjectMocks
-  Authorize authorize = new Authorize(formFactory, jpaApi, mailerClient);
+  Authorize authorize;
+  //Authorize authorize = new Authorize(formFactory, jpaApi, mailerClient);
+
+  @Before
+  public void setUp() throws Exception {
+    MockitoAnnotations.initMocks(this);
+  }
 
   @Test
   public void testGetAuthorizeView() {
@@ -44,19 +53,38 @@ public class AuthorizeTest {
 
   @Test
   public void testValidateUser() {
-    UserCore userCore = mock(UserCore.class);
+    UserCore userCore = new UserCore();
 
     //mock the behavior of stock service to return the value of various stocks
     //when(stockService.getPrice(googleStock)).thenReturn(50.00);
 
-    //mock the behavior of user service to return the user
+    /**
+     * Given
+     */
+    User user = new User();
+    user.email = "siddhujz@gmail.com";
+    user.passwordHash = "welcome123";
     when(userCore.authenticate(jpaApi, "siddhujz@gmail.com", "welcome123")).thenReturn(Constants.SUCCESS);
-    when(userCore.authenticate(jpaApi, "siddhujz@gmail.com", "incorrect")).thenReturn(Constants.INCORRECT_PASSWORD);
-    when(userCore.authenticate(jpaApi, "incorrect@gmail.com", "incorrect")).thenReturn(Constants.USER_NOT_FOUND);
 
-    assertEquals(userCore.authenticate(jpaApi, "siddhujz@gmail.com", "welcome123"), Constants.SUCCESS);
-    assertEquals(userCore.authenticate(jpaApi, "siddhujz@gmail.com", "incorrect"), Constants.INCORRECT_PASSWORD);
-    assertEquals(userCore.authenticate(jpaApi, "incorrect@gmail.com", "incorrect"), Constants.USER_NOT_FOUND);
+    /**
+     * When
+     */
+    String validate = userCore.authenticate(jpaApi, user.email, user.passwordHash);
+
+    /**
+     * Then
+     */
+    assertEquals(validate, (Constants.SUCCESS));
+
+
+    //mock the behavior of user service to return the user
+//    when(userCore.authenticate(jpaApi, "siddhujz@gmail.com", "welcome123")).thenReturn(Constants.SUCCESS);
+//    when(userCore.authenticate(jpaApi, "siddhujz@gmail.com", "incorrect")).thenReturn(Constants.INCORRECT_PASSWORD);
+//    when(userCore.authenticate(jpaApi, "incorrect@gmail.com", "incorrect")).thenReturn(Constants.USER_NOT_FOUND);
+//
+//    assertEquals(userCore.authenticate(jpaApi, "siddhujz@gmail.com", "welcome123"), Constants.SUCCESS);
+//    assertEquals(userCore.authenticate(jpaApi, "siddhujz@gmail.com", "incorrect"), Constants.INCORRECT_PASSWORD);
+//    assertEquals(userCore.authenticate(jpaApi, "incorrect@gmail.com", "incorrect"), Constants.USER_NOT_FOUND);
   }
 
   @Test
