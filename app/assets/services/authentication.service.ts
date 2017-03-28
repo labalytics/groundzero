@@ -45,6 +45,7 @@ export class AuthenticationService {
           let result: Object;
           result = JSON.parse(response._body);
           this.oRoleAndMenu = result.response;
+          console.log(this.oRoleAndMenu);
           return result.response;
         })
         .share();
@@ -64,7 +65,7 @@ export class AuthenticationService {
 
 
   addlabs(info: any = {}) {
-    return this.http.post('/addlabs', JSON.stringify({info}), this.options)
+    return this.http.post('/addLabs', JSON.stringify({info}), this.options)
       .map((response: Response) => {
         //this.authenticated = true;
         //localStorage.setItem('currentUser', JSON.stringify(response));

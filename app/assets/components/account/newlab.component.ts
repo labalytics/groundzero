@@ -19,6 +19,7 @@ export class NewLabComponent implements OnInit{
   model: any = {};
   loading = false;
   returnUrl: string;
+  roleId = 0;
 
   constructor(protected router: Router, public authenticationService: AuthenticationService)
   {
@@ -26,9 +27,13 @@ export class NewLabComponent implements OnInit{
   }
 
   insertlab() {
-    console.log("here");
+    console.log(this.authenticationService.username);
+    if(this.roleId === 1) {
+      console.log("here");
+      this.model.email = this.authenticationService.username;
+    }
     console.log(this.model);
-    this.authenticationService.signup(this.model)
+    this.authenticationService.addlabs(this.model)
       .subscribe((result) => {
           console.log(result);
           this.router.navigate(['/Labs']);
