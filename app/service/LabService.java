@@ -17,7 +17,7 @@ import utils.Hash;
 import javax.inject.Inject;
 import java.util.Date;
 import java.util.UUID;
-
+import java.util.Random;
 /**
  * Created by aniketchitale7 on 3/27/17.
  */
@@ -28,13 +28,42 @@ public class LabService {
     UserLabRole userLabRole =  new UserLabRole();
 //    lab.labName = json.findPath("lab_name").textValue();
 //    lab.labPi = json.findPath("lab_pi").textValue();
-    lab.labName = "Dexter Labs";
-    lab.labPi = "Maddy";
+    User user = UserCore.findByEmail(jpaApi , managerEmail);
+    if(user == null)
+    {
+      user = new User();
+      user.firstName = json.findPath("manager_fname").textValue();
+      user.lastName =json.findPath("manager_lname").textValue();
+      user.email = json.findPath("email").textValue();
+      user.dateCreation = new Date();
+      user.validated = false;
+      char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+      StringBuilder sb = new StringBuilder();
+      Random random = new Random();
+      for (int i = 0; i < 10; i++) {
+        char c = chars[random.nextInt(chars.length)];
+        sb.append(c);
+      }
+      String output = sb.toString();
+      try {
+        user.passwordHash = Hash.createPassword(output);
+
+      }
+      catch(Exception e)
+      {
+        user.passwordHash ="";
+      }
+      user.confirmationToken = UUID.randomUUID().toString();
+      user = UserCore.doRegister(jpaApi, user);
+    }
+
+    if(user == null) return Constants.REGISTRATION_FAILURE;
+
+    lab.labName = json.findPath("lab_name").textValue();
+    lab.labPi = json.findPath("pi_name").textValue();
     lab = LabCore.insert(jpaApi, lab);
     if(lab==null)
       return Constants.LAB_EXISTS;
-    User user = UserCore.findByEmail(jpaApi , managerEmail);
-    if(user == null) return Constants.USER_NOT_FOUND;
 
     userLabRole.labId = lab;
     userLabRole.roleId = RoleCore.GetRole(jpaApi, 1);
