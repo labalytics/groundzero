@@ -35,7 +35,7 @@ CREATE TABLE `hibernate_sequence` (
 
 LOCK TABLES `hibernate_sequence` WRITE;
 /*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
-INSERT INTO `hibernate_sequence` VALUES (9),(9),(9),(9),(9);
+INSERT INTO `hibernate_sequence` VALUES (20),(20),(20),(20),(20);
 /*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,7 +82,7 @@ CREATE TABLE `labs` (
   `lab_name` varchar(45) NOT NULL,
   `lab_pi` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`lab_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,7 +91,7 @@ CREATE TABLE `labs` (
 
 LOCK TABLES `labs` WRITE;
 /*!40000 ALTER TABLE `labs` DISABLE KEYS */;
-INSERT INTO `labs` VALUES (5,'Testing','Kalyan');
+INSERT INTO `labs` VALUES (5,'Testing','Kalyan'),(9,'h','k'),(11,'Manager','Sai Kalyan Moguloju'),(14,'NEW','Sai Kalyan Moguloju');
 /*!40000 ALTER TABLE `labs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,8 +160,9 @@ CREATE TABLE `user_lab_roles` (
   `lab_id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
   `status` int(11) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
   `user_lab_role_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`user_lab_role_id`),
   KEY `roleId_idx` (`role_id`),
   KEY `labId_idx` (`lab_id`),
   KEY `FKhlnibwx9jv3oo8curmoi8ykxr` (`user_id`),
@@ -179,7 +180,7 @@ CREATE TABLE `user_lab_roles` (
 
 LOCK TABLES `user_lab_roles` WRITE;
 /*!40000 ALTER TABLE `user_lab_roles` DISABLE KEYS */;
-INSERT INTO `user_lab_roles` VALUES (5,1,NULL,4,7),(5,2,NULL,5,8),(5,2,NULL,6,9),(5,2,NULL,7,10),(5,2,NULL,8,11);
+INSERT INTO `user_lab_roles` VALUES (5,1,NULL,4,7),(5,1,NULL,5,8),(5,1,NULL,6,9),(5,1,NULL,8,11),(11,2,NULL,4,12),(14,1,NULL,13,15),(5,2,NULL,16,17),(5,2,NULL,18,19);
 /*!40000 ALTER TABLE `user_lab_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -203,7 +204,7 @@ CREATE TABLE `users` (
   `validated` bit(1) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `emailId_UNIQUE` (`email_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -212,7 +213,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'msaikalyan@yahoo.com','kkkkk','Sai','Kalyan',NULL,NULL,NULL,NULL,NULL),(4,'kalyansaim@gmail.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Sai','Kalyan Moguloju',NULL,NULL,'1487515e-c2dd-4ddc-a16b-4298e2bd3577','2017-03-10 18:54:14','\0'),(5,'abc.gmal.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Test','Test',NULL,NULL,NULL,NULL,NULL),(6,'abc1.gmal.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Test1','Test1',NULL,NULL,NULL,NULL,NULL),(7,'abc2.gmal.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Test2','Test2',NULL,NULL,NULL,NULL,NULL),(8,'abc3.gmal.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Test3','Test3',NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `users` VALUES (1,'msaikalyan@yahoo.com','kkkkk','Sai','Kalyan',NULL,NULL,NULL,NULL,NULL),(4,'kalyansaim@gmail.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Sai','Kalyan Moguloju',NULL,NULL,'1487515e-c2dd-4ddc-a16b-4298e2bd3577','2017-03-10 18:54:14','\0'),(5,'abc.gmal.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Test','Test',NULL,NULL,NULL,NULL,NULL),(6,'abc1.gmal.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Test1','Test1',NULL,NULL,NULL,NULL,NULL),(7,'abc2.gmal.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Test2','Test2',NULL,NULL,NULL,NULL,NULL),(8,'abc3.gmal.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Test3','Test3',NULL,NULL,NULL,NULL,NULL),(13,'kalyansaim6@gmail.com','$2a$10$TkT2o65gQQxwP8k.NxCNYesxzPWdrs0RpekG6kufsu95zC0JnDVeu','Sai','Kalyan Moguloju',NULL,NULL,'805a2b69-0b8f-4a2c-9d14-bff46f2fdbe2','2017-03-28 17:27:52','\0'),(16,'kaljyansaim@gmail.com','$2a$10$A8eJQHHV.HZbsdR5K30oEOoE1domuz.Iy7bwV76msASSs/NIu.4ra','Sai','Kalyan Moguloju',NULL,NULL,'9e566ecd-1d36-4cc4-96bc-168e723c8e76','2017-03-29 02:09:45','\0'),(18,'testing@gmail.com','$2a$10$aII7x9lk6nlkarM.2pej6.1BYgT675FwPlMkwSU7lmjEEAtacRXBm','Sai','Kalyan Moguloju',NULL,NULL,'c38ddaa6-317f-4fbb-9b6b-242b469d507a','2017-03-29 02:13:23','\0');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -225,4 +226,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-03-22 15:27:21
+-- Dump completed on 2017-03-29  2:18:57
