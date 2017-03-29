@@ -20,6 +20,9 @@ POST    /registration                   controllers.account.Authorize.registrati
 #LabController
 POST    /addLabs                   controllers.account.LabController.addLabsForManager()
 
+#StudentController
+POST    /insertStudents                   controllers.account.StudentController.addStudents()
+
 #get userData and Dynamic Menu Items based on UserRole
 
 POST    /getMenuAndRoleItems                   controllers.account.Authorize.getRoleAndMenuItems()

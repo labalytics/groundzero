@@ -1,10 +1,7 @@
 package core;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import models.Lab;
-import models.RoleAccess;
-import models.User;
-import models.UserLabRole;
+import models.*;
 import play.Logger;
 import play.db.jpa.JPAApi;
 import play.db.jpa.Transactional;
@@ -71,14 +68,13 @@ public class LabCore {
     }
   }
 
-  public static ArrayList<Lab> getLabById(JPAApi jpaApi , long labId)
+  public static Lab getLabById(JPAApi jpaApi , long labId)
   {
     Query q = jpaApi.em().createQuery("SELECT distinct(u) FROM Lab u where u.id = :labId");
     q.setParameter("labId", labId);
     try {
-      ArrayList<Lab> res = new ArrayList<Lab>();
-      res = (ArrayList<Lab>) q.getResultList();
-      return res;
+      Lab lab = (Lab) q.getSingleResult();
+      return lab;
     } catch(Exception e){
       System.out.println("Exception e = " + e.getMessage());
       return null;

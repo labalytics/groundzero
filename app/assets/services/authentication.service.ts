@@ -45,7 +45,6 @@ export class AuthenticationService {
           let result: Object;
           result = JSON.parse(response._body);
           this.oRoleAndMenu = result.response;
-          console.log(this.oRoleAndMenu);
           return result.response;
         })
         .share();
@@ -56,6 +55,16 @@ export class AuthenticationService {
   getAllLabs(labid: string , managerEmail: string) {
     //this.http.post('/addLabs', JSON.stringify({email: managerEmail}), this.options)
     return this.http.post('/getAllLabs', JSON.stringify({email: managerEmail}), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse(response._body);
+        return result;
+      });
+  }
+
+  insertStudents(newstudents: any)
+  {
+    return this.http.post('/insertStudents', JSON.stringify({students: newstudents}), this.options)
       .map((response: Response) => {
         let result: Object;
         result = JSON.parse(response._body);
