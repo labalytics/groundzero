@@ -12,10 +12,7 @@ import java.util.ArrayList;
 
 public class LabCore {
 
-
-
   public static Lab insert(JPAApi jpaApi, Lab lab) {
-
       try {
         jpaApi.em().persist(lab);
         return lab;
@@ -28,7 +25,6 @@ public class LabCore {
   }
 
   public static UserLabRole insertRoleMapper(JPAApi jpaApi, UserLabRole userLabRole) {
-
     try {
       jpaApi.em().persist(userLabRole);
       return userLabRole;
@@ -40,23 +36,20 @@ public class LabCore {
 
   }
 
-  public static ArrayList<UserLabRole> GetAllLabsForManager(JPAApi jpaApi , String email)
-  {
-
-      Query q = jpaApi.em().createQuery("SELECT distinct(u) FROM UserLabRole u where u.roleId.roleName = 'Manager' AND u.userId.email = :email");
-      q.setParameter("email", email);
-      try {
-          ArrayList<UserLabRole> res = new ArrayList<UserLabRole>();
-          res = (ArrayList<UserLabRole>) q.getResultList();
-          return res;
-      } catch(Exception e){
-          System.out.println("Exception e = " + e.getMessage());
-          return null;
-      }
+  public static ArrayList<UserLabRole> GetAllLabsForManager(JPAApi jpaApi , String email) {
+    Query q = jpaApi.em().createQuery("SELECT distinct(u) FROM UserLabRole u where u.roleId.roleName = 'Manager' AND u.userId.email = :email");
+    q.setParameter("email", email);
+    try {
+      ArrayList<UserLabRole> res = new ArrayList<UserLabRole>();
+      res = (ArrayList<UserLabRole>) q.getResultList();
+      return res;
+    } catch(Exception e){
+      System.out.println("Exception e = " + e.getMessage());
+      return null;
+    }
   }
 
-  public static ArrayList<UserLabRole> GetAllLabs(JPAApi jpaApi)
-  {
+  public static ArrayList<UserLabRole> GetAllLabs(JPAApi jpaApi) {
     Query q = jpaApi.em().createQuery("SELECT distinct(u) FROM UserLabRole u where u.roleId.roleName = 'Manager'");
     try {
       ArrayList<UserLabRole> res = new ArrayList<UserLabRole>();
@@ -68,8 +61,7 @@ public class LabCore {
     }
   }
 
-  public static Lab getLabById(JPAApi jpaApi , long labId)
-  {
+  public static Lab getLabById(JPAApi jpaApi , long labId) {
     Query q = jpaApi.em().createQuery("SELECT distinct(u) FROM Lab u where u.id = :labId");
     q.setParameter("labId", labId);
     try {

@@ -97,26 +97,6 @@ public class Authorize extends Controller {
     }
     return ok(Json.toJson(oResponse));
   }
-//    if (user != null) {
-//      //Login success
-//      logger.debug("Login successful");
-//      RoleCore roleCore = new RoleCore();
-//      ArrayList<RoleAccess> roleAccess = roleCore.GetMenu(jpaApi, userLabRole.roleId.id);
-//      hash.put("userDetails",userLabRole);
-//      hash.put("navItems" , roleAccess);
-//
-//      oResponse.status = "success";
-//      oResponse.message = "user added successfully";
-//      oResponse.response = hash;
-//      System.out.println("Value of Map " + oResponse.response);
-//      return ok(Json.toJson(oResponse));
-//    } else {
-//      //Login failed
-//      //TODO
-//      logger.debug("Login failed");
-//      return ok(views.html.authorize.authorize.render("A"));
-//    }
-
 
   @Transactional(readOnly = true)
   public ArrayList<UserLabRole> getRoleAccess(String email) {
@@ -127,8 +107,7 @@ public class Authorize extends Controller {
 
   @Transactional(readOnly = true)
   public ArrayList<RoleAccess> getMenuItems(UserLabRole userLabRole) {
-    RoleCore roleCore = new RoleCore();
-    ArrayList<RoleAccess> roleAccessList = roleCore.GetMenu(jpaApi, userLabRole.roleId.id);
+    ArrayList<RoleAccess> roleAccessList = RoleCore.GetMenu(jpaApi, userLabRole.roleId.id);
     return roleAccessList;
   }
 
@@ -162,16 +141,12 @@ public class Authorize extends Controller {
       JsonNode json = request().body().asJson();
       UserService userService = new UserService();
 
-
-
       String sStatus = userService.registerUser(jpaApi, json);
       hash.put("registration", sStatus);
-
 
       oResponse.status = Constants.RESPONSE_SUCCESS;
       oResponse.message = "Role Retrieved Successfully";
       oResponse.response = hash;
-
     } catch (Exception e) {
       logger.error("Authorize.save error", e);
       flash("error", Messages.get("error.technical"));
@@ -200,7 +175,6 @@ public class Authorize extends Controller {
     Mail mailer = new Mail(mailerClient);
     mailer.sendMail(envelop);
   }
-
 
   /**
    * Validate an account with the url in the confirm mail.
@@ -253,31 +227,9 @@ public class Authorize extends Controller {
     mailer.sendMail(envelop);
   }
 
-
   public Result register() {
     return ok(views.html.authorize.authorize.render("B"));
   }
 
-
-/*
-  @Transactional(readOnly = true)
-  public Result authenticate() {
-    Form<Login> form = formFactory.form(Login.class).bindFromRequest();
-
-    if (form.hasErrors()) {
-      return badRequest(views.html.authorize.render(form));
-    } else {
-      session().clear();
-      session("email", form.get().email);
-      return redirect(routes.Dashboard.index());
-    }
-  }
-
-  public Result logout() {
-    session().clear();
-    flash("success", Messages.get("you.have.been.logged.out"));
-    return redirect(routes.Application.authorize());
-  }
-*/
 }
 

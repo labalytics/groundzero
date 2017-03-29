@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public  class RoleCore {
 
   public static Role GetRole(JPAApi jpaApi, long role_id) {
-
     Query q = jpaApi.em().createQuery("SELECT r FROM Role r WHERE r.id = :id");
     q.setParameter("id", role_id);
     try {
@@ -24,7 +23,6 @@ public  class RoleCore {
   }
 
   public static ArrayList<RoleAccess> GetMenu(JPAApi jpaApi, long role_id) {
-
     Query q = jpaApi.em().createQuery("SELECT r FROM RoleAccess r WHERE r.role.id = :id");
     q.setParameter("id", role_id);
     try {
