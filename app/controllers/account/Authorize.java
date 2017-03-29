@@ -82,10 +82,9 @@ public class Authorize extends Controller {
     ResponseCore oResponse = new ResponseCore();
     User user = new User();
 
-    UserCore userCore = new UserCore();
     String email = json.findPath("email").textValue();
     HashMap<String, Object> hash = new HashMap();
-    String sStatus = userCore.authenticate(jpaApi, email, json.findPath("password").textValue());
+    String sStatus = UserCore.authenticate(jpaApi, email, json.findPath("password").textValue());
     if (sStatus.equals(Constants.SUCCESS)) {
 
       oResponse.status = Constants.RESPONSE_SUCCESS;
@@ -122,8 +121,7 @@ public class Authorize extends Controller {
   @Transactional(readOnly = true)
   public ArrayList<UserLabRole> getRoleAccess(String email) {
     User user = new User();
-    UserCore userCore = new UserCore();
-    ArrayList<UserLabRole> userLabRole = userCore.getUserLabRole(jpaApi, email);
+    ArrayList<UserLabRole> userLabRole = UserCore.getUserLabRole(jpaApi, email);
     return userLabRole;
   }
 

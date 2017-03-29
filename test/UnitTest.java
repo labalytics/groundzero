@@ -1,5 +1,6 @@
 import controllers.Application;
 import org.junit.Test;
+import org.mockito.Mockito;
 import play.api.libs.mailer.MailerClient;
 import play.data.FormFactory;
 import play.db.jpa.JPAApi;
@@ -24,9 +25,9 @@ public class UnitTest {
 
   @Test
   public void checkIndex() {
-    JPAApi jpaApi = mock(JPAApi.class);
-    FormFactory formFactory = mock(FormFactory.class);
-    MailerClient mailerClient = mock(MailerClient.class);
+    JPAApi jpaApi = Mockito.mock(JPAApi.class);
+    FormFactory formFactory = Mockito.mock(FormFactory.class);
+    MailerClient mailerClient = Mockito.mock(MailerClient.class);
     final Application controller = new Application(formFactory, jpaApi, mailerClient);
     final Result result = controller.index();
 

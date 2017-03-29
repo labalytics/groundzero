@@ -1,12 +1,18 @@
 package controllers.account;
 
 import core.UserCore;
+import models.User;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 import play.api.libs.mailer.MailerClient;
 import play.data.FormFactory;
 import play.db.jpa.JPAApi;
@@ -22,7 +28,7 @@ import static play.mvc.Http.Status.OK;
  */
 
 // @RunWith attaches a runner with the test class to initialize the test data
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(PowerMockRunner.class)
 public class AuthorizeTest {
 
   @Mock
@@ -34,7 +40,13 @@ public class AuthorizeTest {
 
   //@InjectMocks annotation is used to create and inject the mock object
   @InjectMocks
-  Authorize authorize = new Authorize(formFactory, jpaApi, mailerClient);
+  Authorize authorize;
+  //Authorize authorize = new Authorize(formFactory, jpaApi, mailerClient);
+
+  @Before
+  public void setUp() throws Exception {
+    MockitoAnnotations.initMocks(this);
+  }
 
   @Test
   public void testGetAuthorizeView() {
@@ -42,21 +54,92 @@ public class AuthorizeTest {
     assertEquals(OK, result.status());
   }
 
+  @PrepareForTest({UserCore.class})
   @Test
-  public void testValidateUser() {
-    UserCore userCore = mock(UserCore.class);
+  public void testValidateUserCorrectUsernameAndPassword() {
+    /**
+     * Given
+     */
+    User user = new User();
+    user.email = "siddhujz@gmail.com";
+    user.passwordHash = "welcome123";
+    PowerMockito.mockStatic(UserCore.class);
+    //mock the behavior of UserCore.authenticate to return the value, when the following data is given as input
+    PowerMockito.when(UserCore.authenticate(jpaApi, "siddhujz@gmail.com", "welcome123")).thenReturn(Constants.SUCCESS);
 
-    //mock the behavior of stock service to return the value of various stocks
-    //when(stockService.getPrice(googleStock)).thenReturn(50.00);
+    /**
+     * When
+     */
+    String validate = UserCore.authenticate(jpaApi, user.email, user.passwordHash);
 
-    //mock the behavior of user service to return the user
-    when(userCore.authenticate(jpaApi, "siddhujz@gmail.com", "welcome123")).thenReturn(Constants.SUCCESS);
-    when(userCore.authenticate(jpaApi, "siddhujz@gmail.com", "incorrect")).thenReturn(Constants.INCORRECT_PASSWORD);
-    when(userCore.authenticate(jpaApi, "incorrect@gmail.com", "incorrect")).thenReturn(Constants.USER_NOT_FOUND);
+    /**
+     * Then
+     */
+    assertEquals(validate, (Constants.SUCCESS));
 
-    assertEquals(userCore.authenticate(jpaApi, "siddhujz@gmail.com", "welcome123"), Constants.SUCCESS);
-    assertEquals(userCore.authenticate(jpaApi, "siddhujz@gmail.com", "incorrect"), Constants.INCORRECT_PASSWORD);
-    assertEquals(userCore.authenticate(jpaApi, "incorrect@gmail.com", "incorrect"), Constants.USER_NOT_FOUND);
+    //Verify that UserCore.authenticate was called
+    PowerMockito.verifyStatic();
+    UserCore.authenticate(jpaApi, user.email, user.passwordHash);
+  }
+
+  @PrepareForTest({UserCore.class})
+  @Test
+  public void testValidateUserIncorrectPassword() {
+    /**
+     * Given
+     */
+    User user = new User();
+    user.email = "siddhujz@gmail.com";
+    user.passwordHash = "incorrect";
+    PowerMockito.mockStatic(UserCore.class);
+    //mock the behavior of UserCore.authenticate to return the value, when the following data is given as input
+    PowerMockito.when(UserCore.authenticate(jpaApi, "siddhujz@gmail.com", "welcome123")).thenReturn(Constants.SUCCESS);
+    PowerMockito.when(UserCore.authenticate(jpaApi, "siddhujz@gmail.com", "incorrect")).thenReturn(Constants.INCORRECT_PASSWORD);
+
+    /**
+     * When
+     */
+    String validate = UserCore.authenticate(jpaApi, user.email, user.passwordHash);
+
+    /**
+     * Then
+     */
+    assertNotEquals(validate, (Constants.SUCCESS));
+    assertEquals(validate, (Constants.INCORRECT_PASSWORD));
+
+    //Verify that UserCore.authenticate was called
+    PowerMockito.verifyStatic();
+    UserCore.authenticate(jpaApi, user.email, user.passwordHash);
+  }
+
+  @PrepareForTest({UserCore.class})
+  @Test
+  public void testValidateUserIncorrectUsernameAndPassword() {
+    /**
+     * Given
+     */
+    User user = new User();
+    user.email = "incorrect@gmail.com";
+    user.passwordHash = "incorrect";
+    PowerMockito.mockStatic(UserCore.class);
+    //mock the behavior of UserCore.authenticate to return the value, when the following data is given as input
+    PowerMockito.when(UserCore.authenticate(jpaApi, "siddhujz@gmail.com", "welcome123")).thenReturn(Constants.SUCCESS);
+    PowerMockito.when(UserCore.authenticate(jpaApi, "incorrect@gmail.com", "incorrect")).thenReturn(Constants.USER_NOT_FOUND);
+
+    /**
+     * When
+     */
+    String validate = UserCore.authenticate(jpaApi, user.email, user.passwordHash);
+
+    /**
+     * Then
+     */
+    assertNotEquals(validate, (Constants.SUCCESS));
+    assertNotEquals(validate, (Constants.SUCCESS));
+
+    //Verify that UserCore.authenticate was called
+    PowerMockito.verifyStatic();
+    UserCore.authenticate(jpaApi, user.email, user.passwordHash);
   }
 
   @Test
