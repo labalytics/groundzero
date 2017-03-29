@@ -24,9 +24,6 @@ import java.util.UUID;
  */
 public class UserService {
 
-
-
-
   public String registerUser(JPAApi jpaApi ,JsonNode json ){
 
     User user = new User();
@@ -40,17 +37,14 @@ public class UserService {
     user.validated = false;
     try {
       user.passwordHash = Hash.createPassword(json.findPath("password").textValue());
-
     }
-    catch(Exception e)
-    {
+    catch(Exception e) {
       user.passwordHash ="";
     }
     user.confirmationToken = UUID.randomUUID().toString();
     user = UserCore.doRegister(jpaApi, user);
 
-    if(user==null)
-      return Constants.REGISTRATION_USER_EXISTS;
+    if(user==null) return Constants.REGISTRATION_USER_EXISTS;
 
     lab.labName = json.findPath("lname").textValue();
     lab.labPi = json.findPath("piname").textValue();

@@ -4,18 +4,8 @@ package controllers.account;
  * Created by aniketchitale7 on 3/27/17.
  */
 import com.fasterxml.jackson.databind.JsonNode;
-import core.RoleCore;
-import core.UserCore;
-import models.RoleAccess;
-import models.User;
-import models.UserLabRole;
-import org.apache.commons.mail.EmailException;
-import play.Configuration;
 import play.Logger;
-import play.data.Form;
 import play.data.FormFactory;
-import play.data.validation.Constraints;
-import play.db.jpa.JPA;
 import play.db.jpa.JPAApi;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;
@@ -23,20 +13,12 @@ import play.libs.Json;
 import play.libs.mailer.MailerClient;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security;
 
 import javax.inject.Inject;
-import javax.persistence.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.*;
-import java.util.List;
 
 import service.LabService;
-import service.UserService;
 import utils.Constants;
-import utils.Mail;
 
 import core.ResponseCore;
 

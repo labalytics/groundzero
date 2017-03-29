@@ -31,8 +31,7 @@ public class UserCore {
         if (Hash.checkPassword(password, user.passwordHash)) {
          return Constants.SUCCESS;
         }
-        else
-          return Constants.INCORRECT_PASSWORD;
+        else return Constants.INCORRECT_PASSWORD;
       }
       return Constants.USER_NOT_FOUND;
     } catch(Exception e){
@@ -41,6 +40,7 @@ public class UserCore {
     }
 
   }
+
   public static boolean userExists(JPAApi jpaApi, String email) {
     Query q = jpaApi.em().createQuery("SELECT u FROM User u WHERE u.email = :email");
     q.setParameter("email", email);
@@ -48,11 +48,8 @@ public class UserCore {
       User user = (User) q.getSingleResult();
       if(user != null) {
         return true;
-        }
-        else{
-          return false;
       }
-
+      else return false;
     } catch(Exception e){
       System.out.println("Exception e = " + e.getMessage());
      return false;
@@ -66,11 +63,11 @@ public class UserCore {
     try {
       User user = (User) q.getSingleResult();
       if(user != null) {
-       Query q1 = jpaApi.em().createQuery("SELECT r FROM UserLabRole r WHERE r.userId.id = :userId");
-          q1.setParameter("userId", user.id);
+        Query q1 = jpaApi.em().createQuery("SELECT r FROM UserLabRole r WHERE r.userId.id = :userId");
+        q1.setParameter("userId", user.id);
         ArrayList<UserLabRole> res = new ArrayList<UserLabRole>();
         res = (ArrayList<UserLabRole>) q1.getResultList();
-          return  res;
+        return  res;
       }
       return null;
     } catch(Exception e){
@@ -80,29 +77,20 @@ public class UserCore {
 
   }
 
-
   public static User doRegister(JPAApi jpaApi, User user) {
-
     Query q = jpaApi.em().createQuery("SELECT u FROM User u WHERE u.email = :email");
     q.setParameter("email", user.email);
-      try {
-        ArrayList<User> users= (ArrayList<User>) q.getResultList();
-        if(users.size() > 0)
-            return null;
-        jpaApi.em().persist(user);
-        return user;
-      } catch (Exception e) {
-        Logger.error("Authorize.save error", e);
-      }
-      return null;
+    try {
+      ArrayList<User> users= (ArrayList<User>) q.getResultList();
+      if(users.size() > 0) return null;
+      jpaApi.em().persist(user);
+      return user;
+    } catch (Exception e) {
+      Logger.error("Authorize.save error", e);
+    }
+    return null;
 
   }
-
-
-
-
-
-
 
   /**
    * Find user by confirmationToken
