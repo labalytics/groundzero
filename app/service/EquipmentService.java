@@ -74,10 +74,13 @@ public class EquipmentService {
         equipmentUnit.status= "Active";
         if(jsonNode.findPath("equipment_cat").asInt() == 0)
           equipmentUnit.type = "Equipment";
-        else
+        else {
           equipmentUnit.type = "Accessory";
-        equipmentUnit.available_count = 1234;  //dynamic
-        equipmentUnit.units_count = 1234;
+          equipmentUnit.parentEquipment = EquipmentCore.getEquipmentById(jpaApi,jsonNode.findPath("equipment_parName").asLong());
+
+        }
+        equipmentUnit.available_count = jsonNode.findPath("hoursUse").asInt();
+        equipmentUnit.units_count = jsonNode.findPath("hoursUse").asInt();
         if(EquipmentCore.addEquipmentUnit(jpaApi,equipmentUnit) == null)
           return Constants.UNIT_FAILURE;
       }
