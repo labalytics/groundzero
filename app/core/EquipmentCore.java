@@ -54,6 +54,18 @@ public class EquipmentCore {
   }
 
 
+  public static Equipment getEquipmentById(JPAApi jpaApi , long id) {
+    Query q = jpaApi.em().createQuery("SELECT distinct(e) FROM Equipment e where e.id = :id");
+    q.setParameter("id", id);
+    try {
+      Equipment equipment = (Equipment) q.getSingleResult();
+      return equipment;
+    } catch(Exception e){
+      System.out.println("Exception e = " + e.getMessage());
+      return null;
+    }
+  }
+
 
 }
 
