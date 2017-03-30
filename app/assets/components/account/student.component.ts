@@ -39,7 +39,6 @@ export class StudentComponent implements OnInit {
     this.authService.getStudents(userDetails)
       .subscribe((result) => {
         this.students = result;
-        this.studentsBCKP = result;
         this.studentCopy = result;
       });
   }

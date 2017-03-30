@@ -51,5 +51,11 @@ public class Equipment {
   @Formats.NonEmpty
   public String status;
 
+  @ManyToOne
+  @JoinColumn(name = "labid")
+  @Formats.NonEmpty
+  public Lab lab;
+
+
 
 }

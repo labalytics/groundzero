@@ -11,6 +11,8 @@
     <class>models.Role</class>
     <class>models.UserLabRole</class>
     <class>models.RoleAccess</class>
+    <class>models.Equipment</class>
+    <class>models.EquipmentUnit</class>
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
       <property name="hibernate.hbm2ddl.auto" value="update"/>
