@@ -39,6 +39,11 @@ GET     /home                      controllers.Application.home()
 POST    /getstudents                   controllers.Application.getstudent()
 POST    /getAllLabs                    controllers.Application.getAllLabs()
 
+#Equipment Controller
+POST     /getEquipments                  controllers.account.EquipmentController.GetEquipments()
+POST     /addEquipment                  controllers.account.EquipmentController.AddEquipment()
+
+
 
 #GET     /register                   controllers.Authorize.getRegister()
 #POST    /register                   controllers.account.Authorizeize.doRegister()

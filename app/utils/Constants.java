@@ -18,5 +18,7 @@ public class Constants {
   public static final String LAB_EXISTS = "Lab already exists";
   public static final String STUDENT_FAILURE = "Failed to add student";
   public static final String ROLE_FAILURE = "Role not found";
+  public static final String EQUIPMENT_FAILURE = "Failed to add equipment";
+  public static final String UNIT_FAILURE = "Failed to add unit";
 
 }

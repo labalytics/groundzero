@@ -122,4 +122,36 @@ export class AuthenticationService {
     //this.authenticated = false;
     localStorage.removeItem('currentUser');
   }
+
+  public getEquipments(userDetails: any)
+  {
+    let id: any = [];
+    for (let i = 0; i < userDetails.length; i++) {
+      id.push(userDetails[i].labId.id);
+      console.log(userDetails[i].labId.id);
+    }
+    return this.http.post('/getEquipments', JSON.stringify({id}), this.options)
+      .map((response: Response) => {
+        //this.authenticated = true;
+        //localStorage.setItem('currentUser', JSON.stringify(response));
+        let result: Object;
+        result = JSON.parse(response._body);
+        console.log(result.response);
+        return result.response;
+      });
+  }
+
+  public addEquipment(equipment: any)
+  {
+    return this.http.post('/addEquipment', JSON.stringify({equipment}), this.options)
+      .map((response: Response) => {
+        //this.authenticated = true;
+        //localStorage.setItem('currentUser', JSON.stringify(response));
+        let result: Object;
+        result = JSON.parse(response._body);
+        console.log(result.response);
+        return result.response;
+      });
+  }
+
 }

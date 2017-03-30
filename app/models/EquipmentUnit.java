@@ -6,7 +6,7 @@ import play.data.validation.Constraints;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "equipments")
+@Table(name = "equipment_units")
 public class EquipmentUnit {
 
   @Id

@@ -17,6 +17,7 @@ import {StudentComponent} from "../../components/account/student.component"
 import {LabComponent} from "../../components/account/lab.component"
 import {DeveloperComponent} from "../../components/account/developer.component"
 import {NewLabComponent} from "../../components/account/newlab.component"
+import {EquipmentComponent} from "../../components/account/equipment.component"
 
 const routes: Routes = [
   {path: 'admin', pathMatch: 'full', component: AdminComponent},
@@ -24,7 +25,8 @@ const routes: Routes = [
   {path: 'Labs', pathMatch: 'full', component: LabComponent},
   {path: '', redirectTo: 'admin', pathMatch: 'full'},
   {path: 'dev', pathMatch: 'full', component: DeveloperComponent},
-  {path: 'newlab', pathMatch: 'full', component: NewLabComponent}
+  {path: 'newlab', pathMatch: 'full', component: NewLabComponent},
+  {path: 'Equipments', pathMatch: 'full', component: EquipmentComponent}
 ];
 
 @NgModule({
@@ -34,7 +36,7 @@ const routes: Routes = [
     , HttpModule
     , RouterModule.forRoot(routes)
   ],
-  declarations: [HomeComponent, HeadComponent, MenuComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, NewLabComponent],
+  declarations: [HomeComponent, HeadComponent, MenuComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, NewLabComponent, EquipmentComponent],
   bootstrap: [HomeComponent],
   providers: [
     AuthenticationService,
