@@ -1,5 +1,6 @@
 package controllers.account;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import core.UserCore;
 import models.User;
 import org.junit.Before;
@@ -16,6 +17,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
 import play.api.libs.mailer.MailerClient;
 import play.data.FormFactory;
 import play.db.jpa.JPAApi;
+import play.libs.Json;
 import play.mvc.Result;
 import utils.Constants;
 
@@ -156,6 +158,37 @@ public class AuthorizeTest {
 
   @Test
   public void testRegistration() {
+    /**
+     * Given
+     */
+    ObjectNode result = Json.newObject();
+    result.put("first_name", "TestFirstName");
+    result.put("last_name", "TestLastName");
+    result.put("email", "testuser@gmail.com");
+    result.put("password", "testpassword@gmail.com");
+
+    User user = new User();
+    user.email = "incorrect@gmail.com";
+    user.passwordHash = "incorrect";
+    PowerMockito.mockStatic(UserCore.class);
+    //mock the behavior of UserCore.authenticate to return the value, when the following data is given as input
+    PowerMockito.when(UserCore.authenticate(jpaApi, "siddhujz@gmail.com", "welcome123")).thenReturn(Constants.SUCCESS);
+    PowerMockito.when(UserCore.authenticate(jpaApi, "incorrect@gmail.com", "incorrect")).thenReturn(Constants.USER_NOT_FOUND);
+
+    /**
+     * When
+     */
+    String validate = UserCore.authenticate(jpaApi, user.email, user.passwordHash);
+
+    /**
+     * Then
+     */
+    assertNotEquals(validate, (Constants.SUCCESS));
+    assertNotEquals(validate, (Constants.SUCCESS));
+
+    //Verify that UserCore.authenticate was called
+    PowerMockito.verifyStatic();
+    UserCore.authenticate(jpaApi, user.email, user.passwordHash);
   }
 
   @Test
