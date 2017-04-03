@@ -17,6 +17,16 @@ GET     /register                   controllers.account.Authorize.register()
 POST    /validate                   controllers.account.Authorize.validateUser()
 POST    /registration                   controllers.account.Authorize.registration()
 
+#LabController
+POST    /addLabs                   controllers.account.LabController.addLabsForManager()
+
+#StudentController
+POST    /insertStudents                   controllers.account.StudentController.addStudents()
+
+#get userData and Dynamic Menu Items based on UserRole
+
+POST    /getMenuAndRoleItems                   controllers.account.Authorize.getRoleAndMenuItems()
+
 # Accessed when the user confirms the registration.
 GET     /confirm/:confirmToken      controllers.account.Authorize.confirm(confirmToken:String)
 
@@ -28,6 +38,11 @@ GET     /getuserinfo                controllers.Application.GetUserInfo()
 GET     /home                      controllers.Application.home()
 POST    /getstudents                   controllers.Application.getstudent()
 POST    /getAllLabs                    controllers.Application.getAllLabs()
+
+#Equipment Controller
+POST     /getEquipments                  controllers.account.EquipmentController.GetEquipments()
+POST     /addEquipment                  controllers.account.EquipmentController.AddEquipment()
+
 
 
 #GET     /register                   controllers.Authorize.getRegister()

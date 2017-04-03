@@ -1,0 +1,357 @@
+<div id="header"></div>
+<style type="text/css">
+
+  .form-control{
+    background: transparent;
+  }
+  form {
+    margin: 20px;
+  }
+  form > div {
+    position: relative;
+    overflow: hidden;
+  }
+  form input, form textarea {
+    width: 100%;
+    border: 2px solid gray;
+    background: none;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    padding: 8px 12px;
+    outline: 0;
+  }
+  form input:valid, form textarea:valid {
+    background: white;
+  }
+  form input:focus, form textarea:focus {
+    border-color: #357EBD;
+  }
+  form input:focus + label, form textarea:focus + label {
+    background: #357EBD;
+    color: white;
+    font-size: 70%;
+    padding: 1px 6px;
+    z-index: 2;
+    text-transform: uppercase;
+  }
+  form label {
+    -webkit-transition: background 0.2s, color 0.2s, top 0.2s, bottom 0.2s, right 0.2s, left 0.2s;
+    transition: background 0.2s, color 0.2s, top 0.2s, bottom 0.2s, right 0.2s, left 0.2s;
+    position: absolute;
+    color: rgba(153, 153, 153, 0);;
+    padding: 7px 6px;
+    font-weight: normal;
+    width: 1px;
+  }
+  form textarea {
+    display: block;
+    resize: vertical;
+  }
+  form.go-bottom input, form.go-bottom textarea {
+    padding: 12px 12px 12px 12px;
+  }
+  form.go-bottom label {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+  form.go-bottom input:focus, form.go-bottom textarea:focus {
+    padding: 4px 6px 20px 6px;
+  }
+  form.go-bottom input:focus + label, form.go-bottom textarea:focus + label {
+    top: 100%;
+    margin-top: -16px;
+  }
+  form.go-right label {
+    border-radius: 0 5px 5px 0;
+    height: 100%;
+    top: 0;
+    right: 100%;
+    width: 100%;
+    margin-right: -100%;
+  }
+  form.go-right input:focus + label, form.go-right textarea:focus + label {
+    right: 0;
+    margin-right: 0;
+    width: 40%;
+    padding-top: 5px;
+  }
+</style>
+
+<!--Remaining section-->
+<table>
+  <tr>
+    <td valign="top">
+      <div id="menu"></div>
+    </td>
+    <td>
+      <div id="page-wrapper">
+        <div class="container">
+          <div *ngIf="addEquipments == 1" class="row">
+
+
+            <div class="col-md-12">
+              <div class="table-responsive">
+
+                <h4> Equipments Information</h4>
+                <table style="width: 100%" >
+                  <tr>
+                    <td>
+                      <div id="custom-search-input">
+                        <div class="input-group col-md-12">
+                          <!--<input type="text" class="  search-query form-control" placeholder="Search" /> -->
+                          <input [(ngModel)] = "searchTerm" (ngModelChange) = "search()" class="search-query form-control"/>
+
+                          <span class="input-group-btn">
+                            <!--<button class="btn btn-danger" type="button">
+                                                                <span class=" glyphicon glyphicon-search"></span>
+                                                            </button> -->
+                            <input [(ngModel)] = "searchTerm" (ngModelChange) = "search()"/>
+                                                        </span>
+                        </div>
+                      </div>
+                    </td>
+                    <td align="center">
+                      <a (click)="addEquipmentsClick()" style="height: 30px; font-size:medium" class = "btn btn-primary btn-xs"><b>+</b> Add new equipment</a>
+                    </td>
+                  </tr>
+                </table>
+                <div style="height: 20px;"></div>
+                <table id="mytable1" class="table table-bordred table-striped">
+
+                  <thead>
+
+                  <th>Equipment Name</th>
+                  <th>Category</th>
+                  <th>Lab Name</th>
+
+                  <th></th>
+                  <th>Delete</th>
+                  <th></th>
+                  </thead>
+                  <tbody *ngFor="let equipment of equipments">
+
+                  <tr>
+                    <td>{{equipment.equipment.equipmentName}}</td>
+                    <td>{{equipment.type}}</td>
+                    <td>{{equipment.equipment.lab.labName}}</td>
+                    <td><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-primary btn-xs" data-title="Details" data-toggle="modal" attr.data-target="#edit_{{equipment.id}}"><span style="font-size: small"> Details</span></button></p>
+
+                      <div class="modal fade" id="edit_{{equipment.id}}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button"  class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                              <h4 class="modal-title custom_align" id="Heading">Equipment Detail</h4>
+                            </div>
+                            <div class="modal-body">
+                              <div class="form-group">
+                                <label>Equipment Name</label>
+                                <label class="form-control ">{{equipment.equipment.equipmentName}}</label>
+                              </div>
+                              <div class="form-group">
+                                <label>Equipment Type</label>
+                                <label class="form-control ">{{equipment.equipment.equipmentType}}</label>
+                              </div>
+                              <div class="form-group">
+                                <label>Category</label>
+                                <label class="form-control ">{{equipment.type}}</label>
+                              </div>
+                              <div class="form-group">
+                                <label>Description</label>
+                                <label class="form-control ">{{equipment.equipment.description}}</label>
+                              </div>
+                              <div class="form-group">
+                                <label>Working hour rate</label>
+                                <label class="form-control ">{{equipment.equipment.workingRate}}</label>
+                              </div>
+                              <div class="form-group">
+                                <label>Non-working hour rate</label>
+                                <label class="form-control ">{{equipment.equipment.nonworkingRate}}</label>
+                              </div>
+                              <div class="form-group">
+                                <label>Lab Name</label>
+                                <label class="form-control ">{{equipment.equipment.lab.labName}}</label>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                      </div>
+
+                    </td>
+                    <td><p data-placement="top" data-toggle="tooltip" title="Schedule"><button class="btn btn-primary btn-xs" data-title="Schedule" data-toggle="modal" data-target="#edit" ><span style="font-size: small"> Schedule</span></button></p></td>
+                    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+
+          <div *ngIf="addEquipments == 2" class="row">
+
+            <div class="col-md-12">
+              <div class="table-responsive">
+
+                <h4> New Student</h4>
+
+                <table style="width: 100%" >
+                  <tr>
+                    <td style="width: 60%">
+                    </td>
+                    <td align="center">
+                      <a (click)="EquipmentsListClick()" style="height: 30px; font-size:medium" class = "btn btn-primary btn-xs"><b>+</b> Back to list</a>
+                    </td>
+                  </tr>
+                </table>
+
+                <div style="height: 20px;"></div>
+                <form role="form" class="col-md-9 go-right" (ngSubmit)="f.form.valid && insertequipment()" #f="ngForm" novalidate>
+
+                  <table>
+                    <tr>
+                      <td>
+
+                      </td>
+                    </tr>
+                  </table>
+
+                  <div  class="form-group" [ngClass]="{ 'has-error': f.submitted && !equipment_name.valid }">
+                    <input id="equipment_name" name="equipment_name" type="text" class="form-control" required placeholder="Equipment Name" [(ngModel)]="newequipment.equipment_name" #equipment_name="ngModel" required>
+                    <div *ngIf="f.submitted && !equipment_name.valid" class="help-block">Equipment Name is required</div>
+                    <label for="equipment_name">Equipment Name</label>
+                  </div>
+
+                  <div  class="form-group" [ngClass]="{ 'has-error': f.submitted && !units.valid }">
+                    <input id="units" name="workingRate" type="text" class="form-control" required placeholder="Units count" [(ngModel)]="newequipment.units" #units="ngModel" required>
+                    <div *ngIf="f.submitted && !units.valid" class="help-block">Units is required</div>
+                    <label for="units">No of Units</label>
+                  </div>
+
+
+
+                  <div  class="form-group" >
+                    <table width="100%">
+                      <tr>
+                        <td>
+                          <input style="border: none; text-align: left" type="text" value="Lab" readonly>
+                        </td>
+                        <td>
+                          <select style="width: 150px" name="labid" class="form-control" [(ngModel)]="newequipment.labid" #labid="ngModel" required>
+                            <option *ngFor="let role of roles" [ngValue]= "role.labId.id"  >
+                              <div *ngIf="role.roleId.id==1">{{role.labId.labName}}</div>
+                            </option>
+                          </select>
+                        </td>
+                        <td>
+                          <input style="border: none;width: auto; text-align: right" type="text" value="Category" readonly>
+                        </td>
+                        <td>
+                          <select style="width: 150px" (change)="dropChange(equipment_cat.value)" name="equipment_cat" class="form-control" [(ngModel)]="newequipment.equipment_cat" #equipment_cat="ngModel" required>
+                            <option [ngValue]= 0> Equipment </option>
+                            <option [ngValue]= 1> Accessory </option>
+                          </select>
+                        </td>
+
+                      </tr>
+                    </table>
+
+
+                  </div>
+                  <div *ngIf="equipment_cat.value == 1">
+                    <div class="form-group">
+                      <table width="100%">
+                        <tr>
+                          <td>
+                            <input style="border: none; text-align: left" type="text" value="Equipment" readonly>
+                          </td>
+                          <td>
+                            <select name="equipment_parName" class="form-control" [(ngModel)]="newequipment.equipment_parName" #equipment_parName="ngModel" required>
+                              <option *ngFor="let equip of equipments" [ngValue]= "equip.equipment.id"  >
+                                <div *ngIf="equip.equipment.lab.id == labid.value && equip.type =='Equipment'">{{equip.equipment.equipmentName}}</div>
+                              </option>
+                            </select>
+                          </td>
+                        </tr>
+                      </table>
+
+                    </div>
+                  </div>
+                  <div  class="form-group" >
+                    <table width="100%">
+                      <tr>
+                        <td>
+                          <input style="border: none; text-align: left" type="text" value="Type" readonly>
+                        </td>
+                        <td>
+                          <select style="width: 150px" name="equipment_type" class="form-control" [(ngModel)]="newequipment.equipment_type" #equipment_type="ngModel" required>
+                            <option [ngValue]= 0> Reusable </option>
+                            <option [ngValue]= 1> Non-Reusable </option>
+                          </select>
+                        </td>
+                        <td>
+                          <input  style="border: none;width: auto; text-align: right" type="text" value="Notification" readonly>
+                        </td>
+                        <td>
+                          <select style="width: 150px" name="usageNot" class="form-control" [(ngModel)]="newequipment.usageNot" #usageNot="ngModel" required>
+                            <option [ngValue]= 10> 10 </option>
+                            <option [ngValue]= 20> 20 </option>
+                            <option [ngValue]= 30> 30 </option>
+                            <option [ngValue]= 40> 40 </option>
+                            <option [ngValue]= 50> 50 </option>
+                            <option [ngValue]= 60> 60 </option>
+                            <option [ngValue]= 70> 70 </option>
+                            <option [ngValue]= 80> 80 </option>
+                            <option [ngValue]= 90> 90 </option>
+                          </select>
+                        </td>
+
+                      </tr>
+                    </table>
+
+
+                  </div>
+
+                  <div *ngIf="equipment_type.value == 0">
+                    <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !hoursUse.valid }">
+                      <input id="hoursUse" name="hoursUse" type="text" class="form-control" required placeholder="Hours on unit" [(ngModel)]="newequipment.hoursUse" #hoursUse="ngModel" required>
+                      <div *ngIf="f.submitted && !hoursUse.valid" class="help-block">Hours on unit is required</div>
+                      <label for="hoursUse">Hours on unit</label>
+                    </div>
+                  </div>
+                  <div  class="form-group" [ngClass]="{ 'has-error': f.submitted && !workingRate.valid }">
+                    <input id="workingRate" name="workingRate" type="text" class="form-control" required placeholder="Working Rate" [(ngModel)]="newequipment.workingRate" #workingRate="ngModel" required>
+                    <div *ngIf="f.submitted && !workingRate.valid" class="help-block">Working Rate is required</div>
+                    <label for="workingRate">Working Rate</label>
+                  </div>
+
+                  <div  class="form-group" [ngClass]="{ 'has-error': f.submitted && !nonworkingRate.valid }">
+                    <input id="nonworkingRate" name="nonworkingRate" type="text" class="form-control" required placeholder="Non-Working Rate" [(ngModel)]="newequipment.nonworkingRate" #nonworkingRate="ngModel" required>
+                    <div *ngIf="f.submitted && !nonworkingRate.valid" class="help-block">Non-Working Rate is required</div>
+                    <label for="nonworkingRate">Non-Working Rate</label>
+                  </div>
+
+                  <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !descriptiom.valid }">
+                    <textarea id="descriptiom" name="descriptiom" class="form-control" required placeholder="Description" [(ngModel)]="newequipment.descriptiom" #descriptiom="ngModel" required></textarea>
+                    <div *ngIf="f.submitted && !descriptiom.valid" class="help-block">Description required</div>
+
+                  </div>
+                  <div class="row">
+                    <div ><input type="submit" value="Submit" class = "btn btn-primary btn-xs" tabindex="11"></div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- /.row -->
+      </div>
+    </td>
+  </tr>
+</table>

@@ -12,6 +12,7 @@ import play.data.FormFactory;
 import play.db.jpa.JPAApi;
 import play.db.jpa.Transactional;
 import play.libs.mailer.MailerClient;
+import utils.Constants;
 import utils.Hash;
 
 import javax.inject.Inject;
@@ -22,9 +23,6 @@ import java.util.UUID;
  * Created by sai on 3/10/17.
  */
 public class UserService {
-
-
-
 
   public String registerUser(JPAApi jpaApi ,JsonNode json ){
 
@@ -39,17 +37,14 @@ public class UserService {
     user.validated = false;
     try {
       user.passwordHash = Hash.createPassword(json.findPath("password").textValue());
-
     }
-    catch(Exception e)
-    {
+    catch(Exception e) {
       user.passwordHash ="";
     }
     user.confirmationToken = UUID.randomUUID().toString();
     user = UserCore.doRegister(jpaApi, user);
 
-    if(user==null)
-      return "User Exits";
+    if(user==null) return Constants.REGISTRATION_USER_EXISTS;
 
     lab.labName = json.findPath("lname").textValue();
     lab.labPi = json.findPath("piname").textValue();
@@ -61,8 +56,7 @@ public class UserService {
     userLabRole.userId = user;
     userLabRole =  LabCore.insertRoleMapper(jpaApi, userLabRole);
 
-
-    return "Complete";
+    return Constants.REGISTRATION_SUCCESS;
   }
 
 }

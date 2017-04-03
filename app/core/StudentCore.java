@@ -11,18 +11,21 @@ import java.util.ArrayList;
 
 public  class StudentCore {
 
-  public static ArrayList<UserLabRole> GetStudents(JPAApi jpaApi, long lab_id) {
-
-    Query q = jpaApi.em().createQuery("SELECT u FROM UserLabRole u WHERE u.labId.id = :id");
-    q.setParameter("id", lab_id);
-    try {
-      ArrayList<UserLabRole> userLabRoles = (ArrayList<UserLabRole>) q.getResultList();
-      return userLabRoles;
-    } catch(Exception e){
-      System.out.println("Exception e = " + e.getMessage());
-      return null;
+  public static ArrayList<UserLabRole> GetStudents(JPAApi jpaApi,  ArrayList<Integer> lab_id) {
+    ArrayList<UserLabRole> result = new ArrayList<>();
+    for(int i = 0 ; i < lab_id.size() ; i++)
+    {
+      Query q = jpaApi.em().createQuery("SELECT u FROM UserLabRole u WHERE u.labId.id = :id");
+      q.setParameter("id", (long)lab_id.get(i));
+      try {
+        ArrayList<UserLabRole> userLabRoles = (ArrayList<UserLabRole>) q.getResultList();
+        result.addAll(userLabRoles);
+      } catch(Exception e){
+        System.out.println("Exception e = " + e.getMessage());
+        return result;
+      }
     }
-
+    return result;
   }
 
 }

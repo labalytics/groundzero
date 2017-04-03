@@ -8,7 +8,7 @@
     <td>
       <div id="page-wrapper">
         <div class="container">
-          <div class="row">
+          <div *ngIf="addStudents == 1" class="row">
 
 
             <div class="col-md-12">
@@ -20,17 +20,20 @@
                     <td>
                       <div id="custom-search-input">
                         <div class="input-group col-md-12">
-                          <input type="text" class="  search-query form-control" placeholder="Search" />
+                          <!--<input type="text" class="  search-query form-control" placeholder="Search" /> -->
+                          <input [(ngModel)] = "searchTerm" (ngModelChange) = "search()" class="search-query form-control"/>
+
                           <span class="input-group-btn">
-                                                            <button class="btn btn-danger" type="button">
+                            <!--<button class="btn btn-danger" type="button">
                                                                 <span class=" glyphicon glyphicon-search"></span>
-                                                            </button>
+                                                            </button> -->
+                            <input [(ngModel)] = "searchTerm" (ngModelChange) = "search()"/>
                                                         </span>
                         </div>
                       </div>
                     </td>
                     <td align="center">
-                      <a href="newlab.html" style="height: 30px; font-size: medium" class = "btn btn-primary btn-xs"><b>+</b> Add new student</a>
+                      <a (click)="addStudentsClick()" style="height: 30px; font-size:medium" class = "btn btn-primary btn-xs"><b>+</b> Add new student</a>
                     </td>
                   </tr>
                 </table>
@@ -43,6 +46,7 @@
                   <th>Last Name</th>
                   <th>Role</th>
                   <th>Email</th>
+                  <th>Lab</th>
                   <th></th>
                   <th>Delete</th>
                   <th></th>
@@ -54,6 +58,7 @@
                     <td>{{student.userId.lastName}}</td>
                     <td>{{student.roleId.roleName}}</td>
                     <td>{{student.userId.email}}</td>
+                    <td>{{student.labId.labName}}</td>
                     <td><p data-placement="top" data-toggle="tooltip" title="Details"><button class="btn btn-primary btn-xs" data-title="Details" data-toggle="modal" attr.data-target="#edit_{{student.userId.id}}"><span style="font-size: small"> Details</span></button></p>
 
                       <div class="modal fade" id="edit_{{student.userId.id}}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
@@ -91,44 +96,87 @@
                     <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
                     <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
                   </tr>
-
-
                   </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
 
+
+          <div *ngIf="addStudents == 2" class="row">
+
+            <div class="col-md-12">
+              <div class="table-responsive">
+
+                <h4> New Student</h4>
+
+                <table style="width: 100%" >
+                  <tr>
+                    <td style="width: 60%">
+                    </td>
+                    <td align="center">
+                      <a (click)="StudentsListClick()" style="height: 30px; font-size:medium" class = "btn btn-primary btn-xs"><b>+</b> Back to list</a>
+                    </td>
+                  </tr>
                 </table>
 
+                <div style="height: 20px;"></div>
+                <form role="form" class="col-md-9 go-right" style="width: 90%;" (ngSubmit)="f.form.valid && insertStudents()" #f="ngForm" novalidate>
+                  <table id="mytable" class="table table-bordred table-striped">
 
+                    <thead>
 
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Lab</th>
+                    <th></th>
+                    <th></th>
+                    </thead>
+                    <tbody *ngFor="let student of newstudents">
+
+                    <tr>
+                      <td>
+                        <div  class="form-group" [ngClass]="{ 'has-error': f.submitted && !firstName.valid }">
+                          <input id="firstName" name="firstName" type="text" class="form-control" required placeholder="First Name" [(ngModel)]="student.firstName" #firstName="ngModel" required>
+                          <div *ngIf="f.submitted && !firstName.valid" class="help-block">First name is required</div>
+                        </div>
+                      </td>
+                      <td>
+                        <div  class="form-group" [ngClass]="{ 'has-error': f.submitted && !lastName.valid }">
+                          <input id="lastName" name="lastName" type="text" class="form-control" required placeholder="Last Name" [(ngModel)]="student.lastName" #lastName="ngModel" required>
+                          <div *ngIf="f.submitted && !lastName.valid" class="help-block">Lab name is required</div>
+                        </div>
+                      </td>
+                      <td>
+                        <div  style="width: 200px" class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+                          <input id="email" name="email" type="text" class="form-control" required placeholder="Email Id" [(ngModel)]="student.email" #email="ngModel" required>
+                          <div *ngIf="f.submitted && !email.valid" class="help-block">Email id is required</div>
+                        </div>
+                      </td>
+                      <td>
+                        <div  class="form-group" style="width: 150px;">
+                          <select name="labid" class="form-control" [(ngModel)]="student.labid" #labid="ngModel" required>
+                            <option *ngFor="let role of roles" [ngValue]= "role.labId.id"  >
+                              <div *ngIf="role.roleId.id==1">{{role.labId.labName}}</div>
+                            </option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" (click)="deleterow(student)" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+                    </tr>
+                    </tbody>
+
+                  </table>
+                  <div class="row">
+                    <div ><input type="submit" style="height: 30px; font-size:medium" value="Submit" class = "btn btn-primary btn-xs" ></div>
+                  </div>
+                </form>
+                <button  class = "btn btn-primary btn-xs" (click)="newrow()"><b>+</b> Add row</button>
               </div>
-
             </div>
           </div>
-        </div>
-
-
-        <div *ngFor="let student of students">
-
-         <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h4 class="modal-title custom_align" id="Heading">Delete lab entry</h4>
-              </div>
-              <div class="modal-body">
-
-                <div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this lab?</div>
-
-              </div>
-              <div class="modal-footer ">
-                <button type="button" class="btn btn-success" ><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-          <!-- /.modal-dialog -->
-        </div>
         </div>
 
         <!-- /.row -->

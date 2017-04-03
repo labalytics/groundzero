@@ -1,57 +1,12 @@
-<div id="wrapper">
-
-  <!-- Navigation -->
-  <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-
-
-
-    <!-- /.navbar-top-links -->
-
-    <div class="navbar-default sidebar" role="navigation">
-      <div class="sidebar-nav navbar-collapse">
-        <ul class="nav" id="side-menu" *ngFor="let m of menu">
-          <li>
-            <a href="#" routerLink="/{{m.menu_name}}"><i class="fa fa-dashboard fa-fw"></i> {{ m.menu_name }}</a>
-          </li>
-          <!--<li>-->
-            <!--<a href="index.html"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>-->
-          <!--</li>-->
-
-          <!--<li>-->
-            <!--<a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Reports<span class="fa arrow"></span></a>-->
-            <!--<ul class="nav nav-second-level">-->
-              <!--<li>-->
-                <!--<a href="flot.html">Detail</a>-->
-              <!--</li>-->
-              <!--<li>-->
-                <!--<a href="morris.html">Billing</a>-->
-              <!--</li>-->
-            <!--</ul>-->
-            <!--&lt;!&ndash; /.nav-second-level &ndash;&gt;-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<a href="labs.html"><i class="fa fa-table fa-fw"></i> Labs</a>-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<a href="bookings.html"><i class="fa fa-edit fa-fw"></i> Bookings</a>-->
-          <!--</li>-->
-          <!--<li>-->
-            <!--<a href="students.html"><i class="fa fa-edit fa-fw"></i> Students</a>-->
-          <!--</li>-->
-
-          <!--<li>-->
-            <!--<a href="equipment.html"><i class="fa fa-edit fa-fw"></i> Equipments</a>-->
-          <!--</li>-->
-
-        </ul>
-      </div>
-      <!-- /.sidebar-collapse -->
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+  <div class="navbar-default sidebar" role="navigation">
+    <div class="sidebar-nav navbar-collapse">
+      <ul class="nav" id="side-menu" *ngFor="let m of menu">
+        <li>
+          <a href="#" routerLink="/{{m.menu_name}}"><i class="fa fa-dashboard fa-fw"></i> {{ m.menu_name }}</a>
+        </li>
+      </ul>
     </div>
-    <!-- /.navbar-static-side -->
-  </nav>
-
-  <!-- Page Content -->
-
-  <!-- /#page-wrapper -->
-
-</div>
+  </div>
+</nav>

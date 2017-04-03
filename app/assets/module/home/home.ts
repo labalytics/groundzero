@@ -7,8 +7,8 @@ import { AuthenticationService } from  "../../services/authentication.service"
 
 @Component({
   selector: "home",
-  templateUrl: "assets/module/home/home.html",
-  providers: [AuthenticationService]
+  templateUrl: "assets/module/home/home.html"
+  //providers: [AuthenticationService]
 })
 
 export class HomeComponent implements OnInit{
@@ -22,13 +22,12 @@ export class HomeComponent implements OnInit{
 
 
   currentUser: any = {};
-  menu: any ={};
 
   ngOnInit() {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-    console.log(this.currentUser);
-    this.menu = this.currentUser[0];
-    console.log(this.menu);
+    this.authService.getRoleandMenuData(this.authService.username)
+      .subscribe((result) => {
+       // let response = result["response"];
+      });
   }
 }
 
