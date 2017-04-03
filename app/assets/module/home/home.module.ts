@@ -21,12 +21,12 @@ import {EquipmentComponent} from "../../components/account/equipment.component"
 
 const routes: Routes = [
   {path: 'admin', pathMatch: 'full', component: AdminComponent},
-  {path: 'Students', pathMatch: 'full', component: StudentComponent},
-  {path: 'Labs', pathMatch: 'full', component: LabComponent},
-  {path: '', redirectTo: 'admin', pathMatch: 'full'},
+  {path: 'students', pathMatch: 'full', component: StudentComponent},
+  {path: 'labs', pathMatch: 'full', component: LabComponent},
+  {path: '', redirectTo: 'labs', pathMatch: 'full'},
   {path: 'dev', pathMatch: 'full', component: DeveloperComponent},
   {path: 'newlab', pathMatch: 'full', component: NewLabComponent},
-  {path: 'Equipments', pathMatch: 'full', component: EquipmentComponent}
+  {path: 'equipments', pathMatch: 'full', component: EquipmentComponent}
 ];
 
 @NgModule({

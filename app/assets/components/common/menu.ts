@@ -27,6 +27,9 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     this.authService.getRoleandMenuData(this.authService.username)
       .subscribe((result) => {
+        result.navItems.forEach(function(oItem: any){
+          oItem.menu_name = oItem.menu_name.toLowerCase();
+        });
         this.menu = result.navItems;
       });
   }

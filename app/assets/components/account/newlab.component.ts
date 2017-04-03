@@ -19,7 +19,7 @@ export class NewLabComponent implements OnInit{
   model: any = {};
   loading = false;
   returnUrl: string;
-  roleId = 0;
+  roleId = 1;
 
   constructor(protected router: Router, public authenticationService: AuthenticationService)
   {
@@ -36,7 +36,7 @@ export class NewLabComponent implements OnInit{
     this.authenticationService.addlabs(this.model)
       .subscribe((result) => {
           console.log(result);
-          this.router.navigate(['/Labs']);
+          this.router.navigate(['/labs']);
           //window.location.href = window.location.origin + "/home";
         }
       );
