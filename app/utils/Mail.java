@@ -1,5 +1,6 @@
 package utils;
 
+import org.apache.commons.mail.EmailException;
 import play.Configuration;
 import play.Logger;
 import play.libs.Akka;
@@ -64,7 +65,7 @@ public class Mail {
      *
      * @param envelop envelop to send
      */
-    public void sendMail(Mail.Envelop envelop) {
+    public void sendMail(Mail.Envelop envelop) throws EmailException {
         EnvelopJob envelopJob = new EnvelopJob(envelop, mailerClient);
         final FiniteDuration delay = Duration.create(DELAY, TimeUnit.SECONDS);
         Akka.system().scheduler().scheduleOnce(delay, envelopJob, Akka.system().dispatcher());
