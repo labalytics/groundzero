@@ -1,0 +1,100 @@
+@(title: String)(content: Html)
+<!doctype html>
+<html lang="en" data-framework="angular2">
+  <head>
+    @* In this version of the application the typescript compilation is done by the play framework.
+    The browser downloads .js files. *@
+    <meta charset="utf-8">
+    <title>@title</title>
+      <!--<link rel="stylesheet" href="@routes.Assets.versioned("lib/todomvc-common/base.css")">
+    <link rel="stylesheet" href="assets/stylesheets/todomvc-app.css"> -->
+    <script type='text/javascript' src='@routes.Assets.versioned("lib/systemjs/dist/system-polyfills.js")'></script>
+    <script type='text/javascript' src='@routes.Assets.versioned("lib/core-js/client/shim.min.js")'></script>
+    <script type='text/javascript' src='@routes.Assets.versioned("lib/zone.js/dist/zone.js")'></script>
+    <script type='text/javascript' src='@routes.Assets.versioned("lib/reflect-metadata/Reflect.js")'></script>
+    <script type='text/javascript' src='@routes.Assets.versioned("lib/systemjs/dist/system.src.js")'></script>
+
+    <script>    @* our app is downloaded as individual javascript files by SystemJs after compilation by sbt-typescript*@
+
+    var map = {
+      'app': 'assets',
+      '@@angular': 'assets/lib/@@angular',
+      'rxjs': 'assets/lib/rxjs',
+      'symbol-observable': 'assets/lib/symbol-observable'
+
+    };
+
+    var file = "bootstrap." + "@title";
+
+    var packages = {
+      'app': {main: file + '.js', defaultExtension: 'js'},
+      'rxjs': {defaultExtension: 'js'},
+      'assets/lib': {defaultExtension: 'js'},
+      'symbol-observable': {defaultExtension: 'js', main: 'index.js'}
+    };
+    var ngPackageNames = [
+      'common',
+      'compiler',
+      'core',
+      'forms',
+      'http',
+      'platform-browser',
+      'platform-browser-dynamic',
+      'router'
+    ];
+
+    function packIndex(pkgName) {
+      packages['@@angular/' + pkgName] = {main: 'index.js', defaultExtension: 'js'};
+    }
+    function packUmd(pkgName) {
+      packages['@@angular/' + pkgName] = {main: '/bundles/' + pkgName + '.umd.js', defaultExtension: 'js'};
+    }
+    // Most environments should use UMD; some (Karma) need the individual index files
+    function addAngularModulesToMap(pkgName) {
+      map['@@angular/' + pkgName] = 'assets/lib/angular__' + pkgName;
+    }
+
+    // Add package entries for angular packages
+    var setPackageConfig = System.packageWithIndex ? packIndex : packUmd;
+    ngPackageNames.forEach(setPackageConfig)
+
+    // Add map entries for angular packages
+    ngPackageNames.forEach(function (pkgName) {
+      addAngularModulesToMap(pkgName)
+    });
+
+    System.config({
+      map: map,
+      packages: packages,
+    });
+    @* SystemJs works out which other modules our app module depends on and will download and load them*@
+    System.import('app')
+      .catch(console.error.bind(console));
+
+    </script>
+      <!-- Bootstrap Core CSS -->
+    <link href="assets/stylesheets/bootstrap.min.css" rel="stylesheet">
+      <!-- Custom CSS -->
+    <link href="assets/stylesheets/landing-page.css" rel="stylesheet">
+    <link href="assets/stylesheets/labalytics.css" rel="stylesheet">
+      <!-- Custom Fonts -->
+    @*<link href="assets/stylesheets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">*@
+    @*<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">*@
+
+      <!-- jQuery -->
+    <script src="assets/javascripts/jquery.js"></script>
+      <!-- Bootstrap Core JavaScript -->
+    <script src="assets/javascripts/bootstrap.min.js"></script>
+
+      <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+      <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+      <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+  <body>
+  @content
+  </body>
+</html>
