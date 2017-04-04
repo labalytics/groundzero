@@ -45,6 +45,14 @@ export class AuthenticationService {
           let result: Object;
           result = JSON.parse(response._body);
           this.oRoleAndMenu = result.response;
+
+          /*Temp dummy user details*/
+          this.oRoleAndMenu.userInfo = {
+            userName: "Zack Snyder",
+            userEmail: "zack-snyder@uiowa.edu",
+            userRole: "Manager"
+          };
+
           return result.response;
         })
         .share();
@@ -52,7 +60,7 @@ export class AuthenticationService {
     }
   }
 
-  getAllLabs(labid: string , managerEmail: string) {
+  getAllLabs(labid: string, managerEmail: string) {
     //this.http.post('/addLabs', JSON.stringify({email: managerEmail}), this.options)
     return this.http.post('/getAllLabs', JSON.stringify({email: managerEmail}), this.options)
       .map((response: Response) => {
@@ -62,8 +70,7 @@ export class AuthenticationService {
       });
   }
 
-  insertStudents(newstudents: any)
-  {
+  insertStudents(newstudents: any) {
     return this.http.post('/insertStudents', JSON.stringify({students: newstudents}), this.options)
       .map((response: Response) => {
         let result: Object;
@@ -85,7 +92,7 @@ export class AuthenticationService {
   }
 
   getStudents(labid: Array<Object>) {
-    return this.http.post('/getstudents', JSON.stringify({ labid: labid}), this.options)
+    return this.http.post('/getstudents', JSON.stringify({labid: labid}), this.options)
       .map((response: Response) => {
         let result: Object;
         result = JSON.parse(response._body);
@@ -123,8 +130,7 @@ export class AuthenticationService {
     localStorage.removeItem('currentUser');
   }
 
-  public getEquipments(userDetails: any)
-  {
+  public getEquipments(userDetails: any) {
     let id: any = [];
     for (let i = 0; i < userDetails.length; i++) {
       id.push(userDetails[i].labId.id);
@@ -141,8 +147,7 @@ export class AuthenticationService {
       });
   }
 
-  public addEquipment(equipment: any)
-  {
+  public addEquipment(equipment: any) {
     return this.http.post('/addEquipment', JSON.stringify({equipment}), this.options)
       .map((response: Response) => {
         //this.authenticated = true;

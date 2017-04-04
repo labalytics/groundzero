@@ -1,9 +1,9 @@
 import {Component, OnInit} from "@angular/core"
-import { Router, ActivatedRoute } from '@angular/router';
+import {Router, NavigationEnd} from '@angular/router';
 
 //import { AlertService, AuthenticationService } from "../../services/index";
 
-import { AuthenticationService } from  "../../services/authentication.service"
+import {AuthenticationService} from  "../../services/authentication.service"
 
 @Component({
   selector: "home",
@@ -11,9 +11,31 @@ import { AuthenticationService } from  "../../services/authentication.service"
   //providers: [AuthenticationService]
 })
 
-export class HomeComponent implements OnInit{
+export class HomeComponent implements OnInit {
+  currentRouteHeader: string;
+  currentRouteDesc: string;
 
-  constructor(private authService: AuthenticationService) {
+  constructor(route: Router, private authService: AuthenticationService) {
+    route.events.subscribe((event) => {
+      if(event instanceof NavigationEnd) {
+        switch (event.url){
+          case "/labs":
+            this.currentRouteHeader = "Lab information";
+            this.currentRouteDesc = "View, add or edit lab information";
+            break;
+          case "/students":
+            this.currentRouteHeader = "Student information";
+            this.currentRouteDesc = "View or add students to labs";
+            break;
+          case "/equipments":
+            this.currentRouteHeader = "Equipment information";
+            this.currentRouteDesc = "Manage equipments for your labs";
+            break;
+          default:
+            this.currentRouteHeader = "";
+        }
+      }
+    });
   }
 
   get authenticated() {
@@ -26,7 +48,7 @@ export class HomeComponent implements OnInit{
   ngOnInit() {
     this.authService.getRoleandMenuData(this.authService.username)
       .subscribe((result) => {
-       // let response = result["response"];
+        // let response = result["response"];
       });
   }
 }

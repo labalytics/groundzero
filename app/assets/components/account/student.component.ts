@@ -65,7 +65,7 @@ export class StudentComponent implements OnInit {
     this.authService.getRoleandMenuData(this.authService.username)
       .subscribe((result) => {
         // let labId = result.userDetails.labId.id;
-        console.log(result);
+        //console.log(result);
         this.roles = result.userDetails;
         this.getStudents(result.userDetails)
         //this.getLabs(labId);
