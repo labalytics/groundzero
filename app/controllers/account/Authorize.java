@@ -141,9 +141,8 @@ public class Authorize extends Controller {
       JsonNode json = request().body().asJson();
       UserService userService = new UserService();
 
-      String sStatus = userService.registerUser(jpaApi, json);
+      String sStatus = userService.registerUser(jpaApi, json , mailerClient);
       hash.put("registration", sStatus);
-
       oResponse.status = Constants.RESPONSE_SUCCESS;
       oResponse.message = "Role Retrieved Successfully";
       oResponse.response = hash;
