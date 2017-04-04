@@ -20,13 +20,10 @@ import java.util.UUID;
  * Created by aniketchitale7 on 3/27/17.
  */
 public class StudentService {
-
-  public String addStudents(JPAApi jpaApi ,ArrayNode arrayNode){
-
+  public static String addStudents(JPAApi jpaApi ,ArrayNode arrayNode){
     for (final JsonNode objNode : arrayNode) {
       User user = UserCore.findByEmail(jpaApi , objNode.findPath("email").textValue());
-      if(user == null)
-      {
+      if(user == null) {
         user = new User();
         user.firstName = objNode.findPath("firstName").textValue();
         user.lastName =objNode.findPath("lastName").textValue();
@@ -43,11 +40,8 @@ public class StudentService {
         String output = sb.toString();
         try {
           user.passwordHash = Hash.createPassword(output);
-
-        }
-        catch(Exception e)
-        {
-          user.passwordHash ="";
+        } catch(Exception e) {
+          return Constants.STUDENT_FAILURE;
         }
         user.confirmationToken = UUID.randomUUID().toString();
         user = UserCore.doRegister(jpaApi, user);
@@ -55,21 +49,14 @@ public class StudentService {
 
       if(user == null) return Constants.STUDENT_FAILURE;
 
-
-
       UserLabRole userLabRole =new UserLabRole();
       userLabRole.labId = LabCore.getLabById(jpaApi, objNode.findPath("labid").asLong());
       userLabRole.roleId = RoleCore.GetRole(jpaApi, 2);
       userLabRole.userId = user;
       userLabRole =  LabCore.insertRoleMapper(jpaApi, userLabRole);
 
-      if(userLabRole == null)
-          return Constants.STUDENT_FAILURE;
-
+      if(userLabRole == null) return Constants.STUDENT_FAILURE;
     }
-
-
-
     return Constants.REGISTRATION_SUCCESS;
   }
 }
