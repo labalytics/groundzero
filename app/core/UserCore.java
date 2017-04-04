@@ -36,9 +36,9 @@ public class UserCore {
             user.validated = true;
             user.status = "Active";
             JPA.em().persist(user);
-            return
+            return Constants.RESET_PASSWORD;
           }
-         return Constants.RESET_PASSWORD;
+         return Constants.SUCCESS;
         }
         else return Constants.INCORRECT_PASSWORD;
       }
