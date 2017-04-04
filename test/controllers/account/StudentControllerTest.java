@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 import play.api.libs.mailer.MailerClient;
 import play.data.FormFactory;
@@ -48,6 +49,7 @@ public class StudentControllerTest {
     MockitoAnnotations.initMocks(this);
   }
 
+  @PrepareForTest({StudentService.class})
   @Test
   public void addStudents() throws Exception {
     /**
@@ -61,16 +63,16 @@ public class StudentControllerTest {
     result.put("lastName", "TestLastName");
     result.put("email", "testuser@gmail.com");
     result.put("labid", "testlabid");
+    arrayNode.add(result);
 
-    arrayNode.addAll(ObjectNode);
     PowerMockito.mockStatic(StudentService.class);
     //mock the behavior of UserCore.authenticate to return the value, when the following data is given as input
-    PowerMockito.when(StudentService.addStudents(jpaApi, )).thenReturn(Constants.SUCCESS);
+    PowerMockito.when(StudentService.addStudents(jpaApi, arrayNode)).thenReturn(Constants.SUCCESS);
 
     /**
      * When
      */
-    String validate = UserCore.authenticate(jpaApi, user.email, user.passwordHash);
+    String validate = StudentService.addStudents(jpaApi, arrayNode);
 
     /**
      * Then
@@ -79,7 +81,7 @@ public class StudentControllerTest {
 
     //Verify that UserCore.authenticate was called
     PowerMockito.verifyStatic();
-    UserCore.authenticate(jpaApi, user.email, user.passwordHash);
+    StudentService.addStudents(jpaApi, arrayNode);
   }
 
 }
