@@ -39,6 +39,8 @@ public class UserService {
     user.email = json.findPath("email").textValue();
     user.dateCreation = new Date();
     user.validated = false;
+    user.status = "Active";
+
     try {
       user.passwordHash = Hash.createPassword(json.findPath("password").textValue());
     }
