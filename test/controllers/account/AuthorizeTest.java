@@ -221,12 +221,70 @@ public class AuthorizeTest {
     PowerMockito.verifyStatic();
     UserCore.authenticate(jpaApi, user.email, user.passwordHash);
   }
-
+  @PrepareForTest({UserCore.class})
   @Test
-  public void testConfirm() {
+  public void testConfirmforuser() {
     //Result result = authorize.confirm("hfhf");
+    User user = new User();
+    user.email = "ankur.shri@gmail.com";
+    user.passwordHash = "ankur";
+    user.firstName = "Ankur";
+    user.id = (long) 172863863;
+    user.lastName = "Shrivastava";
+    user.confirmationToken = "asghs";
+    user.validated = true;
+
+    PowerMockito.mockStatic(UserCore.class);
+    //mock the behavior of UserCore.authenticate to return the value, when the following data is given as input
+    PowerMockito.when(UserCore.findByConfirmationToken(jpaApi,"asghs")).thenReturn(user);
+
+    User userreturn = UserCore.findByConfirmationToken(jpaApi, user.confirmationToken);
+    assertEquals(userreturn, user);
 
   }
+  @PrepareForTest({UserCore.class})
+  @Test
+  public void testConfirmforwronguser() {
+    //Result result = authorize.confirm("hfhf");
+    User user = new User();
+    user.email = "ankur.shri@gmail.com";
+    user.passwordHash = "ankur";
+    user.firstName = "Ankur";
+    user.id = (long) 172863863;
+    user.lastName = "Shrivastava";
+    user.confirmationToken = "ghjj";
+    user.validated = true;
+
+    PowerMockito.mockStatic(UserCore.class);
+    //mock the behavior of UserCore.authenticate to return the value, when the following data is given as input
+    PowerMockito.when(UserCore.findByConfirmationToken(jpaApi,"asghs")).thenReturn(user);
+
+    User userreturn = UserCore.findByConfirmationToken(jpaApi, user.confirmationToken);
+    assertNotEquals(userreturn, user);
+
+  }
+  @PrepareForTest({UserCore.class})
+  @Test
+  public void testConfirmfornulluser() {
+    //Result result = authorize.confirm("hfhf");
+//    User user = new User();
+//    user.email = "ankur.shri@gmail.com";
+//    user.passwordHash = "ankur";
+//    user.firstName = "Ankur";
+//    user.id = (long) 172863863;
+//    user.lastName = "Shrivastava";
+//    user.confirmationToken = "ghjj";
+//    user.validated = true;
+
+    PowerMockito.mockStatic(UserCore.class);
+    //mock the behavior of UserCore.authenticate to return the value, when the following data is given as input
+    //PowerMockito.when(UserCore.findByConfirmationToken(jpaApi,"asghs")).thenReturn(user);
+
+    User userreturn = UserCore.findByConfirmationToken(jpaApi, "asghs");
+    assertEquals(userreturn, null);
+
+  }
+
 
   @Test
   public void testRegister() {
