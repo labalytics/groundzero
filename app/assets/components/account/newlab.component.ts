@@ -19,7 +19,7 @@ export class NewLabComponent implements OnInit{
   model: any = {};
   loading = false;
   returnUrl: string;
-  roleId = 1;
+  roleId = 0;
 
   constructor(protected router: Router, public authenticationService: AuthenticationService)
   {
