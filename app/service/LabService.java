@@ -41,6 +41,7 @@ public class LabService {
       user.email = json.findPath("email").textValue();
       user.dateCreation = new Date();
       user.validated = false;
+      user.status = "Pending";
       char[] chars = "abcdefghijklmnopqrstuvwxyz".toCharArray();
       StringBuilder sb = new StringBuilder();
       Random random = new Random();
