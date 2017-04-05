@@ -46,11 +46,13 @@ export class AuthenticationService {
           result = JSON.parse(response._body);
           this.oRoleAndMenu = result.response;
 
+          const userInfo = this.oRoleAndMenu.userDetails[0];
           /*Temp dummy user details*/
           this.oRoleAndMenu.userInfo = {
-            userName: "Zack Snyder",
-            userEmail: "zack-snyder@uiowa.edu",
-            userRole: "Manager"
+            userName: userInfo.userId.firstName + ", " + userInfo.userId.lastName,
+            userEmail: userInfo.userId.email,
+            dateAdded: userInfo.userId.dateCreation,
+            userRole: userInfo.roleId.roleName
           };
 
           return result.response;

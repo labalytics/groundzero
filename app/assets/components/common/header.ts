@@ -6,8 +6,7 @@ import {AlertService, AuthenticationService} from "../../services/index";
 
 @Component({
   selector: "common-header",
-  templateUrl: "assets/components/common/header.html",
-  providers: [AuthenticationService]
+  templateUrl: "assets/components/common/header.html"
 })
 
 export class HeadComponent implements OnInit {

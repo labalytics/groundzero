@@ -1,11 +1,9 @@
 @(level: String)
 
 @main("login") {
-  @app.navigation()
-  <div id="wrap">
-    <div id="main" class="clear-top">
-      <authorize><loading></loading></authorize>
-    </div>
-  </div>
-  @app.footer()
+  @* @app.navigation() *@
+  <body class="hold-transition login-page">
+    <authorize><loading></loading></authorize>
+  </body>
+  @* @app.footer()*@
 }
