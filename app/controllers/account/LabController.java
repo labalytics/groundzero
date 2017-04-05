@@ -21,6 +21,7 @@ import service.LabService;
 import utils.Constants;
 
 import core.ResponseCore;
+import utils.Mailer;
 
 import static play.libs.Json.newObject;
 import static play.libs.Json.toJson;
@@ -48,11 +49,13 @@ public class LabController extends Controller {
       JsonNode json = request().body().asJson();
       String email = json.findPath("email").textValue();
       LabService labService = new LabService();
-      String sStatus = labService.addLabs(jpaApi, json , email);
+      String sStatus = labService.addLabs(jpaApi, json , email , mailerClient);
       hash.put("registration", sStatus);
       oResponse.status = Constants.RESPONSE_SUCCESS;
       oResponse.message = "Lab Added Successfully";
       oResponse.response = hash;
+      //Send Email
+
 
     } catch (Exception e) {
       logger.error("Authorize.save error", e);

@@ -48,11 +48,8 @@ export class EquipmentComponent implements OnInit {
       .subscribe((result) => {
         // let labId = result.userDetails.labId.id;
         console.log(result);
-
-
       });
   }
-
 
   dropChange(val:any)
   {

@@ -7,6 +7,7 @@ import org.apache.commons.mail.EmailException;
 import play.Configuration;
 import play.Logger;
 import play.data.Form;
+import play.db.jpa.JPA;
 import play.db.jpa.JPAApi;
 import play.db.jpa.Transactional;
 import play.i18n.Messages;
@@ -29,6 +30,14 @@ public class UserCore {
       User user = (User) q.getSingleResult();
       if(user != null) {
         if (Hash.checkPassword(password, user.passwordHash)) {
+          if(user.status.equals("Pending"))
+          {
+            user.confirmationToken = null;
+            user.validated = true;
+            user.status = "Active";
+            JPA.em().persist(user);
+            return Constants.RESET_PASSWORD;
+          }
          return Constants.SUCCESS;
         }
         else return Constants.INCORRECT_PASSWORD;

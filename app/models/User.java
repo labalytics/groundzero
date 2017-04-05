@@ -50,6 +50,10 @@ public class User {
   @Formats.NonEmpty
   public Boolean validated = false;
 
+  @Column(name = "status")
+  @Formats.NonEmpty
+  public String status;
+
   public static User authenticate(String email, String password) {
     //return find.where().eq("email", email).eq("password", password).findUnique();
 

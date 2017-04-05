@@ -8,7 +8,9 @@ public class Constants {
   public static final String RESPONSE_SUCCESS = "Success";
   public static final String RESPONSE_FAILURE = "Failure";
 
+
   public static final String SUCCESS = "User Logged in Successfully";
+  public static final String RESET_PASSWORD = "Please reset your password";
   public static final String USER_NOT_FOUND = "User not found";
   public static final String INCORRECT_PASSWORD = "Incorrect Password";
 

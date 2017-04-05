@@ -8,14 +8,18 @@ import models.Lab;
 import models.Role;
 import models.User;
 import models.UserLabRole;
+import org.apache.commons.mail.EmailException;
 import play.data.FormFactory;
 import play.db.jpa.JPAApi;
 import play.db.jpa.Transactional;
+import play.i18n.Messages;
 import play.libs.mailer.MailerClient;
 import utils.Constants;
 import utils.Hash;
+import utils.Mailer;
 
 import javax.inject.Inject;
+import java.net.MalformedURLException;
 import java.util.Date;
 import java.util.UUID;
 
@@ -24,7 +28,7 @@ import java.util.UUID;
  */
 public class UserService {
 
-  public String registerUser(JPAApi jpaApi ,JsonNode json ){
+  public String registerUser(JPAApi jpaApi ,JsonNode json, MailerClient mailerClient ){
 
     User user = new User();
     Lab lab = new Lab();
@@ -35,6 +39,8 @@ public class UserService {
     user.email = json.findPath("email").textValue();
     user.dateCreation = new Date();
     user.validated = false;
+    user.status = "Active";
+
     try {
       user.passwordHash = Hash.createPassword(json.findPath("password").textValue());
     }
@@ -45,7 +51,6 @@ public class UserService {
     user = UserCore.doRegister(jpaApi, user);
 
     if(user==null) return Constants.REGISTRATION_USER_EXISTS;
-
     lab.labName = json.findPath("lname").textValue();
     lab.labPi = json.findPath("piname").textValue();
     lab = LabCore.insert(jpaApi, lab);
@@ -55,7 +60,18 @@ public class UserService {
     userLabRole.roleId = RoleCore.GetRole(jpaApi, 1);
     userLabRole.userId = user;
     userLabRole =  LabCore.insertRoleMapper(jpaApi, userLabRole);
+    //send email
+    Mailer mail = new Mailer(mailerClient);
+    try {
+      mail.sendMailAskForConfirmation(user);
+    } catch (EmailException e) {
+      e.printStackTrace();
+      //return Constants.RESPONSE_EXCEPTION;
+    } catch (MalformedURLException e) {
+      e.printStackTrace();
+      //return Constants.RESPONSE_EXCEPTION;
 
+    }
     return Constants.REGISTRATION_SUCCESS;
   }
 

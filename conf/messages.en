@@ -17,7 +17,10 @@ login=Login
 logout=Logout
 
 mail.confirm.subject=Welcome to Labalytics
-mail.confirm.message=Welcome to Welcome to Labalytics <br> Click on this link : {0} to confirm your email.
+mail.labAdded.subject=New Lab Added
+mail.resetPassword.message=Welcome to Labalytics <br> You have been added as a Lab Manager.<br>Username is: {0} , Temporary Password: {1} <br> click on link to login : {2}
+mail.labAdded.message =Welcome to Labalytics <br> You have added a new Lab : {0}
+mail.confirm.message=Welcome to Labalytics <br> Click on this link : {0} to confirm your email.
 mail.welcome.subject=Welcome to Labalytics
 mail.welcome.message=Welcome to Labalytics. <br> Your account is validated. Enjoy!
 

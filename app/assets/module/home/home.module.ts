@@ -8,7 +8,8 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 import {HomeComponent} from "./home";
 import {HeadComponent} from "../../components/common/header";
-import {MenuComponent} from "../../components/common/menu";
+import {MenuComponent} from "../../components/common/sidebar";
+import {FooterComponent} from "../../components/common/footer";
 
 import { AuthenticationService } from  "../../services/authentication.service"
 
@@ -16,17 +17,16 @@ import {AdminComponent} from "../../components/account/admin.component"
 import {StudentComponent} from "../../components/account/student.component"
 import {LabComponent} from "../../components/account/lab.component"
 import {DeveloperComponent} from "../../components/account/developer.component"
-import {NewLabComponent} from "../../components/account/newlab.component"
 import {EquipmentComponent} from "../../components/account/equipment.component"
+
 
 const routes: Routes = [
   {path: 'admin', pathMatch: 'full', component: AdminComponent},
-  {path: 'Students', pathMatch: 'full', component: StudentComponent},
-  {path: 'Labs', pathMatch: 'full', component: LabComponent},
-  {path: '', redirectTo: 'admin', pathMatch: 'full'},
+  {path: 'students', pathMatch: 'full', component: StudentComponent},
+  {path: 'labs', pathMatch: 'full', component: LabComponent},
+  {path: '', redirectTo: 'labs', pathMatch: 'full'},
   {path: 'dev', pathMatch: 'full', component: DeveloperComponent},
-  {path: 'newlab', pathMatch: 'full', component: NewLabComponent},
-  {path: 'Equipments', pathMatch: 'full', component: EquipmentComponent}
+  {path: 'equipments', pathMatch: 'full', component: EquipmentComponent}
 ];
 
 @NgModule({
@@ -36,7 +36,7 @@ const routes: Routes = [
     , HttpModule
     , RouterModule.forRoot(routes)
   ],
-  declarations: [HomeComponent, HeadComponent, MenuComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, NewLabComponent, EquipmentComponent],
+  declarations: [HomeComponent, HeadComponent, MenuComponent, FooterComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, EquipmentComponent],
   bootstrap: [HomeComponent],
   providers: [
     AuthenticationService,

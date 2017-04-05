@@ -75,7 +75,7 @@ public class Authorize extends Controller {
     return ok(views.html.authorize.authorize.render("A"));
   }
 
-  @Transactional(readOnly = true)
+  @Transactional
   public Result validateUser() {
     logger.debug("Trying to Login");
     JsonNode json = request().body().asJson();
@@ -85,7 +85,7 @@ public class Authorize extends Controller {
     String email = json.findPath("email").textValue();
     HashMap<String, Object> hash = new HashMap();
     String sStatus = UserCore.authenticate(jpaApi, email, json.findPath("password").textValue());
-    if (sStatus.equals(Constants.SUCCESS)) {
+    if (sStatus.equals(Constants.SUCCESS) || sStatus.equals(Constants.RESET_PASSWORD)) {
 
       oResponse.status = Constants.RESPONSE_SUCCESS;
       oResponse.message = sStatus;
@@ -141,9 +141,8 @@ public class Authorize extends Controller {
       JsonNode json = request().body().asJson();
       UserService userService = new UserService();
 
-      String sStatus = userService.registerUser(jpaApi, json);
+      String sStatus = userService.registerUser(jpaApi, json , mailerClient);
       hash.put("registration", sStatus);
-
       oResponse.status = Constants.RESPONSE_SUCCESS;
       oResponse.message = "Role Retrieved Successfully";
       oResponse.response = hash;
