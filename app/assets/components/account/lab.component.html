@@ -136,7 +136,7 @@
               <div *ngIf="f.submitted && !lab_name.valid" class="help-block">Lab name is required</div>
               <label for="lab_name">Lab Name</label>
             </div>
-            <div *ngIf="roleId == 0" class="form-group"
+            <div *ngIf="roleId == 3" class="form-group"
                  [ngClass]="{ 'has-error': f.submitted && !manager_fname.valid }">
               <input id="manager_fname" name="manager_fname" type="text" class="form-control" required
                      placeholder="Manager First Name" [(ngModel)]="model.manager_fname" #manager_fname="ngModel"
@@ -145,7 +145,7 @@
               </div>
               <label for="manager_fname">Manager First Name</label>
             </div>
-            <div *ngIf="roleId == 0" class="form-group"
+            <div *ngIf="roleId == 3" class="form-group"
                  [ngClass]="{ 'has-error': f.submitted && !manager_lname.valid }">
               <input id="manager_lname" name="manager_lname" type="text" class="form-control" required
                      placeholder="Manager Last Name" [(ngModel)]="model.manager_lname" #manager_lname="ngModel"
@@ -161,19 +161,19 @@
               </div>
               <label for="pi_name">PI Name</label>
             </div>
-            <div *ngIf="roleId == 0" class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
+            <div *ngIf="roleId == 3" class="form-group" [ngClass]="{ 'has-error': f.submitted && !email.valid }">
               <input id="email" name="email" type="text" class="form-control" required placeholder="Email ID"
                      [(ngModel)]="model.email" #email="ngModel" required>
               <div *ngIf="f.submitted && !email.valid" class="help-block">Email id is required</div>
               <label for="email">Email ID</label>
             </div>
-            <div *ngIf="roleId == 0" class="form-group" [ngClass]="{ 'has-error': f.submitted && !phone.valid }">
+            <div *ngIf="roleId == 3" class="form-group" [ngClass]="{ 'has-error': f.submitted && !phone.valid }">
               <input id="phone" name="phone" type="text" class="form-control" required placeholder="Phone Number"
                      [(ngModel)]="model.phone" #phone="ngModel" required>
               <div *ngIf="f.submitted && !phone.valid" class="help-block">Lab name is required</div>
               <label for="phone">Phone Number</label>
             </div>
-            <div *ngIf="roleId == 0" class="form-group" [ngClass]="{ 'has-error': f.submitted && !address.valid }">
+            <div *ngIf="roleId == 3" class="form-group" [ngClass]="{ 'has-error': f.submitted && !address.valid }">
               <input id="address" name="address" type="text" class="form-control" required placeholder="Address"
                      [(ngModel)]="model.address" #address="ngModel" required>
               <div *ngIf="f.submitted && !address.valid" class="help-block">Lab name is required</div>

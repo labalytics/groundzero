@@ -50,9 +50,9 @@ public class Mailer {
    * @param user user created
    * @throws EmailException Exception when sending mail
    */
-  public void sendEmailForNewLab(Lab lab , String email) throws EmailException, MalformedURLException {
+  public void sendEmailForNewLab(String labname , String email) throws EmailException, MalformedURLException {
     String subject = Messages.get("mail.labAdded.subject");
-    String message = Messages.get("mail.labAdded.message", lab.labName);
+    String message = Messages.get("mail.labAdded.message", labname);
     Mail.Envelop envelop = new Mail.Envelop(subject, message, email);
     Mail mailer = new Mail(mailerClient);
     mailer.sendMail(envelop);
@@ -64,13 +64,13 @@ public class Mailer {
    * @param user user created
    * @throws EmailException Exception when sending mail
    */
-  public void sendEmailWithManagerPassword(User user , String password) throws EmailException, MalformedURLException {
+  public void sendEmailForNewPassword(String username , String password) throws EmailException, MalformedURLException {
     String subject = Messages.get("mail.confirm.subject");
     String urlString = "http://" + Configuration.root().getString("server.hostname");
     urlString += "/authorize#/login";
     URL url = new URL(urlString); // validate the URL, will throw an exception if bad.
-    String message = Messages.get("mail.resetPassword.message", user.email, password , url.toString());
-    Mail.Envelop envelop = new Mail.Envelop(subject, message, user.email);
+    String message = Messages.get("mail.resetPassword.message", username, password , url.toString());
+    Mail.Envelop envelop = new Mail.Envelop(subject, message, username);
     Mail mailer = new Mail(mailerClient);
     mailer.sendMail(envelop);
   }
