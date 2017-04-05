@@ -51,7 +51,7 @@ public class StudentController extends Controller {
       Iterator<JsonNode> iterator = json.elements();
       ArrayNode arrayNode = (ArrayNode) json.findPath("students");
       StudentService studentService = new StudentService();
-      studentService.addStudents(jpaApi, arrayNode);
+      studentService.addStudents(jpaApi, arrayNode , mailerClient);
       oResponse.status = Constants.RESPONSE_SUCCESS;
       oResponse.message = "Students added Successfully";
       oResponse.response = hash;
