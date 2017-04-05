@@ -20,7 +20,33 @@
         </div>
       </div>
     </form>
-    <a href="#">I forgot my password</a><br>
-    <a routerLink="/signup" class="text-center">Signup</a>
+    <button style="border: none; background-color: transparent;" data-title="Newlab" data-toggle="modal" data-target="#newlab">I forgot my password</button>
+    <br>
+    <button style="border: none; background-color: transparent;" routerLink="/signup" class="text-center">Signup</button>
   </div>
 </div>
+<div class="modal fade" id="newlab" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
+          class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Forgot password</h4>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group">
+          <input class="form-control " type="text" placeholder="Email Id" [(ngModel)]="resetemail.email" #resetemail="ngModel" required>
+        </div>
+      </div>
+      <div class="modal-footer ">
+        <button type="button" class="btn btn-primary btn-block btn-flat" (click)="resetpassword(resetemail.value)"><span
+          class="glyphicon glyphicon-ok-sign"></span> Reset password
+        </button>
+      </div>
+
+    </div>
+    </div>
+  <!-- /.modal-content -->
+</div>
+

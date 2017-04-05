@@ -137,6 +137,12 @@ public class UserCore {
     return null;
   }
 
+  public static boolean updateUser(JPAApi jpaApi, User user)
+  {
+    jpaApi.em().persist(user);
+    return true;
+  }
+
   /**
    * Confirms an account.
    *

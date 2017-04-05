@@ -17,6 +17,7 @@ import play.libs.mailer.MailerClient;
 import utils.Constants;
 import utils.Hash;
 import utils.Mailer;
+import utils.UtilCommons;
 
 import javax.inject.Inject;
 import java.net.MalformedURLException;
@@ -73,6 +74,25 @@ public class UserService {
 
     }
     return Constants.REGISTRATION_SUCCESS;
+  }
+
+  public String forgotPassword(JPAApi jpaApi, String email)
+  {
+    try {
+      User user = UserCore.findByEmail(jpaApi, email);
+      if (user != null) {
+        user.passwordHash = Hash.createPassword(UtilCommons.generatePassword());
+        user.status = "Pending";
+        //email logic
+        UserCore.updateUser(jpaApi,user);
+        return Constants.SUCCESS;
+      } else {
+        return Constants.USER_NOT_FOUND;
+      }
+    }
+    catch (Exception e) {
+      return Constants.RESPONSE_FAILURE;
+    }
   }
 
 }

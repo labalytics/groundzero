@@ -161,4 +161,15 @@ export class AuthenticationService {
       });
   }
 
+  public forgotpassword(email :any)
+  {
+    return this.http.post('/forgotpassword', JSON.stringify({email}), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse(response._body);
+        console.log(result.message);
+        return result.message;
+      });
+  }
+
 }
