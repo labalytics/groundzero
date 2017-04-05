@@ -62,7 +62,7 @@ public class LabService {
       user = UserCore.doRegister(jpaApi, user);
       //send email for New Manager Registration
       try {
-        mail.sendEmailWithManagerPassword(user , output);
+        mail.sendEmailForNewPassword(user.email , output);
       } catch (EmailException e) {
         e.printStackTrace();
       } catch (MalformedURLException e) {
@@ -86,7 +86,7 @@ public class LabService {
     userLabRole =  LabCore.insertRoleMapper(jpaApi, userLabRole);
     //send Email for new Lab registration under existing manager.
     try {
-      mail.sendEmailForNewLab(lab , user.email);
+      mail.sendEmailForNewLab(lab.labName , user.email);
     } catch (EmailException e) {
       e.printStackTrace();
     } catch (MalformedURLException e) {

@@ -72,6 +72,7 @@ export class LabComponent implements OnInit, OnDestroy {
        // let labId = result.userDetails.labId.id;
         this.labs = result.userDetails;
         this.labsCopy = this.labs;
+        this.roleId = result.userDetails[0].roleId.id;
         //this.getLabs(labId);
       });
   }
