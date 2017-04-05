@@ -51,7 +51,7 @@ public class StudentControllerTest {
 
   @PrepareForTest({StudentService.class})
   @Test
-  public void addStudents() throws Exception {
+  public void testAddStudents() throws Exception {
     /**
      * Given
      */
@@ -67,7 +67,7 @@ public class StudentControllerTest {
 
     PowerMockito.mockStatic(StudentService.class);
     //mock the behavior of UserCore.authenticate to return the value, when the following data is given as input
-    PowerMockito.when(StudentService.addStudents(jpaApi, arrayNode)).thenReturn(Constants.SUCCESS);
+    PowerMockito.when(StudentService.addStudents(jpaApi, arrayNode)).thenReturn(Constants.REGISTRATION_SUCCESS);
 
     /**
      * When
@@ -77,7 +77,7 @@ public class StudentControllerTest {
     /**
      * Then
      */
-    assertEquals(validate, (Constants.SUCCESS));
+    assertEquals(validate, (Constants.REGISTRATION_SUCCESS));
 
     //Verify that UserCore.authenticate was called
     PowerMockito.verifyStatic();

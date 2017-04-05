@@ -223,7 +223,7 @@ public class AuthorizeTest {
   }
   @PrepareForTest({UserCore.class})
   @Test
-  public void testConfirmforuser() {
+  public void testConfirmForUser() {
     //Result result = authorize.confirm("hfhf");
     User user = new User();
     user.email = "ankur.shri@gmail.com";
@@ -244,7 +244,7 @@ public class AuthorizeTest {
   }
   @PrepareForTest({UserCore.class})
   @Test
-  public void testConfirmforwronguser() {
+  public void testConfirmForWrongUser() {
     //Result result = authorize.confirm("hfhf");
     User user = new User();
     user.email = "ankur.shri@gmail.com";
@@ -265,7 +265,7 @@ public class AuthorizeTest {
   }
   @PrepareForTest({UserCore.class})
   @Test
-  public void testConfirmfornulluser() {
+  public void testConfirmForNullUser() {
     //Result result = authorize.confirm("hfhf");
 //    User user = new User();
 //    user.email = "ankur.shri@gmail.com";
