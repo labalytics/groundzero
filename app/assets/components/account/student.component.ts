@@ -88,8 +88,10 @@ export class StudentComponent implements OnInit {
       .subscribe((result) => {
         // let labId = result.userDetails.labId.id;
         console.log(result);
+        this.ngOnInit();
         //this.getLabs(labId);
       });
+
   }
 
   newrow()

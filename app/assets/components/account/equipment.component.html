@@ -199,7 +199,7 @@
             <div class="col-md-12">
               <div class="table-responsive">
 
-                <h4> New Student</h4>
+                <h4> New Equipment</h4>
 
                 <table style="width: 100%" >
                   <tr>
@@ -271,7 +271,7 @@
                           <td>
                             <input style="border: none; text-align: left" type="text" value="Equipment" readonly>
                           </td>
-                          <td>
+                          <td align="right">
                             <select name="equipment_parName" class="form-control" [(ngModel)]="newequipment.equipment_parName" #equipment_parName="ngModel" required>
                               <option *ngFor="let equip of equipments" [ngValue]= "equip.equipment.id"  >
                                 <div *ngIf="equip.equipment.lab.id == labid.value && equip.type =='Equipment'">{{equip.equipment.equipmentName}}</div>
@@ -342,8 +342,8 @@
                     <div *ngIf="f.submitted && !descriptiom.valid" class="help-block">Description required</div>
 
                   </div>
-                  <div class="row">
-                    <div ><input type="submit" value="Submit" class = "btn btn-primary btn-xs" tabindex="11"></div>
+                  <div>
+                    <div ><input type="submit" value="Submit" style="background-color: #367fa9; width: 100px;height: 30px; font-size:medium; text-align: center" class = "btn btn-primary btn-xs" tabindex="11"></div>
                   </div>
                 </form>
               </div>

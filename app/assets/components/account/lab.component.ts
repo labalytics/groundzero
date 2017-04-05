@@ -61,6 +61,7 @@ export class LabComponent implements OnInit, OnDestroy {
       .subscribe((result) => {
           console.log(result);
           this.router.navigate(['/labs']);
+          this.ngOnInit();
           //window.location.href = window.location.origin + "/home";
         }
       );
