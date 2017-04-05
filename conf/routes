@@ -16,6 +16,7 @@ GET     /authorize                      controllers.account.Authorize.GetAuthori
 GET     /register                   controllers.account.Authorize.register()
 POST    /validate                   controllers.account.Authorize.validateUser()
 POST    /registration                   controllers.account.Authorize.registration()
+POST  /forgotpassword                 controllers.account.Authorize.forgotpassword()
 
 #LabController
 POST    /addLabs                   controllers.account.LabController.addLabsForManager()

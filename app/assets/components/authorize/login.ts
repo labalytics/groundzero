@@ -17,6 +17,7 @@ export class LoginComponent{
   currentUser: any = {};
   loading = false;
   returnUrl: string;
+  resetemail: any = {};
 
   constructor(protected router: Router, public authenticationService: AuthenticationService)
   {}
@@ -36,6 +37,19 @@ export class LoginComponent{
         }
       );
 
+  }
+
+  resetpassword(email: any)
+  {
+
+    this.authenticationService.forgotpassword(email)
+      .subscribe((result) => {
+          console.log(result);
+          alert(result);
+          //this.router.navigate(['/signup']);
+          window.location.href = window.location.origin + "/authorize";
+        }
+      );
   }
 }
 
