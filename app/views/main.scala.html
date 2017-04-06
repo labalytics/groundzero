@@ -13,17 +13,25 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="assets/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="assets/dist/css/skins/skin-blue.min.css">
+
+
+
     <!-- Bootstrap CSS end -->
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/stylesheets/labalytics.css">
     <link rel="stylesheet" href="assets/stylesheets/landing-page.css">
+    <link rel="stylesheet" href="assets/calender/css/fullcalendar.min.css"/>
+    <link rel="stylesheet" href="assets/calender/css/fullcalendar.print.min.css" media='print'/>
 
     <script type='text/javascript' src='@routes.Assets.versioned("lib/systemjs/dist/system-polyfills.js")'></script>
     <script type='text/javascript' src='@routes.Assets.versioned("lib/core-js/client/shim.min.js")'></script>
     <script type='text/javascript' src='@routes.Assets.versioned("lib/zone.js/dist/zone.js")'></script>
     <script type='text/javascript' src='@routes.Assets.versioned("lib/reflect-metadata/Reflect.js")'></script>
     <script type='text/javascript' src='@routes.Assets.versioned("lib/systemjs/dist/system.src.js")'></script>
+
+
+
 
     <script>    @* our app is downloaded as individual javascript files by SystemJs after compilation by sbt-typescript*@
 
@@ -84,9 +92,12 @@
 
     </script>
 
-    <script src="assets/plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script type='text/javascript' src="assets/calender/js/jquery.min.js"></script>
+    <script type='text/javascript' src="assets/calender/js/jquery-ui.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/dist/js/app.min.js"></script>
+    <script type='text/javascript' src="assets/calender/js/moment.min.js"></script>
+    <script type="text/javascript" src="assets/calender/js/fullcalendar.min.js"></script>
 
   </head>
   @content

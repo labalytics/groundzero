@@ -6,10 +6,12 @@ import {RouterModule, Routes} from "@angular/router";
 import {APP_BASE_HREF} from '@angular/common';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
+
 import {HomeComponent} from "./home";
 import {HeadComponent} from "../../components/common/header";
 import {MenuComponent} from "../../components/common/sidebar";
 import {FooterComponent} from "../../components/common/footer";
+import {ScheduleComponent} from "../../components/account/schedule.component"
 
 import { AuthenticationService } from  "../../services/authentication.service"
 
@@ -26,7 +28,8 @@ const routes: Routes = [
   {path: 'labs', pathMatch: 'full', component: LabComponent},
   {path: '', redirectTo: 'labs', pathMatch: 'full'},
   {path: 'dev', pathMatch: 'full', component: DeveloperComponent},
-  {path: 'equipments', pathMatch: 'full', component: EquipmentComponent}
+  {path: 'equipments', pathMatch: 'full', component: EquipmentComponent},
+  {path: 'schedule', pathMatch: 'full', component: ScheduleComponent}
 ];
 
 @NgModule({
@@ -36,7 +39,7 @@ const routes: Routes = [
     , HttpModule
     , RouterModule.forRoot(routes)
   ],
-  declarations: [HomeComponent, HeadComponent, MenuComponent, FooterComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, EquipmentComponent],
+  declarations: [HomeComponent, HeadComponent, MenuComponent, FooterComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, EquipmentComponent, ScheduleComponent],
   bootstrap: [HomeComponent],
   providers: [
     AuthenticationService,

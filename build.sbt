@@ -37,6 +37,9 @@ libraryDependencies ++= {
 
     "org.webjars.npm" % "typescript" % "2.0.3",
 
+    //calender
+    "org.webjars" % "fullcalendar" % "3.0.0",
+    "org.webjars" % "jquery" % "3.2.0",
     //tslint dependency
     "org.webjars.npm" % "tslint-eslint-rules" % "2.1.0",
     "org.webjars.npm" % "codelyzer" % "0.0.28",
