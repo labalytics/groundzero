@@ -18,9 +18,13 @@ export class LoginComponent{
   loading = false;
   returnUrl: string;
   resetemail: any = {};
+  showLogIn: any;
+  reset: any = {};
 
   constructor(protected router: Router, public authenticationService: AuthenticationService)
-  {}
+  {
+    this.showLogIn = 1;
+  }
 
   login() {
     this.loading = true;
@@ -31,12 +35,41 @@ export class LoginComponent{
 
     this.authenticationService.authorize(this.model.username, this.model.password)
       .subscribe((result) => {
-          console.log(result);
-          //this.router.navigate(['/signup']);
-          window.location.href = window.location.origin + "/home";
+          this.loading = false;
+        //this.router.navigate(['/signup']);
+          if(result.message === "Please reset your password")
+          {
+            this.showLogIn = 2;
+          }
+          else if(result.message ==="Failure")
+          {
+            alert("Invalid Credentials");
+          }
+          else {
+            window.location.href = window.location.origin + "/home";
+          }
         }
       );
 
+  }
+
+  passwordReset()
+  {
+    this.authenticationService.resetpassword(this.authenticationService.username, this.reset)
+      .subscribe((result) => {
+          console.log(result);
+          if(result === "Success")
+          {
+            this.showLogIn = 1;
+          }
+          else {
+            alert("Invalid password");
+          }
+          this.model = {};
+          //this.router.navigate(['/signup']);
+
+        }
+      );
   }
 
   resetpassword(email: any)
@@ -47,7 +80,7 @@ export class LoginComponent{
           console.log(result);
           alert(result);
           //this.router.navigate(['/signup']);
-          window.location.href = window.location.origin + "/authorize";
+          this.showLogIn = 1;
         }
       );
   }

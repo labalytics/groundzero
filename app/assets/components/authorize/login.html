@@ -1,4 +1,4 @@
-<div class="login-box">
+<div class="login-box" *ngIf="showLogIn==1">
   <div class="login-box-body">
     <p class="login-box-msg">Sign in to start your session</p>
 
@@ -49,4 +49,36 @@
     </div>
   <!-- /.modal-content -->
 </div>
+<div class="login-box" *ngIf="showLogIn==2">
+  <div class="login-box-body">
+    <p class="login-box-msg">Reset your password</p>
 
+    <form name="form" (ngSubmit)="f.form.valid && passwordReset()" #f="ngForm" novalidate>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" placeholder="Old password" name="oldpassword" [(ngModel)]="reset.oldpassword" #oldpassword="ngModel" required>
+        <div *ngIf="f.submitted && !oldpassword.valid" class="help-block">Old password is required</div>
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" class="form-control" placeholder="New password" name="newpassword" [(ngModel)]="reset.newpassword" #newpassword="ngModel" required />
+        <div *ngIf="f.submitted && !newpassword.valid" class="help-block">New password is required</div>
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="password" name="repeatpassword" id="repeatpassword" class="form-control"
+               placeholder="Confirm password" [(ngModel)]="reset.repeatpassword"
+               #repeatpassword="ngModel" required>
+        <div *ngIf="f.submitted && !repeatpassword.valid" class="help-block">Confirm password is required
+        </div>
+        <div *ngIf="f.submitted && repeatpassword == newpassword" class="help-block">Password's does not match
+        </div>
+        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+      </div>
+      <div class="row">
+        <div class="col-xs-offset-8 col-xs-4">
+          <button [disabled]="loading" class="btn btn-primary btn-block btn-flat">Update</button>
+          <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+        </div>
+      </div>
+    </form></div>
+</div>

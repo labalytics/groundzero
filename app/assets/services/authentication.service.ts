@@ -171,4 +171,15 @@ export class AuthenticationService {
       });
   }
 
+  public resetpassword(email :any, reset: any)
+  {
+    return this.http.post('/resetpassword', JSON.stringify({email,reset}), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse(response._body);
+        console.log(result.message);
+        return result.message;
+      });
+  }
+
 }

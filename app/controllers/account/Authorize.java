@@ -113,6 +113,21 @@ public class Authorize extends Controller {
     return ok(Json.toJson(oResponse));
   }
 
+  @Transactional
+  public Result resetpassword() {
+    JsonNode json = request().body().asJson();
+    ResponseCore oResponse = new ResponseCore();
+    User user = new User();
+    String email = json.findPath("email").textValue();
+    String oldPswd = json.findPath("oldpassword").textValue();
+    String newPswd = json.findPath("newpassword").textValue();
+    HashMap<String, Object> hash = new HashMap();
+    UserService userService = new UserService();
+    oResponse.status = "Done! Please check your email";
+    oResponse.message = userService.resetPassword(jpaApi, email, oldPswd, newPswd );
+    return ok(Json.toJson(oResponse));
+  }
+
   @Transactional(readOnly = true)
   public UserLabRole getRoleAccess(String email) {
     User user = new User();
