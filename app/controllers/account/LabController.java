@@ -4,6 +4,8 @@ package controllers.account;
  * Created by aniketchitale7 on 3/27/17.
  */
 import com.fasterxml.jackson.databind.JsonNode;
+import core.LabCore;
+import models.UserLabRole;
 import play.Logger;
 import play.data.FormFactory;
 import play.db.jpa.JPAApi;
@@ -65,6 +67,17 @@ public class LabController extends Controller {
       oResponse.response = null;
     }
     return ok(Json.toJson(oResponse));
+  }
+
+  @Transactional
+  public Result getAllLabs(){
+    JsonNode json = request().body().asJson();
+    String email = json.findPath("email").textValue();
+    long roleId = json.findPath("roleId").asLong();
+    System.out.println("Value of Email is" + email);
+    ArrayList<UserLabRole> labs =  LabCore.GetAllLabs(jpaApi , email, roleId);
+
+    return ok(Json.toJson(labs));
   }
 
 

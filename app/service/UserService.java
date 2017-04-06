@@ -54,12 +54,14 @@ public class UserService {
     if(user==null) return Constants.REGISTRATION_USER_EXISTS;
     lab.labName = json.findPath("lname").textValue();
     lab.labPi = json.findPath("piname").textValue();
+    lab.status = "Active";
     lab = LabCore.insert(jpaApi, lab);
 
     UserLabRole userLabRole1 = new UserLabRole();
     userLabRole.labId = lab;
     userLabRole.roleId = RoleCore.GetRole(jpaApi, 1);
     userLabRole.userId = user;
+    userLabRole.status = "Active";
     userLabRole =  LabCore.insertRoleMapper(jpaApi, userLabRole);
     //send email
     Mailer mail = new Mailer(mailerClient);
@@ -94,5 +96,6 @@ public class UserService {
       return Constants.RESPONSE_FAILURE;
     }
   }
+
 
 }

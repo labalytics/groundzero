@@ -32,11 +32,11 @@ export class LabComponent implements OnInit, OnDestroy {
   constructor(protected router: Router, private authService: AuthenticationService) {
   }
 
-  getLabs(labid: string) {
+  getLabs() {
     let headers = new Headers({'Content-Type': 'application/json'});
     let options = new RequestOptions({headers: headers});
     //this.oServiceCall_GetAllLab =
-    this.authService.getAllLabs(labid, this.authService.username)
+    this.authService.getAllLabs(this.roleId, this.authService.username)
       .subscribe((result) => {
         this.labs = result;
         this.labsCopy = this.labs;
@@ -71,10 +71,9 @@ export class LabComponent implements OnInit, OnDestroy {
     this.authService.getRoleandMenuData(this.authService.username)
       .subscribe((result) => {
        // let labId = result.userDetails.labId.id;
-        this.labs = result.userDetails;
-        this.labsCopy = this.labs;
-        this.roleId = result.userDetails[0].roleId.id;
-        //this.getLabs(labId);
+        console.log(result);
+        this.roleId = result.userDetails.roleId.id;
+        this.getLabs();
       });
   }
 

@@ -66,17 +66,40 @@ public class UserCore {
 
   }
 
-  public static ArrayList<UserLabRole> getUserLabRole(JPAApi jpaApi, String email) {
+  public static UserLabRole getUserLabRole(JPAApi jpaApi, String email) {
     Query q = jpaApi.em().createQuery("SELECT u FROM User u WHERE u.email = :email");
     q.setParameter("email", email);
     try {
       User user = (User) q.getSingleResult();
       if(user != null) {
-        Query q1 = jpaApi.em().createQuery("SELECT r FROM UserLabRole r WHERE r.userId.id = :userId");
+        Query q1 = jpaApi.em().createQuery("SELECT r FROM UserLabRole r WHERE r.userId.id = :userId and r.roleId.id = 3");
         q1.setParameter("userId", user.id);
-        ArrayList<UserLabRole> res = new ArrayList<UserLabRole>();
-        res = (ArrayList<UserLabRole>) q1.getResultList();
-        return  res;
+        UserLabRole res = null;
+        try {
+          res = ((ArrayList<UserLabRole>) q1.getResultList()).get(0);
+        }
+        catch (Exception e)
+        {
+
+        }
+        if(res!=null)
+          return  res;
+        q1 = jpaApi.em().createQuery("SELECT r FROM UserLabRole r WHERE r.userId.id = :userId and r.roleId.id = 1");
+        q1.setParameter("userId", user.id);
+        try {
+          res = ((ArrayList<UserLabRole>) q1.getResultList()).get(0);
+        }
+        catch (Exception e)
+        {
+
+        }
+        if(res!=null)
+          return  res;
+        q1 = jpaApi.em().createQuery("SELECT r FROM UserLabRole r WHERE r.userId.id = :userId and r.roleId.id = 2");
+        q1.setParameter("userId", user.id);
+        res = ((ArrayList<UserLabRole>) q1.getResultList()).get(0);
+        if(res!=null)
+          return  res;
       }
       return null;
     } catch(Exception e){

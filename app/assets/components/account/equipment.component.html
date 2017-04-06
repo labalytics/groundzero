@@ -113,7 +113,7 @@
                         </div>
                       </div>
                     </td>
-                    <td align="center">
+                    <td *ngIf="roleId!=2" align="center">
                       <a (click)="addEquipmentsClick()" style="height: 30px; font-size:medium" class = "btn btn-primary btn-xs"><b>+</b> Add new equipment</a>
                     </td>
                   </tr>
@@ -244,7 +244,7 @@
                         </td>
                         <td>
                           <select style="width: 150px" name="labid" class="form-control" [(ngModel)]="newequipment.labid" #labid="ngModel" required>
-                            <option *ngFor="let role of roles" [ngValue]= "role.labId.id"  >
+                            <option *ngFor="let role of labs" [ngValue]= "role.labId.id"  >
                               <div *ngIf="role.roleId.id==1">{{role.labId.labName}}</div>
                             </option>
                           </select>

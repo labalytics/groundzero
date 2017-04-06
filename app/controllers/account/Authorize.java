@@ -114,9 +114,9 @@ public class Authorize extends Controller {
   }
 
   @Transactional(readOnly = true)
-  public ArrayList<UserLabRole> getRoleAccess(String email) {
+  public UserLabRole getRoleAccess(String email) {
     User user = new User();
-    ArrayList<UserLabRole> userLabRole = UserCore.getUserLabRole(jpaApi, email);
+    UserLabRole userLabRole = UserCore.getUserLabRole(jpaApi, email);
     return userLabRole;
   }
 
@@ -132,11 +132,10 @@ public class Authorize extends Controller {
     JsonNode json = request().body().asJson();
     String email = json.findPath("email").textValue();
     HashMap<String, Object> hash = new HashMap();
-    ArrayList<UserLabRole> userLabRole = getRoleAccess(email);
+    UserLabRole userLabRole = getRoleAccess(email);
     hash.put("userDetails", userLabRole);
     if (userLabRole != null) {
-      UserLabRole role = userLabRole.get(0);
-      ArrayList<RoleAccess> roleAccessList = getMenuItems(role);
+      ArrayList<RoleAccess> roleAccessList = getMenuItems(userLabRole);
       hash.put("navItems", roleAccessList);
     }
     ResponseCore oResponse = new ResponseCore();
@@ -244,6 +243,7 @@ public class Authorize extends Controller {
   public Result register() {
     return ok(views.html.authorize.authorize.render("B"));
   }
+
 
 }
 
