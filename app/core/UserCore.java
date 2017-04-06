@@ -32,10 +32,10 @@ public class UserCore {
         if (Hash.checkPassword(password, user.passwordHash)) {
           if(user.status.equals("Pending"))
           {
-            user.confirmationToken = null;
-            user.validated = true;
-            user.status = "Active";
-            JPA.em().persist(user);
+//            user.confirmationToken = null;
+//            user.validated = true;
+//            user.status = "Active";
+//            JPA.em().persist(user);
             return Constants.RESET_PASSWORD;
           }
          return Constants.SUCCESS;

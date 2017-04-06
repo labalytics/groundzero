@@ -97,5 +97,27 @@ public class UserService {
     }
   }
 
+  public String resetPassword(JPAApi jpaApi, String email, String oldPswd, String newPswd)
+  {
+    try {
+      String res = UserCore.authenticate(jpaApi,email, oldPswd);
+      if(res.equals(Constants.RESET_PASSWORD) || res.equals(Constants.SUCCESS))
+      {
+        User user = UserCore.findByEmail(jpaApi,email);
+        user.validated = true;
+        user.status = "Active";
+        user.passwordHash = Hash.createPassword(newPswd);
+        UserCore.updateUser(jpaApi,user);
+        return Constants.RESPONSE_SUCCESS;
+      }
+      else
+      {
+        return res;
+      }
+    }
+    catch (Exception e) {
+      return Constants.RESPONSE_FAILURE;
+    }
+  }
 
 }
