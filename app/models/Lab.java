@@ -28,4 +28,13 @@ public class Lab {
   @Constraints.Required
   @Formats.NonEmpty
   public String labPi;
+
+  @Column(name = "description")
+  @Formats.NonEmpty
+  public String description;
+
+  @Column(name = "status")
+  @Constraints.Required
+  @Formats.NonEmpty
+  public String status;
 }

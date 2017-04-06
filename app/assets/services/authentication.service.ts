@@ -46,7 +46,7 @@ export class AuthenticationService {
           result = JSON.parse(response._body);
           this.oRoleAndMenu = result.response;
 
-          const userInfo = this.oRoleAndMenu.userDetails[0];
+          const userInfo = this.oRoleAndMenu.userDetails;
           /*Temp dummy user details*/
           this.oRoleAndMenu.userInfo = {
             userName: userInfo.userId.firstName + ", " + userInfo.userId.lastName,
@@ -62,9 +62,9 @@ export class AuthenticationService {
     }
   }
 
-  getAllLabs(labid: string, managerEmail: string) {
+  getAllLabs(roleid: any, managerEmail: string, ) {
     //this.http.post('/addLabs', JSON.stringify({email: managerEmail}), this.options)
-    return this.http.post('/getAllLabs', JSON.stringify({email: managerEmail}), this.options)
+    return this.http.post('/getLabs', JSON.stringify({email: managerEmail, roleId: roleid}), this.options)
       .map((response: Response) => {
         let result: Object;
         result = JSON.parse(response._body);
@@ -93,8 +93,8 @@ export class AuthenticationService {
       });
   }
 
-  getStudents(labid: Array<Object>) {
-    return this.http.post('/getstudents', JSON.stringify({labid: labid}), this.options)
+  getStudents(labid: Array<Object>, roleId: any) {
+    return this.http.post('/getstudents', JSON.stringify({labid: labid, role: roleId}), this.options)
       .map((response: Response) => {
         let result: Object;
         result = JSON.parse(response._body);
@@ -136,7 +136,6 @@ export class AuthenticationService {
     let id: any = [];
     for (let i = 0; i < userDetails.length; i++) {
       id.push(userDetails[i].labId.id);
-      console.log(userDetails[i].labId.id);
     }
     return this.http.post('/getEquipments', JSON.stringify({id}), this.options)
       .map((response: Response) => {

@@ -77,12 +77,14 @@ public class LabService {
     lab.labName = json.findPath("lab_name").textValue();
     lab.labPi = json.findPath("pi_name").textValue();
     lab = LabCore.insert(jpaApi, lab);
+    lab.status = "Active";
     if(lab==null)
       return Constants.LAB_EXISTS;
 
     userLabRole.labId = lab;
     userLabRole.roleId = RoleCore.GetRole(jpaApi, 1);
     userLabRole.userId = user;
+    userLabRole.status = "Active";
     userLabRole =  LabCore.insertRoleMapper(jpaApi, userLabRole);
     //send Email for new Lab registration under existing manager.
     try {

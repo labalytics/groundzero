@@ -36,9 +36,14 @@ public class LabCore {
 
   }
 
-  public static ArrayList<UserLabRole> GetAllLabsForManager(JPAApi jpaApi , String email) {
-    Query q = jpaApi.em().createQuery("SELECT distinct(u) FROM UserLabRole u where u.roleId.roleName = 'Manager' AND u.userId.email = :email");
-    q.setParameter("email", email);
+  public static ArrayList<UserLabRole> GetAllLabs(JPAApi jpaApi , String email, long roleId) {
+    Query q =  null;
+    if(roleId == 3)
+      q = jpaApi.em().createQuery("SELECT distinct(u) FROM UserLabRole u where u.status = 'Active' and u.labId is not NULL");
+    else {
+      q = jpaApi.em().createQuery("SELECT distinct(u) FROM UserLabRole u where u.userId.email = :email and u.status = 'Active' and u.labId is not NULL");
+      q.setParameter("email", email);
+    }
     try {
       ArrayList<UserLabRole> res = new ArrayList<UserLabRole>();
       res = (ArrayList<UserLabRole>) q.getResultList();
@@ -49,17 +54,6 @@ public class LabCore {
     }
   }
 
-  public static ArrayList<UserLabRole> GetAllLabs(JPAApi jpaApi) {
-    Query q = jpaApi.em().createQuery("SELECT distinct(u) FROM UserLabRole u where u.roleId.roleName = 'Manager'");
-    try {
-      ArrayList<UserLabRole> res = new ArrayList<UserLabRole>();
-      res = (ArrayList<UserLabRole>) q.getResultList();
-      return res;
-    } catch(Exception e){
-      System.out.println("Exception e = " + e.getMessage());
-      return null;
-    }
-  }
 
   public static Lab getLabById(JPAApi jpaApi , long labId) {
     Query q = jpaApi.em().createQuery("SELECT distinct(u) FROM Lab u where u.id = :labId");

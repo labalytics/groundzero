@@ -59,6 +59,7 @@ public class StudentService {
         userLabRole.labId = LabCore.getLabById(jpaApi, objNode.findPath("labid").asLong());
         userLabRole.roleId = RoleCore.GetRole(jpaApi, 2);
         userLabRole.userId = user;
+        userLabRole.status = "Active";
         userLabRole =  LabCore.insertRoleMapper(jpaApi, userLabRole);
 
         if(userLabRole == null) return Constants.STUDENT_FAILURE;

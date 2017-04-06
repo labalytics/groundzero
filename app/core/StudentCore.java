@@ -28,4 +28,16 @@ public  class StudentCore {
     return result;
   }
 
+  public static ArrayList<UserLabRole> GetAllStudents(JPAApi jpaApi) {
+    ArrayList<UserLabRole> result = new ArrayList<>();
+    Query q = jpaApi.em().createQuery("SELECT u FROM UserLabRole u where u.status = 'Active' and u.labId is not NULL");
+    try {
+        ArrayList<UserLabRole> userLabRoles = (ArrayList<UserLabRole>) q.getResultList();
+        return userLabRoles;
+    } catch(Exception e){
+        System.out.println("Exception e = " + e.getMessage());
+        return result;
+    }
+  }
+
 }

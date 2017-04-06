@@ -21,9 +21,10 @@ export class StudentComponent implements OnInit {
   returnUrl: string;
   searchTerm: string;
   studentCopy: any = [];
-
+  roleId: any;
   newstudents: any = [];
   roles: any = [];
+  labs: any = [];
   val: number =  1;
 
   addStudents: number  = 1;
@@ -35,8 +36,8 @@ export class StudentComponent implements OnInit {
 
   }
 
-  getStudents(userDetails: Array<Object>) {
-    this.authService.getStudents(userDetails)
+  getStudents(labs: any) {
+    this.authService.getStudents(labs,  this.roleId)
       .subscribe((result) => {
         this.students = result;
         this.studentCopy = result;
@@ -53,11 +54,24 @@ export class StudentComponent implements OnInit {
   addStudentsClick()
   {
     this.addStudents = 2;
+    console.log("Kalyanbsfjkvjdks");
   }
 
   StudentsListClick()
   {
     this.addStudents = 1;
+  }
+
+  getLabs() {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    //this.oServiceCall_GetAllLab =
+    this.authService.getAllLabs(this.roleId, this.authService.username)
+      .subscribe((result) => {
+        console.log(result);
+        this.labs = result;
+        this.getStudents(result);
+      });
   }
 
   ngOnInit() {
@@ -66,9 +80,8 @@ export class StudentComponent implements OnInit {
       .subscribe((result) => {
         // let labId = result.userDetails.labId.id;
         //console.log(result);
-        this.roles = result.userDetails;
-        this.getStudents(result.userDetails)
-        //this.getLabs(labId);
+        this.roleId = result.userDetails.roleId.id;
+        this.getLabs();
       });
   }
 

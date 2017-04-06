@@ -20,6 +20,7 @@ POST  /forgotpassword                 controllers.account.Authorize.forgotpasswo
 
 #LabController
 POST    /addLabs                   controllers.account.LabController.addLabsForManager()
+POST    /getLabs                   controllers.account.LabController.getAllLabs()
 
 #StudentController
 POST    /insertStudents                   controllers.account.StudentController.addStudents()
@@ -37,8 +38,7 @@ GET     /getuserinfo                controllers.Application.GetUserInfo()
 
 #GET     /home/$subroute<[0-9a-z]*>                      controllers.Application.home(subroute:String)
 GET     /home                      controllers.Application.home()
-POST    /getstudents                   controllers.Application.getstudent()
-POST    /getAllLabs                    controllers.Application.getAllLabs()
+POST    /getstudents                   controllers.account.StudentController.getstudent()
 
 #Equipment Controller
 POST     /getEquipments                  controllers.account.EquipmentController.GetEquipments()
