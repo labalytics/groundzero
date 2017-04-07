@@ -18,6 +18,9 @@ export class LabComponent implements OnInit, OnDestroy {
   menu: any = [];
   labs: any = [];
   labsCopy: any = [];
+  refinlabs: any =[];
+  refoutlabs: any =[];
+  notreflabs:any =[];
   loading = false;
   searchTerm: string;
   returnUrl: string;
@@ -38,7 +41,9 @@ export class LabComponent implements OnInit, OnDestroy {
     //this.oServiceCall_GetAllLab =
     this.authService.getAllLabs(this.roleId, this.authService.username)
       .subscribe((result) => {
-        this.labs = result;
+        this.labs = result.labs;
+        this.refinlabs = result.refInLabs;
+        this.refoutlabs = result.refOutLabs;
         this.labsCopy = this.labs;
       });
   }
@@ -67,6 +72,15 @@ export class LabComponent implements OnInit, OnDestroy {
       );
   }
 
+  requestLabAccess(currentLab:any,requestedLab: any)
+  {
+    this.authService.labAccessRequest(currentLab,requestedLab)
+      .subscribe((result) => {
+        // let labId = result.userDetails.labId.id;
+        console.log(result);
+      });
+  }
+
   ngOnInit() {
     this.authService.getRoleandMenuData(this.authService.username)
       .subscribe((result) => {
@@ -79,5 +93,16 @@ export class LabComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     //this.oServiceCall_GetAllLab.destroy();
+  }
+
+  getUnrefferedLabs(labId: any)
+  {
+    console.log(labId);
+    if(labId!==-1) {
+      this.authService.getUnrefferedLabs(labId, this.authService.username, this.roleId)
+        .subscribe((result) => {
+          this.notreflabs = result.notRefLabs;
+        });
+    }
   }
 }

@@ -31,7 +31,7 @@ export class EquipmentComponent implements OnInit {
     //this.oServiceCall_GetAllLab =
     this.authService.getAllLabs(this.roleId, this.authService.username)
       .subscribe((result) => {
-        this.labs = result;
+        this.labs = result.labs;
         console.log(this.labs);
         this.authService.getEquipments(this.labs)
           .subscribe((result) => {

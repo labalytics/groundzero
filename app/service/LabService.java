@@ -3,10 +3,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import core.LabCore;
 import core.RoleCore;
 import core.UserCore;
-import models.Lab;
-import models.Role;
-import models.User;
-import models.UserLabRole;
+import models.*;
 import org.apache.commons.mail.EmailException;
 import play.data.FormFactory;
 import play.db.jpa.JPAApi;
@@ -95,5 +92,17 @@ public class LabService {
       e.printStackTrace();
     }
     return Constants.REGISTRATION_SUCCESS;
+  }
+
+  public String createLabRequest(JPAApi jpaApi, long currentLabId, long requestedLabId)
+  {
+    LabPermission labPermission = new LabPermission();
+    labPermission.currentLab = LabCore.getLabById(jpaApi, currentLabId);
+    labPermission.requestedLab = LabCore.getLabById(jpaApi, requestedLabId);
+    labPermission.status = "Pending";
+    if(LabCore.insertLabAccess(jpaApi,labPermission) == null)
+      return Constants.RESPONSE_FAILURE;
+    return Constants.RESPONSE_SUCCESS;
+
   }
 }

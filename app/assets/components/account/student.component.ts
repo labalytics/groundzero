@@ -69,8 +69,8 @@ export class StudentComponent implements OnInit {
     this.authService.getAllLabs(this.roleId, this.authService.username)
       .subscribe((result) => {
         console.log(result);
-        this.labs = result;
-        this.getStudents(result);
+        this.labs = result.labs;
+        this.getStudents(result.labs);
       });
   }
 

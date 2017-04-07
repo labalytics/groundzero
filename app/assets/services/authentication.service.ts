@@ -182,4 +182,25 @@ export class AuthenticationService {
       });
   }
 
+  public labAccessRequest(currentLabId :any, requestedLabId: any)
+  {
+    return this.http.post('/labAccessRequest', JSON.stringify({currentLabId,requestedLabId}), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse(response._body);
+        console.log(result.message);
+        return result.message;
+      });
+  }
+
+  public getUnrefferedLabs(LabId :any, email: any, roleId:any)
+  {
+    return this.http.post('/getUnrefferedLabs', JSON.stringify({LabidA: LabId, email: email, roleId: roleId}), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse(response._body);
+        return result;
+      });
+  }
+
 }
