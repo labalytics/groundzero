@@ -5,6 +5,8 @@ package controllers.account;
  */
 import com.fasterxml.jackson.databind.JsonNode;
 import core.LabCore;
+import models.Lab;
+import models.LabPermission;
 import models.UserLabRole;
 import play.Logger;
 import play.data.FormFactory;
@@ -75,10 +77,58 @@ public class LabController extends Controller {
     String email = json.findPath("email").textValue();
     long roleId = json.findPath("roleId").asLong();
     System.out.println("Value of Email is" + email);
+    HashMap<String, Object> hash = new HashMap();
     ArrayList<UserLabRole> labs =  LabCore.GetAllLabs(jpaApi , email, roleId);
-
-    return ok(Json.toJson(labs));
+    hash.put("labs",labs);
+    ArrayList<LabPermission> refInLabs = null;
+    ArrayList<LabPermission> refOutLabs = null;
+    if(roleId!=3)
+    {
+      ArrayList labIds = new ArrayList();
+      for(UserLabRole userLabRole: labs)
+      {
+        labIds.add(userLabRole.labId.id);
+      }
+      refInLabs = LabCore.getReferedLabs(jpaApi,labIds);
+      refOutLabs = LabCore.getReferedOutLabs(jpaApi,labIds);
+    }
+    hash.put("refInLabs",refInLabs);
+    hash.put("refOutLabs",refOutLabs);
+    return ok(Json.toJson(hash));
   }
 
+  @Transactional
+  public Result labAccessRequest()
+  {
+    ResponseCore oResponse = new ResponseCore();
+    JsonNode json = request().body().asJson();
+    long currentLabId = json.findPath("currentLabId").asLong();
+    long requestedLabId = json.findPath("requestedLabId").asLong();
+    LabService labService = new LabService();
+    labService.createLabRequest(jpaApi, currentLabId, requestedLabId);
+    oResponse.status = labService.createLabRequest(jpaApi, currentLabId, requestedLabId);;
+    oResponse.message = oResponse.status;
+    return ok(Json.toJson(oResponse));
+  }
+
+  @Transactional
+  public Result getNotReferedLabs()
+  {
+    JsonNode json = request().body().asJson();
+    String email = json.findPath("email").textValue();
+    long roleId = json.findPath("roleId").asLong();
+    HashMap<String, Object> hash = new HashMap();
+    ArrayList<UserLabRole> labs =  LabCore.GetAllLabs(jpaApi , email, roleId);
+    long labId = json.findPath("LabidA").asLong();
+    ArrayList labIds = new ArrayList();
+    for(UserLabRole userLabRole: labs)
+    {
+      labIds.add(userLabRole.labId.id);
+    }
+    ArrayList<Lab> notRefLabs = null;
+    notRefLabs = LabCore.getNotReferedLabs(jpaApi, labId, labIds);
+    hash.put("notRefLabs", notRefLabs);
+    return ok(Json.toJson(hash));
+  }
 
 }

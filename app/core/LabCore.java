@@ -67,6 +67,57 @@ public class LabCore {
     }
   }
 
+  public static ArrayList<LabPermission> getReferedLabs(JPAApi jpaApi, ArrayList labdIds)
+  {
+    Query q = jpaApi.em().createQuery("SELECT distinct(l) FROM LabPermission l where l.requestedLab.id in :labId");
+    q.setParameter("labId", labdIds);
+    try {
+      ArrayList<LabPermission> labs = (ArrayList<LabPermission>) q.getResultList();
+      return labs;
+    } catch(Exception e){
+      System.out.println("Exception e = " + e.getMessage());
+      return null;
+    }
+  }
+
+  public static ArrayList<LabPermission> getReferedOutLabs(JPAApi jpaApi, ArrayList labdIds)
+  {
+    Query q = jpaApi.em().createQuery("SELECT distinct(l) FROM LabPermission l where l.currentLab.id in :labId");
+    q.setParameter("labId", labdIds);
+    try {
+      ArrayList<LabPermission> labs = (ArrayList<LabPermission>) q.getResultList();
+      return labs;
+    } catch(Exception e){
+      System.out.println("Exception e = " + e.getMessage());
+      return null;
+    }
+  }
+
+  public static ArrayList<Lab> getNotReferedLabs(JPAApi jpaApi, long labdId, ArrayList labdIds)
+  {
+    Query q = jpaApi.em().createQuery("SELECT distinct(l) FROM Lab l where l.id not in :labIds and l.id not in (SELECT distinct(lb.currentLab.id) from LabPermission lb where lb.requestedLab.id = :labId)" );
+    q.setParameter("labIds", labdIds);
+    q.setParameter("labId", labdId);
+    try {
+      ArrayList<Lab> labs = (ArrayList<Lab>) q.getResultList();
+      return labs;
+    } catch(Exception e){
+      System.out.println("Exception e = " + e.getMessage());
+      return null;
+    }
+  }
+
+  public static LabPermission insertLabAccess(JPAApi jpaApi, LabPermission labPermission)
+  {
+    try {
+      jpaApi.em().persist(labPermission);
+      return labPermission;
+      //Send email to user asking for confirmation of account
+    } catch (Exception e) {
+        Logger.error("Authorize.save error", e);
+    }
+      return null;
+  }
 
 }
 

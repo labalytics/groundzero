@@ -22,7 +22,8 @@ POST  /resetpassword                 controllers.account.Authorize.resetpassword
 #LabController
 POST    /addLabs                   controllers.account.LabController.addLabsForManager()
 POST    /getLabs                   controllers.account.LabController.getAllLabs()
-
+POST    /labAccessRequest           controllers.account.LabController.labAccessRequest()
+POST    /getUnrefferedLabs          controllers.account.LabController.getNotReferedLabs()
 #StudentController
 POST    /insertStudents                   controllers.account.StudentController.addStudents()
 
