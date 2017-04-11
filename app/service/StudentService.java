@@ -25,7 +25,7 @@ import java.util.UUID;
  * Created by aniketchitale7 on 3/27/17.
  */
 public class StudentService {
-  public static String addStudents(JPAApi jpaApi ,ArrayNode arrayNode , MailerClient mailerClient){
+  public static String addStudents(JPAApi jpaApi, ArrayNode arrayNode, MailerClient mailerClient){
     try {
       Mailer mail = new Mailer(mailerClient);
       for (final JsonNode objNode : arrayNode) {
