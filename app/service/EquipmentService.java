@@ -21,25 +21,23 @@ import java.util.UUID;
  */
 public class EquipmentService {
 
-  public ArrayList<EquipmentUnit> GetEquipments(JPAApi jpaApi , ArrayNode arrayNode){
+  public static ArrayList<EquipmentUnit> GetEquipments(JPAApi jpaApi , ArrayNode arrayNode){
     ArrayList labIds = new ArrayList();
     for (final JsonNode objNode : arrayNode) {
       labIds.add(objNode.asLong());
     }
     return EquipmentCore.GetEquipemnts(jpaApi, labIds);
-
   }
 
-  public String AddEquipment(JPAApi jpaApi, JsonNode jsonNode)
-  {
-
+  public static String AddEquipment(JPAApi jpaApi, JsonNode jsonNode) {
     Equipment equipment = new Equipment();
     equipment.equipmentName = jsonNode.findPath("equipment_name").textValue();
     equipment.description = jsonNode.findPath("descriptiom").textValue();
-    if(jsonNode.findPath("equipment_type").asInt() == 0)
+    if(jsonNode.findPath("equipment_type").asInt() == 0) {
       equipment.equipmentType = "Reusable";
-    else
+    } else {
       equipment.equipmentType = "Non-Reusable";
+    }
     equipment.lab = LabCore.getLabById(jpaApi, jsonNode.findPath("labid").asLong());
     equipment.nonworkingRate = jsonNode.findPath("nonworkingRate").asDouble();
     equipment.workingRate= jsonNode.findPath("workingRate").asDouble();
@@ -47,45 +45,43 @@ public class EquipmentService {
     equipment.status = "Active";
 
     equipment =  EquipmentCore.addEquipment(jpaApi,equipment);
-    if(equipment == null)
+    if(equipment == null) {
       return Constants.EQUIPMENT_FAILURE;
-
-    if(jsonNode.findPath("equipment_type").asInt() == 1)
-    {
+    }
+    if(jsonNode.findPath("equipment_type").asInt() == 1) {
       EquipmentUnit equipmentUnit = new EquipmentUnit();
       equipmentUnit.equipment = equipment;
       equipmentUnit.status= "Active";
-      if(jsonNode.findPath("equipment_cat").asInt() == 0)
+      if(jsonNode.findPath("equipment_cat").asInt() == 0) {
         equipmentUnit.type = "Equipment";
-      else
+      } else {
         equipmentUnit.type = "Accessory";
+      }
       equipmentUnit.available_count = jsonNode.findPath("units").asInt();
       equipmentUnit.units_count = jsonNode.findPath("units").asInt();
       //add parent equipiment as dynamic
-      if(EquipmentCore.addEquipmentUnit(jpaApi,equipmentUnit) == null)
+      if(EquipmentCore.addEquipmentUnit(jpaApi,equipmentUnit) == null) {
         return Constants.UNIT_FAILURE;
-    }
-    else
-    {
-      for(int i = 0; i<jsonNode.findPath("units").asInt();i++)
-      {
+      }
+    } else {
+      for(int i = 0; i<jsonNode.findPath("units").asInt();i++) {
         EquipmentUnit equipmentUnit = new EquipmentUnit();
         equipmentUnit.equipment = equipment;
         equipmentUnit.status= "Active";
-        if(jsonNode.findPath("equipment_cat").asInt() == 0)
+        if(jsonNode.findPath("equipment_cat").asInt() == 0) {
           equipmentUnit.type = "Equipment";
-        else {
+        } else {
           equipmentUnit.type = "Accessory";
           equipmentUnit.parentEquipment = EquipmentCore.getEquipmentById(jpaApi,jsonNode.findPath("equipment_parName").asLong());
-
         }
         equipmentUnit.available_count = jsonNode.findPath("hoursUse").asInt();
         equipmentUnit.units_count = jsonNode.findPath("hoursUse").asInt();
-        if(EquipmentCore.addEquipmentUnit(jpaApi,equipmentUnit) == null)
+        if(EquipmentCore.addEquipmentUnit(jpaApi,equipmentUnit) == null){
           return Constants.UNIT_FAILURE;
+        }
       }
     }
-
     return Constants.SUCCESS;
   }
 }
+
