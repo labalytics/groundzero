@@ -303,7 +303,7 @@
             </div>
             <div  *ngIf="notreflabs.length > 0" class="form-group" style="width: 150px;" >
               <label>Request to</label>
-              <select name="labid" class="form-control" #labid>
+              <select name="labid" class="form-control" #labid (change)="setReferedLab(labid.value)">
                 <option [value] = -1>Select</option>
                 <option *ngFor="let lab of notreflabs" [value]= "lab.id">
                   <div>{{lab.labName}}</div>
@@ -316,7 +316,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" style="background-color: #00a7d0" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
-          <button type="submit" style="background-color: #00a7d0" class="btn btn-outline" (click)="requestLabAccess(labid.value,labidA.value)">Request</button>
+          <button type="submit" style="background-color: #00a7d0" class="btn btn-outline" (click)="requestLabAccess(referedLab,currentLab)">Request</button>
         </div>
       </form>
     </div>

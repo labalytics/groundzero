@@ -24,7 +24,8 @@ export class LabComponent implements OnInit, OnDestroy {
   loading = false;
   searchTerm: string;
   returnUrl: string;
-
+  currentLab: number;
+  referedLab: number;
   // New Lab
   model: any = {};
   roleId = 1;
@@ -97,6 +98,7 @@ export class LabComponent implements OnInit, OnDestroy {
 
   getUnrefferedLabs(labId: any)
   {
+    this.currentLab = labId;
     console.log(labId);
     if(labId!==-1) {
       this.authService.getUnrefferedLabs(labId, this.authService.username, this.roleId)
@@ -104,5 +106,10 @@ export class LabComponent implements OnInit, OnDestroy {
           this.notreflabs = result.notRefLabs;
         });
     }
+  }
+  setReferedLab(labId: any)
+  {
+    this.referedLab = labId;
+
   }
 }
