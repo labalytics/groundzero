@@ -1,71 +1,30 @@
-<style>
+<p-schedule [events]="events" [header]="header" defaultDate="2017-02-01" [eventLimit]="4" [editable]="true"
+            (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)"></p-schedule>
 
-	body {
-		margin-top: 40px;
-		text-align: center;
-		font-size: 14px;
-		font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;
-	}
-
-	#wrap {
-		width: 1100px;
-		margin: 0 auto;
-	}
-
-	#external-events {
-		float: left;
-		width: 150px;
-		padding: 0 10px;
-		border: 1px solid #ccc;
-		background: #eee;
-		text-align: left;
-	}
-
-	#external-events h4 {
-		font-size: 16px;
-		margin-top: 0;
-		padding-top: 1em;
-	}
-
-	#external-events .fc-event {
-		margin: 10px 0;
-		cursor: pointer;
-	}
-
-	#external-events p {
-		margin: 1.5em 0;
-		font-size: 11px;
-		color: #666;
-	}
-
-	#external-events p input {
-		margin: 0;
-		vertical-align: middle;
-	}
-
-	#calendar {
-		float: right;
-		width: 900px;
-	}
-
-</style>
-<div id='wrap'>
-
-  <div id='external-events'>
-    <h4>Draggable Events</h4>
-    <div class='fc-event'>My Event 1</div>
-    <div class='fc-event'>My Event 2</div>
-    <div class='fc-event'>My Event 3</div>
-    <div class='fc-event'>My Event 4</div>
-    <div class='fc-event'>My Event 5</div>
-    <p>
-      <input type='checkbox' id='drop-remove' />
-      <label for='drop-remove'>remove after drop</label>
-    </p>
+<p-dialog header="Event Details" [(visible)]="dialogVisible" [responsive]="true" showEffect="fade" [modal]="false" [contentStyle]="{'overflow':'visible'}"
+          [style]="{'overflow':'visible'}" [resizable]="false">
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="event">
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="vin">Title</label></div>
+      <div class="ui-grid-col-8"><input pInputText id="title" [(ngModel)]="event.title" /></div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="start">Start</label></div>
+      <div class="ui-grid-col-8"><p-calendar [(ngModel)]="event.start" dateFormat="yy-mm-dd" dataType="string"></p-calendar></div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="end">End</label></div>
+      <div class="ui-grid-col-8"><p-calendar [(ngModel)]="event.end" dateFormat="yy-mm-dd" dataType="string"></p-calendar></div>
+    </div>
+    <div class="ui-grid-row">
+      <div class="ui-grid-col-4"><label for="allday">All Day</label></div>
+      <div class="ui-grid-col-8"><p-checkbox [(ngModel)]="event.allDay" binary="checkbox"></p-checkbox></div>
+    </div>
   </div>
-
-  <div id='calendar'></div>
-
-  <div style='clear:both'></div>
-
-</div>
+  <p-footer>
+    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+      <button type="button" pButton icon="fa-close" (click)="deleteEvent()" label="Delete" [disabled]="!event?.id"></button>
+      <button type="button" pButton icon="fa-check" (click)="saveEvent()" label="Save" [disabled]="!event?.start"></button>
+    </div>
+  </p-footer>
+</p-dialog>

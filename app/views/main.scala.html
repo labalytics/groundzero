@@ -39,7 +39,9 @@
       'app': 'assets',
       '@@angular': 'assets/lib/@@angular',
       'rxjs': 'assets/lib/rxjs',
-      'symbol-observable': 'assets/lib/symbol-observable'
+      'symbol-observable': 'assets/lib/symbol-observable',
+       'primeng': "node_modules/primeng"
+
 
     };
 
@@ -49,7 +51,11 @@
       'app': {main: file + '.js', defaultExtension: 'js'},
       'rxjs': {defaultExtension: 'js'},
       'assets/lib': {defaultExtension: 'js'},
-      'symbol-observable': {defaultExtension: 'js', main: 'index.js'}
+      'symbol-observable': {defaultExtension: 'js', main: 'index.js'},
+      'node_modules/primeng': {
+        format: 'cjs',
+        defaultExtension: 'js'
+      }
     };
     var ngPackageNames = [
       'common',
@@ -98,6 +104,10 @@
     <script src="assets/dist/js/app.min.js"></script>
     <script type='text/javascript' src="assets/calender/js/moment.min.js"></script>
     <script type="text/javascript" src="assets/calender/js/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="assets/calender/js/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="assets/calender/js/primeng.js"></script>
+
+
 
   </head>
   @content
