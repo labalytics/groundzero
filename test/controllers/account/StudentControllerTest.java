@@ -51,7 +51,7 @@ public class StudentControllerTest {
 
   @PrepareForTest({StudentService.class})
   @Test
-  public void testAddStudents() throws Exception {
+  public void testAddStudentsSuccessful() throws Exception {
     /**
      * Given
      */
@@ -67,12 +67,12 @@ public class StudentControllerTest {
 
     PowerMockito.mockStatic(StudentService.class);
     //mock the behavior of UserCore.authenticate to return the value, when the following data is given as input
-    PowerMockito.when(StudentService.addStudents(jpaApi, arrayNode)).thenReturn(Constants.REGISTRATION_SUCCESS);
+    PowerMockito.when(StudentService.addStudents(jpaApi, arrayNode, mailerClient)).thenReturn(Constants.REGISTRATION_SUCCESS);
 
     /**
      * When
      */
-    String validate = StudentService.addStudents(jpaApi, arrayNode);
+    String validate = StudentService.addStudents(jpaApi, arrayNode, mailerClient);
 
     /**
      * Then
@@ -81,7 +81,42 @@ public class StudentControllerTest {
 
     //Verify that UserCore.authenticate was called
     PowerMockito.verifyStatic();
-    StudentService.addStudents(jpaApi, arrayNode);
+    StudentService.addStudents(jpaApi, arrayNode, mailerClient);
+  }
+
+  @PrepareForTest({StudentService.class})
+  @Test
+  public void testAddStudentsFailed() throws Exception {
+    /**
+     * Given
+     */
+    ArrayNode arrayNode = Json.newArray();
+
+    ObjectNode result = Json.newObject();
+    result.put("id", "testidFailure");
+    result.put("firstName", "TestFirstNameFailure");
+    result.put("lastName", "TestLastNameFailure");
+    result.put("email", "failure@gmail.com");
+    result.put("labid", "testlabidFailure");
+    arrayNode.add(result);
+
+    PowerMockito.mockStatic(StudentService.class);
+    //mock the behavior of UserCore.authenticate to return the value, when the following data is given as input
+    PowerMockito.when(StudentService.addStudents(jpaApi, arrayNode, mailerClient)).thenReturn(Constants.STUDENT_FAILURE);
+
+    /**
+     * When
+     */
+    String validate = StudentService.addStudents(jpaApi, arrayNode, mailerClient);
+
+    /**
+     * Then
+     */
+    assertEquals(validate, (Constants.STUDENT_FAILURE));
+
+    //Verify that UserCore.authenticate was called
+    PowerMockito.verifyStatic();
+    StudentService.addStudents(jpaApi, arrayNode, mailerClient);
   }
 
 }
