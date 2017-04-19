@@ -73,6 +73,7 @@ export class AuthenticationService {
   }
 
   getEvents() {
+
     return this.http.get('showcase/resources/data/scheduleevents.json')
       .toPromise()
       .then(res => <any[]> res.json().data)
