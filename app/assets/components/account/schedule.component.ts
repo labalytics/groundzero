@@ -30,7 +30,14 @@ export class ScheduleComponent implements OnInit {
   constructor(private authService: AuthenticationService, private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.authService.getEvents().then(events => {this.events = events;});
+    this.events = [
+      {
+        "title": "Conference",
+        "start": "2017-04-18",
+        "end": "2017-04-19"
+      }
+    ];
+   // this.authService.getEvents().then(events => {this.events = events;});
 
     this.header = {
       left: 'prev,next today',
@@ -41,7 +48,7 @@ export class ScheduleComponent implements OnInit {
 
   handleDayClick(event) {
     this.event = new MyEvent();
-    this.event.start = event.date.format();
+    this.event.start = event.date._d;
     this.dialogVisible = true;
 
     //trigger detection manually as somehow only moving the mouse quickly after click triggers the automatic detection
