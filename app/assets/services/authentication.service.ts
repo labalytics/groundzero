@@ -72,6 +72,13 @@ export class AuthenticationService {
       });
   }
 
+  getEvents() {
+    return this.http.get('showcase/resources/data/scheduleevents.json')
+      .toPromise()
+      .then(res => <any[]> res.json().data)
+      .then(data => { return data; });
+  }
+
   insertStudents(newstudents: any) {
     return this.http.post('/insertStudents', JSON.stringify({students: newstudents}), this.options)
       .map((response: Response) => {

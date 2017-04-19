@@ -5,6 +5,7 @@ import {HttpModule} from '@angular/http'
 import {RouterModule, Routes} from "@angular/router";
 import {APP_BASE_HREF} from '@angular/common';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
+import {ScheduleModule} from '../../../../node_modules/primeng/primeng';
 
 
 import {HomeComponent} from "./home";
@@ -37,7 +38,8 @@ const routes: Routes = [
     BrowserModule
     , FormsModule
     , HttpModule
-    , RouterModule.forRoot(routes)
+    , RouterModule.forRoot(routes),
+    ScheduleModule
   ],
   declarations: [HomeComponent, HeadComponent, MenuComponent, FooterComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, EquipmentComponent, ScheduleComponent],
   bootstrap: [HomeComponent],
