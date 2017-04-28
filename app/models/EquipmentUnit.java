@@ -32,15 +32,7 @@ public class EquipmentUnit {
   @Formats.NonEmpty
   public long available_count;
 
-  @Column(name = "type")
-  @Constraints.Required
-  @Formats.NonEmpty
-  public String type;
 
-  @ManyToOne
-  @JoinColumn(name = "parent_equip")
-  @Formats.NonEmpty
-  public Equipment parentEquipment;
 
 
   @Column(name = "status")

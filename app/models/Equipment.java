@@ -56,6 +56,16 @@ public class Equipment {
   @Formats.NonEmpty
   public Lab lab;
 
+  @Column(name = "equipmentType")
+  @Constraints.Required
+  @Formats.NonEmpty
+  public String type;
+
+  @ManyToOne
+  @JoinColumn(name = "parent_equip")
+  @Formats.NonEmpty
+  public Equipment parentEquipment;
+
 
 
 }

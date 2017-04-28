@@ -42,9 +42,12 @@ export class LabComponent implements OnInit, OnDestroy {
     //this.oServiceCall_GetAllLab =
     this.authService.getAllLabs(this.roleId, this.authService.username)
       .subscribe((result) => {
-        this.labs = result.labs;
-        this.refinlabs = result.refInLabs;
-        this.refoutlabs = result.refOutLabs;
+        this.labs = (result  as any).labs;
+        console.log(result);
+        this.refinlabs = (result  as any).refInLabs;
+        this.refoutlabs = (result  as any).refOutLabs;
+        console.log(this.refoutlabs.length);
+
         this.labsCopy = this.labs;
       });
   }
@@ -103,9 +106,14 @@ export class LabComponent implements OnInit, OnDestroy {
     if(labId!==-1) {
       this.authService.getUnrefferedLabs(labId, this.authService.username, this.roleId)
         .subscribe((result) => {
-          this.notreflabs = result.notRefLabs;
+          this.notreflabs = (result  as any).notRefLabs;
         });
     }
+  }
+
+  deleteLab(labId: any)
+  {
+    console.log(labId);
   }
   setReferedLab(labId: any)
   {
