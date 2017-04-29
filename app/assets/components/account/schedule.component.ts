@@ -4,6 +4,10 @@ import {Http, Headers, Response, RequestOptions} from '@angular/http';
 import {OnInit,AfterViewInit} from '@angular/core';
 import {AlertService, AuthenticationService} from "../../services/index";
 import {Options} from "@types/fullcalendar";
+import {ScheduleModule} from 'primeng/primeng';
+import {ChangeDetectorRef } from '@angular/core';
+
+import { MyEvent } from '../../models/event';
 
 @Component({
   selector: "todo-account-schedule",
@@ -11,76 +15,188 @@ import {Options} from "@types/fullcalendar";
 })
 
 @Injectable()
-export class ScheduleComponent implements OnInit,AfterViewInit {
+export class ScheduleComponent implements OnInit {
 
-  options:Options = {droppable: true};
-  text: string;
-  calendarInitiated:boolean;
 
-  constructor(public http: Http, private authService: AuthenticationService) {
-    $(document).ready(function() {
-      $('#external-events .fc-event').each(function () {
 
-        // store data so the calendar knows to render an event upon drop
-        $(this).data('event', {
-          title: $.trim($(this).text()), // use the element's text as the event title
-          stick: true // maintain when user navigates (see docs on the renderEvent method)
-        });
+  labs: any = [];
+  refinlabs: any =[];
+  refoutlabs: any =[];
+  loading = false;
+  // New Lab
+  model: any = {};
+  roleId : any;
+  externallabId: any = [];
+  reservation: any = {};
+  completeLabsids : any =[];
+  completeLabs : any =[];
+  selectedLab : any;
+  refLab :any;
 
-        // make the event draggable using jQuery UI
-        $(this).draggable({
-          zIndex: 999,
-          revert: true,      // will cause the event to go back to its
-          revertDuration: 0  //  original position after the drag
-        });
+  availableUnits : any = [];
+  availableEquipments : any = [];
 
+  events: any[];
+
+  header: any;
+
+  event: MyEvent;
+
+  dialogVisible: boolean = false;
+
+  idGen: number = 100;
+
+  constructor(private authService: AuthenticationService, private cd: ChangeDetectorRef) { }
+
+  ngOnInit() {
+    this.authService.getRoleandMenuData(this.authService.username)
+      .subscribe((result) => {
+        // let labId = result.userDetails.labId.id;
+        console.log(result);
+        this.roleId = result.userDetails.roleId.id;
+        this.getLabs();
       });
+    this.events = [
+      {
+        "title": "Conference",
+        "start": "2017-04-18",
+        "end": "2017-04-19"
+      }
+    ];
+   // this.authService.getEvents().then(events => {this.events = events;});
 
-      $('#external-events .fc-event').each(function () {
-        // store data so the calendar knows to render an event upon drop
-        $(this).data('event', {
-          title: $.trim($(this).text()), // use the element's text as the event title
-          stick: true // maintain when user navigates (see docs on the renderEvent method)
-        });
+    this.header = {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'month,agendaWeek,agendaDay'
+    };
+  }
 
-        // make the event draggable using jQuery UI
-        $(this).draggable({
-          zIndex: 999,
-          revert: true,      // will cause the event to go back to its
-          revertDuration: 0  //  original position after the drag
-        });
+  handleDayClick(event: any) {
+    this.event = new MyEvent();
+    this.event.start = event.date._d;
+    this.dialogVisible = true;
 
-      });
+    //trigger detection manually as somehow only moving the mouse quickly after click triggers the automatic detection
+    this.cd.detectChanges();
+  }
 
-      $('#calendar').fullCalendar({
-        header: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'month,agendaWeek,agendaDay'
-        },
-        dayClick: function(date, jsEvent, view) {
-          // change the day's background color just for fun
+  handleEventClick(e : any) {
+    this.event = new MyEvent();
+    this.event.title = e.calEvent.title;
 
-        },
-        editable: true,
-        droppable: true, // this allows things to be dropped onto the calendar
-        drop: function() {
-          // is the "remove after drop" checkbox checked?
-          if ($('#drop-remove').is(':checked')) {
-            // if so, remove the element from the "Draggable Events" list
-            $(this).remove();
+    let start = e.calEvent.start;
+    let end = e.calEvent.end;
+    if(e.view.name === 'month') {
+      start.stripTime();
+    }
+    if(end) {
+      end.stripTime();
+      this.event.end = end.format();
+    }
+
+    this.event.id = e.calEvent.id;
+    this.event.start = start.format();
+    this.event.allDay = e.calEvent.allDay;
+    this.dialogVisible = true;
+  }
+
+  saveEvent() {
+    //update
+    if(this.event.id) {
+      let index: number = this.findEventIndexById(this.event.id);
+      if(index >= 0) {
+        this.events[index] = this.event;
+      }
+    }
+    //new
+    else {
+      this.event.id = this.idGen++;
+      this.events.push(this.event);
+      this.event = null;
+    }
+
+    this.dialogVisible = false;
+  }
+  deleteEvent() {
+    let index: number = this.findEventIndexById(this.event.id);
+    if(index >= 0) {
+      this.events.splice(index, 1);
+    }
+    this.dialogVisible = false;
+  }
+
+  findEventIndexById(id: number) {
+    let index = -1;
+    for(let i = 0; i < this.events.length; i++) {
+      if(id === this.events[i].id) {
+        index = i;
+        break;
+      }
+    }
+
+    return index;
+  }
+
+  getLabs() {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    //this.oServiceCall_GetAllLab =
+    this.authService.getAllLabs(this.roleId, this.authService.username)
+      .subscribe((result) => {
+        this.labs = (result  as any).labs;
+        console.log(result);
+        this.refinlabs = (result  as any).refInLabs;
+        this.refoutlabs = (result  as any).refOutLabs;
+        console.log(this.refoutlabs.length);
+        for(let i =0; i<this.labs.length;i++)
+        {
+          this.completeLabsids.push(this.labs[i].id);
+          this.completeLabs.push(this.labs[i].labId);
+        }
+        for(let i =0; i<this.refinlabs.length;i++)
+        {
+          console.log(i);
+          this.externallabId.push(this.refinlabs[i].currentLab.id);
+          if(this.completeLabsids.indexOf(this.refinlabs[i].currentLab.id) === -1)
+          {
+            this.completeLabsids.push(this.refinlabs[i].currentLab.id);
+            this.completeLabs.push(this.refinlabs[i].currentLab);
           }
         }
+        console.log(this.completeLabs);
       });
-    });
+  }
+  getEquipments()
+  {
+    console.log(this.reservation);
+    this.authService.getAvailables(this.reservation)
+      .subscribe((result) => {
+
+        console.log(result);
+        this.availableUnits = (result  as any).units;
+        this.availableEquipments = (result  as any).equipments;
+        this.refoutlabs = (result  as any).refOutLabs;
+
+      });
+
   }
 
-  ngOnInit():void {
-    console.log("ngOnInit");
-  }
+  makeReservation(unitId: any)
+  {
+    let isRef = false;
+    if(this.externallabId.indexOf(this.reservation.labid)!==-1)
+    {
+      isRef = true;
+    }
+    this.authService.makeReservation(unitId,this.reservation.date, this.reservation.strtTime, this.reservation.endTime, isRef, this.refLab)
+      .subscribe((result) => {
 
+        console.log(result);
+        this.availableUnits = (result  as any).units;
+        this.availableEquipments = (result  as any).equipments;
+        this.refoutlabs = (result  as any).refOutLabs;
 
-  ngAfterViewInit(){
-    console.log("100ms after ngAfterViewInit ");
+      });
   }
 }
