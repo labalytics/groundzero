@@ -26,12 +26,12 @@ DROP TABLE IF EXISTS `bookings`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bookings` (
   `booking_id` int(11) NOT NULL AUTO_INCREMENT,
-  `equipmentId` int(11) NOT NULL,
+  `equipmentId` int(11) DEFAULT NULL,
   `equipmentUnitId` int(11) NOT NULL,
   `userId` int(11) NOT NULL,
   `userLabId` int(11) NOT NULL,
   `startTime` datetime NOT NULL,
-  `totalHours` int(11) NOT NULL,
+  `endTime` datetime NOT NULL,
   `status` varchar(45) NOT NULL,
   `workingRate` decimal(6,2) NOT NULL,
   `nonWorkingRate` decimal(6,2) NOT NULL,
@@ -40,11 +40,15 @@ CREATE TABLE `bookings` (
   KEY `lky_idx` (`userLabId`),
   KEY `eky_idx` (`equipmentId`),
   KEY `uky_idx` (`equipmentUnitId`),
+  CONSTRAINT `FK2rgb3wqoda92euxecb2agubec` FOREIGN KEY (`userId`) REFERENCES `users` (`user_id`),
+  CONSTRAINT `FK4p5yn27hipcmu1wot8wssamqr` FOREIGN KEY (`equipmentId`) REFERENCES `equipments` (`id`),
+  CONSTRAINT `FKq4hua60t6bvanflshtdmdr9w4` FOREIGN KEY (`equipmentUnitId`) REFERENCES `equipment_units` (`id`),
+  CONSTRAINT `FKq7ixvf5lgtxw9uegajhpk7xcq` FOREIGN KEY (`userLabId`) REFERENCES `labs` (`lab_id`),
   CONSTRAINT `eky` FOREIGN KEY (`equipmentId`) REFERENCES `equipments` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `lky` FOREIGN KEY (`userLabId`) REFERENCES `labs` (`lab_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `uky` FOREIGN KEY (`equipmentUnitId`) REFERENCES `equipment_units` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `usk` FOREIGN KEY (`userId`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -53,6 +57,7 @@ CREATE TABLE `bookings` (
 
 LOCK TABLES `bookings` WRITE;
 /*!40000 ALTER TABLE `bookings` DISABLE KEYS */;
+INSERT INTO `bookings` VALUES (1,93,94,46,47,'2017-03-10 18:00:00','2017-03-10 19:00:00','Active',1.00,2.00),(102,NULL,98,46,63,'2017-04-29 15:00:00','2017-04-29 16:00:00','Active',12.00,34.00),(103,NULL,94,46,47,'2017-04-29 15:00:00','2017-04-29 16:00:00','Active',12.00,123.00),(104,NULL,94,46,47,'2017-04-28 15:00:00','2017-04-28 16:00:00','Active',12.00,123.00);
 /*!40000 ALTER TABLE `bookings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +73,6 @@ CREATE TABLE `equipment_units` (
   `equipment_id` int(11) NOT NULL,
   `units_count` int(11) NOT NULL,
   `available_count` int(11) NOT NULL,
-  `type` varchar(15) NOT NULL,
   `parent_equip` int(11) DEFAULT NULL,
   `status` varchar(10) NOT NULL,
   PRIMARY KEY (`id`),
@@ -78,7 +82,7 @@ CREATE TABLE `equipment_units` (
   CONSTRAINT `FKktfptwnx0h5dt1h8lho4qyyvr` FOREIGN KEY (`parent_equip`) REFERENCES `equipments` (`id`),
   CONSTRAINT `eid` FOREIGN KEY (`equipment_id`) REFERENCES `equipments` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `pid` FOREIGN KEY (`parent_equip`) REFERENCES `equipments` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -87,7 +91,7 @@ CREATE TABLE `equipment_units` (
 
 LOCK TABLES `equipment_units` WRITE;
 /*!40000 ALTER TABLE `equipment_units` DISABLE KEYS */;
-INSERT INTO `equipment_units` VALUES (72,71,2,2,'Equipment',NULL,'Active'),(74,73,12,12,'Accessory',NULL,'Active');
+INSERT INTO `equipment_units` VALUES (72,71,2,2,NULL,'Active'),(74,73,12,12,NULL,'Active'),(94,93,240,240,NULL,'Active'),(95,93,240,240,NULL,'Active'),(96,93,240,240,NULL,'Active'),(98,97,123,123,NULL,'Active'),(99,97,123,123,NULL,'Active');
 /*!40000 ALTER TABLE `equipment_units` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,11 +112,15 @@ CREATE TABLE `equipments` (
   `usage_notification` bigint(20) NOT NULL,
   `working_rate` double NOT NULL,
   `labid` int(11) NOT NULL,
+  `equipmentType` varchar(15) NOT NULL,
+  `parent_equip` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `labPK_idx` (`labid`),
   KEY `fk_idx` (`labid`),
-  CONSTRAINT `FK2tttc3ltermet8vwittciqv4b` FOREIGN KEY (`labid`) REFERENCES `labs` (`lab_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=latin1;
+  KEY `FKt6lxhd3yw5gm2y60xc4hlbj1y` (`parent_equip`),
+  CONSTRAINT `FK2tttc3ltermet8vwittciqv4b` FOREIGN KEY (`labid`) REFERENCES `labs` (`lab_id`),
+  CONSTRAINT `FKt6lxhd3yw5gm2y60xc4hlbj1y` FOREIGN KEY (`parent_equip`) REFERENCES `equipments` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,7 +129,7 @@ CREATE TABLE `equipments` (
 
 LOCK TABLES `equipments` WRITE;
 /*!40000 ALTER TABLE `equipments` DISABLE KEYS */;
-INSERT INTO `equipments` VALUES (71,'Router','Router','Non-Reusable',13,'Active',80,12,47),(73,'Cables','Cables','Non-Reusable',3,'Active',50,1,47);
+INSERT INTO `equipments` VALUES (71,'Router','Router','Non-Reusable',13,'Active',80,12,47,'',NULL),(73,'Cables','Cables','Non-Reusable',3,'Active',50,1,47,'',NULL),(93,'New','Telescope','Reusable',123,'Active',80,12,47,'Equipment',NULL),(97,'Direct Motor','DC Engine','Reusable',34,'Active',70,12,76,'Equipment',NULL);
 /*!40000 ALTER TABLE `equipments` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -143,7 +151,7 @@ CREATE TABLE `hibernate_sequence` (
 
 LOCK TABLES `hibernate_sequence` WRITE;
 /*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
-INSERT INTO `hibernate_sequence` VALUES (86),(86),(86),(86),(86);
+INSERT INTO `hibernate_sequence` VALUES (105),(105),(105),(105),(105);
 /*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,7 +174,7 @@ CREATE TABLE `lab_permissions` (
   CONSTRAINT `FK5yf09xlw46jtynwdp5ndo0g8o` FOREIGN KEY (`current_lab_id`) REFERENCES `labs` (`lab_id`),
   CONSTRAINT `foreignid` FOREIGN KEY (`current_lab_id`) REFERENCES `labs` (`lab_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `forif` FOREIGN KEY (`requested_lab_id`) REFERENCES `labs` (`lab_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=86 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -175,7 +183,7 @@ CREATE TABLE `lab_permissions` (
 
 LOCK TABLES `lab_permissions` WRITE;
 /*!40000 ALTER TABLE `lab_permissions` DISABLE KEYS */;
-INSERT INTO `lab_permissions` VALUES (80,63,76,'Pending'),(85,76,47,'Pending');
+INSERT INTO `lab_permissions` VALUES (80,63,76,'Active'),(85,76,47,'Active'),(88,76,63,'Active');
 /*!40000 ALTER TABLE `lab_permissions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -221,7 +229,7 @@ CREATE TABLE `role_access` (
   PRIMARY KEY (`id`),
   KEY `FKn4kfy7i55cucsytjftqb3kj5d` (`role_menu_id`),
   CONSTRAINT `FKn4kfy7i55cucsytjftqb3kj5d` FOREIGN KEY (`role_menu_id`) REFERENCES `roles` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -230,7 +238,7 @@ CREATE TABLE `role_access` (
 
 LOCK TABLES `role_access` WRITE;
 /*!40000 ALTER TABLE `role_access` DISABLE KEYS */;
-INSERT INTO `role_access` VALUES (1,1,'Labs','Active'),(2,1,'Students','Active'),(3,1,'Equipments','Active'),(4,3,'Labs','Active'),(5,3,'Students','Active'),(6,3,'Equipments','Active'),(7,2,'Labs','Active'),(8,2,'Equipments','Active'),(9,1,'Schedule','Active');
+INSERT INTO `role_access` VALUES (1,1,'Dashboard','Active'),(2,1,'Labs','Active'),(3,1,'Students','Active'),(4,1,'Equipments','Active'),(5,1,'Schedule','Active'),(6,2,'Dashboard','Active'),(7,2,'Labs','Active'),(8,2,'Equipments','Active'),(9,2,'Schedule','Active'),(10,3,'Dashboard','Active'),(11,3,'Labs','Active'),(12,3,'Students','Active');
 /*!40000 ALTER TABLE `role_access` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -291,7 +299,7 @@ CREATE TABLE `user_lab_roles` (
 
 LOCK TABLES `user_lab_roles` WRITE;
 /*!40000 ALTER TABLE `user_lab_roles` DISABLE KEYS */;
-INSERT INTO `user_lab_roles` VALUES (1,NULL,3,1,'Active'),(48,47,1,46,'Active'),(64,63,1,46,'Active'),(70,47,2,69,'Active'),(77,76,1,75,'Active');
+INSERT INTO `user_lab_roles` VALUES (1,NULL,3,1,'Active'),(48,47,1,46,'Active'),(64,63,1,46,'Active'),(70,47,2,69,'Active'),(77,76,1,75,'Active'),(87,63,2,86,'Active');
 /*!40000 ALTER TABLE `user_lab_roles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -316,7 +324,7 @@ CREATE TABLE `users` (
   `status` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `emailId_UNIQUE` (`email_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -325,9 +333,17 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'labalytics@gmail.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Admin','Kalyan Moguloju',NULL,NULL,'1487515e-c2dd-4ddc-a16b-4298e2bd3577','2017-03-10 18:54:14','\0','Active'),(46,'kalyansaim@gmail.com','$2a$10$F7A02rb.yKwvcw85CT8wNOhsK7Qau1cEOj5keUc1PcFcj0e7./NrS','Manager','Kalyan Moguloju',NULL,NULL,NULL,'2017-04-05 23:06:09','','Active'),(69,'sai-kalyanmoguloju@uiowa.edu','$2a$10$OyeI/T79OaO1oIFAXRDej.BA.2y0S4arwpXATsGFzhyIcXlLwJS16','Student','Moguloju',NULL,NULL,NULL,'2017-04-06 00:04:03','','Active'),(75,'msaikalyan@yahoo.com','$2a$10$gwg/9MNX7o6gJAmejqLSdeYcSexVV4fE/CNwUMuDNbiM0ifIZoGYq','Test','Manager',NULL,NULL,NULL,'2017-04-07 01:08:13','','Active');
+INSERT INTO `users` VALUES (1,'labalytics@gmail.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Admin','Kalyan Moguloju',NULL,NULL,'1487515e-c2dd-4ddc-a16b-4298e2bd3577','2017-03-10 18:54:14','\0','Active'),(46,'kalyansaim@gmail.com','$2a$10$F7A02rb.yKwvcw85CT8wNOhsK7Qau1cEOj5keUc1PcFcj0e7./NrS','Manager','Kalyan Moguloju',NULL,NULL,NULL,'2017-04-05 23:06:09','','Active'),(69,'sai-kalyanmoguloju@uiowa.edu','$2a$10$OyeI/T79OaO1oIFAXRDej.BA.2y0S4arwpXATsGFzhyIcXlLwJS16','Student','Moguloju',NULL,NULL,NULL,'2017-04-06 00:04:03','','Active'),(75,'msaikalyan@yahoo.com','$2a$10$gwg/9MNX7o6gJAmejqLSdeYcSexVV4fE/CNwUMuDNbiM0ifIZoGYq','Test','Manager',NULL,NULL,NULL,'2017-04-07 01:08:13','','Active'),(86,'kalyankanna32@gmail.com','$2a$10$lSHlloiUsKpXSFLiMXpzT.uyqmpgTLBZ5ZCIW1Mjwmu9Q8mDkdFwq','Sai','Kalyan Moguloju',NULL,NULL,'bffcf8b4-b1c0-4f74-82a5-0f1acc3753ec','2017-04-17 21:14:07','','Active');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'labalytics'
+--
+
+--
+-- Dumping routines for database 'labalytics'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -338,4 +354,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-07  3:57:52
+-- Dump completed on 2017-04-29 18:46:07
