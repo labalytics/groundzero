@@ -62,9 +62,19 @@ export class AuthenticationService {
     }
   }
 
-  getAllLabs(roleid: any, managerEmail: string, ) {
+  getAllLabs(roleid: any, managerEmail: string ) {
     //this.http.post('/addLabs', JSON.stringify({email: managerEmail}), this.options)
     return this.http.post('/getLabs', JSON.stringify({email: managerEmail, roleId: roleid}), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse((response as any)._body);
+        return result;
+      });
+  }
+
+  getAvailables(reservation: any ) {
+    //this.http.post('/addLabs', JSON.stringify({email: managerEmail}), this.options)
+    return this.http.post('/getAvailable', JSON.stringify(reservation), this.options)
       .map((response: Response) => {
         let result: Object;
         result = JSON.parse((response as any)._body);
@@ -204,6 +214,17 @@ export class AuthenticationService {
   public getUnrefferedLabs(LabId :any, email: any, roleId:any)
   {
     return this.http.post('/getUnrefferedLabs', JSON.stringify({LabidA: LabId, email: email, roleId: roleId}), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse((response as any)._body);
+        return result;
+      });
+  }
+
+  public makeReservation(unitId : any, date: any, strtTime : any, endTime : any, isRef : any, refLab : any)
+  {
+    console.log(this.username);
+    return this.http.post('/makeReservation', JSON.stringify({unitId: unitId,date: date, strtTime: strtTime, endTime: endTime, isRef: isRef, refLab: refLab, userId: this.username}), this.options)
       .map((response: Response) => {
         let result: Object;
         result = JSON.parse((response as any)._body);

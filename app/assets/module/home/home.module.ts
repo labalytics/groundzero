@@ -21,16 +21,18 @@ import {StudentComponent} from "../../components/account/student.component"
 import {LabComponent} from "../../components/account/lab.component"
 import {DeveloperComponent} from "../../components/account/developer.component"
 import {EquipmentComponent} from "../../components/account/equipment.component"
+import {DashBoardComponent} from "../../components/account/dashboard.component"
 
 
 const routes: Routes = [
   {path: 'admin', pathMatch: 'full', component: AdminComponent},
   {path: 'students', pathMatch: 'full', component: StudentComponent},
   {path: 'labs', pathMatch: 'full', component: LabComponent},
-  {path: '', redirectTo: 'labs', pathMatch: 'full'},
   {path: 'dev', pathMatch: 'full', component: DeveloperComponent},
   {path: 'equipments', pathMatch: 'full', component: EquipmentComponent},
-  {path: 'schedule', pathMatch: 'full', component: ScheduleComponent}
+  {path: 'schedule', pathMatch: 'full', component: ScheduleComponent},
+  {path: 'dashboard', pathMatch: 'full', component: DashBoardComponent},
+  {path: '', redirectTo: 'dashboard', pathMatch: 'full'}
 ];
 
 @NgModule({
@@ -44,7 +46,7 @@ const routes: Routes = [
     CalendarModule,
     CheckboxModule
   ],
-  declarations: [HomeComponent, HeadComponent, MenuComponent, FooterComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, EquipmentComponent, ScheduleComponent],
+  declarations: [HomeComponent, HeadComponent, MenuComponent, FooterComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, EquipmentComponent, ScheduleComponent, DashBoardComponent],
   bootstrap: [HomeComponent],
   providers: [
     AuthenticationService,
