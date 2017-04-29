@@ -15,9 +15,11 @@ export class EquipmentComponent implements OnInit {
 
 
   equipments: any = [];
+  equipmentUnits: any = [];
   addEquipments: number = 1;
   newequipment: any = {};
   labs: any = [];
+  ManagerLabs: any = [];
   roleId: any;
   equipcat : number =  0;
 
@@ -31,13 +33,17 @@ export class EquipmentComponent implements OnInit {
     //this.oServiceCall_GetAllLab =
     this.authService.getAllLabs(this.roleId, this.authService.username)
       .subscribe((result) => {
-        this.labs = result.labs;
-        console.log(this.labs);
+        this.labs = (result as any).labs;
+        for (let i = 0; i < this.labs.length; i++) {
+          this.ManagerLabs.push(this.labs[i].id);
+          console.log(this.labs[i].id);
+        }
+        console.log(this.ManagerLabs);
         this.authService.getEquipments(this.labs)
           .subscribe((result) => {
             // let labId = result.userDetails.labId.id;
-            console.log(result.equipments);
             this.equipments = result.equipments;
+            this.equipmentUnits = result.units;
           });
       });
   }
@@ -74,6 +80,11 @@ export class EquipmentComponent implements OnInit {
   EquipmentsListClick()
   {
     this.addEquipments = 1;
+  }
+
+  getUnits(id: any)
+  {
+    console.log(id);
   }
 
 }

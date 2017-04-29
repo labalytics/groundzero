@@ -16,17 +16,31 @@ import java.util.UUID;
 
 public class EquipmentCore {
 
-  public static ArrayList<EquipmentUnit> GetEquipemnts(JPAApi jpaApi, ArrayList labIds) {
+  public static ArrayList<Equipment> GetEquipemnts(JPAApi jpaApi, ArrayList labIds) {
 
-    ArrayList<EquipmentUnit> equipmentUnits = new ArrayList<>();
-    Query q = jpaApi.em().createQuery("SELECT e FROM EquipmentUnit e WHERE e.equipment.lab.id in (:email)");
-    q.setParameter("email", labIds );
+    ArrayList<Equipment> equipment = new ArrayList<>();
+    Query q = jpaApi.em().createQuery("SELECT e FROM Equipment e WHERE e.lab.id in (:labs)");
+    q.setParameter("labs", labIds );
     try {
-      equipmentUnits = (ArrayList<EquipmentUnit>) q.getResultList();
-      return  equipmentUnits;
+      equipment = (ArrayList<Equipment>) q.getResultList();
+      return  equipment;
     } catch(Exception e){
       System.out.println("Exception e = " + e.getMessage());
-      return equipmentUnits;
+      return equipment;
+    }
+
+  }
+  public static ArrayList<EquipmentUnit> GetEquipemntsUnits(JPAApi jpaApi, ArrayList labIds) {
+
+    ArrayList<EquipmentUnit> equipment = new ArrayList<>();
+    Query q = jpaApi.em().createQuery("SELECT e FROM EquipmentUnit e WHERE e.equipment.lab.id in (:labs)");
+    q.setParameter("labs", labIds );
+    try {
+      equipment = (ArrayList<EquipmentUnit>) q.getResultList();
+      return  equipment;
+    } catch(Exception e){
+      System.out.println("Exception e = " + e.getMessage());
+      return equipment;
     }
 
   }
