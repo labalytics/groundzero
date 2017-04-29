@@ -14,6 +14,7 @@
     <class>models.Equipment</class>
     <class>models.EquipmentUnit</class>
     <class>models.LabPermission</class>
+    <class>models.Schedule</class>
     <properties>
       <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
       <property name="hibernate.hbm2ddl.auto" value="update"/>

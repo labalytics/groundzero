@@ -17,6 +17,11 @@ import { MyEvent } from '../../models/event';
 @Injectable()
 export class ScheduleComponent implements OnInit {
 
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
   labs: any = [];
   refinlabs: any =[];
   refoutlabs: any =[];
@@ -34,7 +39,10 @@ export class ScheduleComponent implements OnInit {
   availableUnits : any = [];
   availableEquipments : any = [];
 
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
   events: any[];
 
   header: any;
@@ -194,8 +202,12 @@ export class ScheduleComponent implements OnInit {
         this.availableEquipments = (result  as any).equipments;
         this.refoutlabs = (result  as any).refOutLabs;
 
+<<<<<<< Updated upstream
       });
   handleDayClick(event) {
+=======
+  handleDayClick(event: any) {
+>>>>>>> Stashed changes
     this.event = new MyEvent();
     this.event.start = event.date._d;
     this.dialogVisible = true;
@@ -204,7 +216,7 @@ export class ScheduleComponent implements OnInit {
     this.cd.detectChanges();
   }
 
-  handleEventClick(e) {
+  handleEventClick(e : any) {
     this.event = new MyEvent();
     this.event.title = e.calEvent.title;
 
@@ -260,4 +272,67 @@ export class ScheduleComponent implements OnInit {
 
     return index;
   }
+
+  getLabs() {
+    let headers = new Headers({'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+    //this.oServiceCall_GetAllLab =
+    this.authService.getAllLabs(this.roleId, this.authService.username)
+      .subscribe((result) => {
+        this.labs = (result  as any).labs;
+        console.log(result);
+        this.refinlabs = (result  as any).refInLabs;
+        this.refoutlabs = (result  as any).refOutLabs;
+        console.log(this.refoutlabs.length);
+        for(let i =0; i<this.labs.length;i++)
+        {
+          this.completeLabsids.push(this.labs[i].id);
+          this.completeLabs.push(this.labs[i].labId);
+        }
+        for(let i =0; i<this.refinlabs.length;i++)
+        {
+          console.log(i);
+          this.externallabId.push(this.refinlabs[i].currentLab.id);
+          if(this.completeLabsids.indexOf(this.refinlabs[i].currentLab.id) === -1)
+          {
+            this.completeLabsids.push(this.refinlabs[i].currentLab.id);
+            this.completeLabs.push(this.refinlabs[i].currentLab);
+          }
+        }
+        console.log(this.completeLabs);
+      });
+  }
+  getEquipments()
+  {
+    console.log(this.reservation);
+    this.authService.getAvailables(this.reservation)
+      .subscribe((result) => {
+
+        console.log(result);
+        this.availableUnits = (result  as any).units;
+        this.availableEquipments = (result  as any).equipments;
+        this.refoutlabs = (result  as any).refOutLabs;
+
+      });
+
+  }
+
+  makeReservation(unitId: any)
+  {
+    let isRef = false;
+    if(this.externallabId.indexOf(this.reservation.labid)!==-1)
+    {
+      isRef = true;
+    }
+    this.authService.makeReservation(unitId,this.reservation.date, this.reservation.strtTime, this.reservation.endTime, isRef, this.refLab)
+      .subscribe((result) => {
+
+        console.log(result);
+        this.availableUnits = (result  as any).units;
+        this.availableEquipments = (result  as any).equipments;
+        this.refoutlabs = (result  as any).refOutLabs;
+
+      });
+  }
+
 }

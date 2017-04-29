@@ -80,6 +80,17 @@ public class EquipmentCore {
     }
   }
 
+  public static EquipmentUnit getEquipmentUnitById(JPAApi jpaApi , long unitId) {
+    Query q = jpaApi.em().createQuery("SELECT distinct(u) FROM EquipmentUnit u where u.id = :unitId");
+    q.setParameter("unitId", unitId);
+    try {
+      EquipmentUnit equipmentUnit = (EquipmentUnit) q.getSingleResult();
+      return equipmentUnit;
+    } catch(Exception e){
+      System.out.println("Exception e = " + e.getMessage());
+      return null;
+    }
+  }
 
 }
 

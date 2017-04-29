@@ -28,7 +28,7 @@ export class LabComponent implements OnInit, OnDestroy {
   referedLab: number;
   // New Lab
   model: any = {};
-  roleId = 1;
+  roleId : any;
 
   /* All Service calls */
   oServiceCall_GetAllLab: Observable<Response>;
