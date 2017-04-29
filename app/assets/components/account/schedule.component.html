@@ -1,30 +1,240 @@
-<p-schedule [events]="events" [header]="header" defaultDate="2017-02-01" [eventLimit]="4" [editable]="true"
-            (onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)"></p-schedule>
 
-<p-dialog header="Event Details" [(visible)]="dialogVisible" [responsive]="true" showEffect="fade" [modal]="false" [contentStyle]="{'overflow':'visible'}"
-          [style]="{'overflow':'visible'}" [resizable]="false">
-  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="event">
-    <div class="ui-grid-row">
-      <div class="ui-grid-col-4"><label for="vin">Title</label></div>
-      <div class="ui-grid-col-8"><input pInputText id="title" [(ngModel)]="event.title" /></div>
-    </div>
-    <div class="ui-grid-row">
-      <div class="ui-grid-col-4"><label for="start">Start</label></div>
-      <div class="ui-grid-col-8"><p-calendar [(ngModel)]="event.start" dateFormat="yy-mm-dd" dataType="string"></p-calendar></div>
-    </div>
-    <div class="ui-grid-row">
-      <div class="ui-grid-col-4"><label for="end">End</label></div>
-      <div class="ui-grid-col-8"><p-calendar [(ngModel)]="event.end" dateFormat="yy-mm-dd" dataType="string"></p-calendar></div>
-    </div>
-    <div class="ui-grid-row">
-      <div class="ui-grid-col-4"><label for="allday">All Day</label></div>
-      <div class="ui-grid-col-8"><p-checkbox [(ngModel)]="event.allDay" binary="checkbox"></p-checkbox></div>
+<!--<p-schedule [events]="events" [header]="header" defaultDate="2017-02-01" [eventLimit]="4" [editable]="true"-->
+            <!--(onDayClick)="handleDayClick($event)" (onEventClick)="handleEventClick($event)"></p-schedule>-->
+
+<!--<p-dialog header="Event Details" [(visible)]="dialogVisible" [responsive]="true" showEffect="fade" [modal]="false" [contentStyle]="{'overflow':'visible'}"-->
+          <!--[style]="{'overflow':'visible'}" [resizable]="false">-->
+  <!--<div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="event">-->
+    <!--<div class="ui-grid-row">-->
+      <!--<div class="ui-grid-col-4"><label for="vin">Title</label></div>-->
+      <!--<div class="ui-grid-col-8"><input pInputText id="title" [(ngModel)]="event.title" /></div>-->
+    <!--</div>-->
+    <!--<div class="ui-grid-row">-->
+      <!--<div class="ui-grid-col-4"><label for="start">Start</label></div>-->
+      <!--<div class="ui-grid-col-8"><p-calendar [(ngModel)]="event.start" dateFormat="yy-mm-dd" dataType="string"></p-calendar></div>-->
+    <!--</div>-->
+    <!--<div class="ui-grid-row">-->
+      <!--<div class="ui-grid-col-4"><label for="end">End</label></div>-->
+      <!--<div class="ui-grid-col-8"><p-calendar [(ngModel)]="event.end" dateFormat="yy-mm-dd" dataType="string"></p-calendar></div>-->
+    <!--</div>-->
+    <!--<div class="ui-grid-row">-->
+      <!--<div class="ui-grid-col-4"><label for="allday">All Day</label></div>-->
+      <!--<div class="ui-grid-col-8"><p-checkbox [(ngModel)]="event.allDay" binary="checkbox"></p-checkbox></div>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<p-footer>-->
+    <!--<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">-->
+      <!--<button type="button" pButton icon="fa-close" (click)="deleteEvent()" label="Delete" [disabled]="!event?.id"></button>-->
+      <!--<button type="button" pButton icon="fa-check" (click)="saveEvent()" label="Save" [disabled]="!event?.start"></button>-->
+    <!--</div>-->
+  <!--</p-footer>-->
+<!--</p-dialog>-->
+
+
+<style type="text/css">
+
+  .form-control{
+    background: transparent;
+  }
+  form {
+    margin: 20px;
+  }
+  form > div {
+    position: relative;
+    overflow: hidden;
+  }
+  form input, form textarea {
+    width: 100%;
+    border: 2px solid gray;
+    background: none;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    padding: 8px 12px;
+    outline: 0;
+  }
+  form input:valid, form textarea:valid {
+    background: white;
+  }
+  form input:focus, form textarea:focus {
+    border-color: #357EBD;
+  }
+  form input:focus + label, form textarea:focus + label {
+    background: #357EBD;
+    color: white;
+    font-size: 70%;
+    padding: 1px 6px;
+    z-index: 2;
+    text-transform: uppercase;
+  }
+  form label {
+    -webkit-transition: background 0.2s, color 0.2s, top 0.2s, bottom 0.2s, right 0.2s, left 0.2s;
+    transition: background 0.2s, color 0.2s, top 0.2s, bottom 0.2s, right 0.2s, left 0.2s;
+    position: absolute;
+    color: rgba(153, 153, 153, 0);;
+    padding: 7px 6px;
+    font-weight: normal;
+    width: 1px;
+  }
+  form textarea {
+    display: block;
+    resize: vertical;
+  }
+  form.go-bottom input, form.go-bottom textarea {
+    padding: 12px 12px 12px 12px;
+  }
+  form.go-bottom label {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+  form.go-bottom input:focus, form.go-bottom textarea:focus {
+    padding: 4px 6px 20px 6px;
+  }
+  form.go-bottom input:focus + label, form.go-bottom textarea:focus + label {
+    top: 100%;
+    margin-top: -16px;
+  }
+  form.go-right label {
+    border-radius: 0 5px 5px 0;
+    height: 100%;
+    top: 0;
+    right: 100%;
+    width: 100%;
+    margin-right: -100%;
+  }
+  form.go-right input:focus + label, form.go-right textarea:focus + label {
+    right: 0;
+    margin-right: 0;
+    width: 40%;
+    padding-top: 5px;
+  }
+</style>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Booking an Equipment</h3>
+      </div>
+      <table style="width: 100%">
+        <tr>
+          <td>
+            <input style="border: none; width: 100px; text-align: right" type="text" value="Start Time:" readonly>
+          </td>
+          <td>
+            <input class="form-control" name="registration_date" id="registration-date" type="date" [(ngModel)]="reservation.date" #date="ngModel" required>
+          </td>
+          <td>
+            <input style="border: none; width: 100px; text-align: right" type="text" value="Start Time:" readonly>
+          </td>
+          <td>
+            <input class="form-control" name="registration_time" id="registration-Stime" type="time" [(ngModel)]="reservation.strtTime" #strtTime="ngModel" required>
+          </td>
+          <td style="width: 20px"></td>
+          <td>
+            <input style="border: none; width: 100px; text-align: right" type="text" value="End Time:" readonly>
+          </td>
+          <td>
+            <input class="form-control" name="registration_time" id="registration-Etime" type="time" [(ngModel)]="reservation.endTime" #endTime="ngModel" required>
+          </td>
+          <td>
+            <input style="border: none; width: 100px; text-align: right" type="text" value="Lab:" readonly>
+          </td>
+          <td>
+            <select style="width: 150px" name="labid" class="form-control" [(ngModel)]="reservation.labid" #labid="ngModel" required>
+              <option *ngFor="let lab of completeLabs" [ngValue]= "lab.id"  >
+                <div>{{lab.labName}}</div>
+              </option>
+            </select>
+          </td>
+          <td>
+          <td style="width: 100px;">
+            <a (click)="getEquipments()" style="height: 30px; font-size:medium" class = "btn btn-primary btn-xs"> Search</a>
+          </td>
+        </tr>
+      </table>
+      <div style="height: 20px;"></div>
+      <div id="accordion" role="tablist" aria-multiselectable="true">
+        <table id="mytable1" class="table table-bordred table-striped">
+
+          <thead>
+          <th></th>
+          <th>Equipment Name</th>
+          <th>Category</th>
+          <th>Type</th>
+          <th>Lab Name</th>
+          <th>Working Rate</th>
+          <th>Non-Working Rate</th>
+          </thead>
+          <tbody *ngFor="let equipment of availableEquipments">
+
+          <tr>
+            <td>
+              <div class="card">
+                <div class="card-header" role="tab" id="headingOne">
+                  <h5 class="mb-0">
+                    <a data-toggle="collapse"  data-parent="#accordion" attr.href="#collapse_{{equipment.id}}" aria-expanded="true" attr.aria-controls="collapse_{{equipment.id}}">
+                      +
+                    </a>
+                  </h5>
+                </div>
+
+              </div>
+            </td>
+            <td>{{equipment.equipmentName}}</td>
+            <td>{{equipment.type}}</td>
+            <td>{{equipment.equipmentType}}</td>
+            <td>{{equipment.lab.labName}}</td>
+            <td>{{equipment.workingRate}}$</td>
+            <td>{{equipment.nonworkingRate}}$</td>
+
+          </tr>
+          <tr style="column-span: 6">
+            <td height="0" colspan="6">
+              <div class="card">
+                <div id="collapse_{{equipment.id}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                  <div class="card-block">
+                    <table class="table table-bordred table-striped">
+
+                      <thead>
+
+                      <th>Available Units</th>
+
+                      <th>
+                        <div *ngIf=" externallabId.indexOf(reservation.labid) !== -1">
+                          reffered Lab
+                        </div>
+                      </th>
+                      <th></th>
+                      </thead>
+                      <tbody *ngFor="let equipmentUnits of availableUnits">
+
+                      <tr *ngIf="equipmentUnits.equipment.id == equipment.id" style="background-color: #c4c4c4" >
+                        <td>{{equipmentUnits.available_count}}</td>
+                        <td>
+                          <div *ngIf=" externallabId.indexOf(reservation.labid) !== -1">
+                            <select style="width: 150px" name="reflabid" class="form-control" [(ngModel)]="refLab" #reflabid="ngModel" required>
+                              <option *ngFor="let lab of refinlabs"  [ngValue]="lab.requestedLab.id">
+                                <div *ngIf="lab.currentLab.id == reservation.labid">{{lab.requestedLab.labName}}</div>
+                              </option>
+                            </select>
+                          </div>
+                        </td>
+                        <td><p data-placement="top" data-toggle="tooltip" title="Book"><button class="btn btn-primary btn-xs" data-title="Book" (click)="makeReservation(equipmentUnits.id)" ><span style="font-size: small"> Book</span></button></p></td>
+
+                      </tr>
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-  <p-footer>
-    <div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
-      <button type="button" pButton icon="fa-close" (click)="deleteEvent()" label="Delete" [disabled]="!event?.id"></button>
-      <button type="button" pButton icon="fa-check" (click)="saveEvent()" label="Save" [disabled]="!event?.start"></button>
-    </div>
-  </p-footer>
-</p-dialog>
+</div>
