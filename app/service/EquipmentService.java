@@ -21,12 +21,19 @@ import java.util.UUID;
  */
 public class EquipmentService {
 
-  public static ArrayList<EquipmentUnit> GetEquipments(JPAApi jpaApi , ArrayNode arrayNode){
+  public static ArrayList<Equipment> GetEquipments(JPAApi jpaApi , ArrayNode arrayNode){
     ArrayList labIds = new ArrayList();
     for (final JsonNode objNode : arrayNode) {
       labIds.add(objNode.asLong());
     }
     return EquipmentCore.GetEquipemnts(jpaApi, labIds);
+  }
+  public static ArrayList<EquipmentUnit> GetEquipmentsUnits(JPAApi jpaApi , ArrayNode arrayNode){
+    ArrayList labIds = new ArrayList();
+    for (final JsonNode objNode : arrayNode) {
+      labIds.add(objNode.asLong());
+    }
+    return EquipmentCore.GetEquipemntsUnits(jpaApi, labIds);
   }
 
   public static String AddEquipment(JPAApi jpaApi, JsonNode jsonNode) {
@@ -43,6 +50,14 @@ public class EquipmentService {
     equipment.workingRate= jsonNode.findPath("workingRate").asDouble();
     equipment.usageNotification = jsonNode.findPath("usageNot").asInt();
     equipment.status = "Active";
+    if(jsonNode.findPath("equipment_cat").asInt() == 0) {
+      equipment.type = "Equipment";
+    } else {
+      equipment.type = "Accessory";
+    }
+    if(jsonNode.findPath("equipment_type").asInt() != 1) {
+      equipment.parentEquipment = EquipmentCore.getEquipmentById(jpaApi,jsonNode.findPath("equipment_parName").asLong());
+    }
 
     equipment =  EquipmentCore.addEquipment(jpaApi,equipment);
     if(equipment == null) {
@@ -52,11 +67,6 @@ public class EquipmentService {
       EquipmentUnit equipmentUnit = new EquipmentUnit();
       equipmentUnit.equipment = equipment;
       equipmentUnit.status= "Active";
-      if(jsonNode.findPath("equipment_cat").asInt() == 0) {
-        equipmentUnit.type = "Equipment";
-      } else {
-        equipmentUnit.type = "Accessory";
-      }
       equipmentUnit.available_count = jsonNode.findPath("units").asInt();
       equipmentUnit.units_count = jsonNode.findPath("units").asInt();
       //add parent equipiment as dynamic
@@ -68,12 +78,6 @@ public class EquipmentService {
         EquipmentUnit equipmentUnit = new EquipmentUnit();
         equipmentUnit.equipment = equipment;
         equipmentUnit.status= "Active";
-        if(jsonNode.findPath("equipment_cat").asInt() == 0) {
-          equipmentUnit.type = "Equipment";
-        } else {
-          equipmentUnit.type = "Accessory";
-          equipmentUnit.parentEquipment = EquipmentCore.getEquipmentById(jpaApi,jsonNode.findPath("equipment_parName").asLong());
-        }
         equipmentUnit.available_count = jsonNode.findPath("hoursUse").asInt();
         equipmentUnit.units_count = jsonNode.findPath("hoursUse").asInt();
         if(EquipmentCore.addEquipmentUnit(jpaApi,equipmentUnit) == null){

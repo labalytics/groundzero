@@ -49,6 +49,7 @@ public class EquipmentController extends Controller {
       ArrayNode arrayNode = (ArrayNode) json.findPath("id");
       EquipmentService equipmentService = new EquipmentService();
       hash.put("equipments", equipmentService.GetEquipments(jpaApi,arrayNode));
+      hash.put("units", equipmentService.GetEquipmentsUnits(jpaApi,arrayNode));
       oResponse.status = Constants.RESPONSE_SUCCESS;
       oResponse.message = "Success";
       oResponse.response = hash;

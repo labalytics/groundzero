@@ -17,8 +17,6 @@ import { MyEvent } from '../../models/event';
 @Injectable()
 export class ScheduleComponent implements OnInit {
 
-
-
   labs: any = [];
   refinlabs: any =[];
   refoutlabs: any =[];
@@ -35,6 +33,7 @@ export class ScheduleComponent implements OnInit {
 
   availableUnits : any = [];
   availableEquipments : any = [];
+
 
   events: any[];
 
@@ -70,7 +69,6 @@ export class ScheduleComponent implements OnInit {
       center: 'title',
       right: 'month,agendaWeek,agendaDay'
     };
-  }
 
   handleDayClick(event: any) {
     this.event = new MyEvent();
@@ -179,7 +177,6 @@ export class ScheduleComponent implements OnInit {
         this.refoutlabs = (result  as any).refOutLabs;
 
       });
-
   }
 
   makeReservation(unitId: any)
@@ -198,5 +195,69 @@ export class ScheduleComponent implements OnInit {
         this.refoutlabs = (result  as any).refOutLabs;
 
       });
+  handleDayClick(event) {
+    this.event = new MyEvent();
+    this.event.start = event.date._d;
+    this.dialogVisible = true;
+
+    //trigger detection manually as somehow only moving the mouse quickly after click triggers the automatic detection
+    this.cd.detectChanges();
+  }
+
+  handleEventClick(e) {
+    this.event = new MyEvent();
+    this.event.title = e.calEvent.title;
+
+    let start = e.calEvent.start;
+    let end = e.calEvent.end;
+    if(e.view.name === 'month') {
+      start.stripTime();
+    }
+    if(end) {
+      end.stripTime();
+      this.event.end = end.format();
+    }
+
+    this.event.id = e.calEvent.id;
+    this.event.start = start.format();
+    this.event.allDay = e.calEvent.allDay;
+    this.dialogVisible = true;
+  }
+
+  saveEvent() {
+    //update
+    if(this.event.id) {
+      let index: number = this.findEventIndexById(this.event.id);
+      if(index >= 0) {
+        this.events[index] = this.event;
+      }
+    }
+    //new
+    else {
+      this.event.id = this.idGen++;
+      this.events.push(this.event);
+      this.event = null;
+    }
+
+    this.dialogVisible = false;
+  }
+  deleteEvent() {
+    let index: number = this.findEventIndexById(this.event.id);
+    if(index >= 0) {
+      this.events.splice(index, 1);
+    }
+    this.dialogVisible = false;
+  }
+
+  findEventIndexById(id: number) {
+    let index = -1;
+    for(let i = 0; i < this.events.length; i++) {
+      if(id === this.events[i].id) {
+        index = i;
+        break;
+      }
+    }
+
+    return index;
   }
 }

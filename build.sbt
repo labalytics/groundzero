@@ -40,6 +40,9 @@ libraryDependencies ++= {
     //calender
     "org.webjars" % "fullcalendar" % "3.0.0",
     "org.webjars" % "jquery" % "3.2.0",
+    "org.webjars" % "jquery" % "3.2.0",
+    "org.webjars.npm" % "primeng" % "2.0.3",
+    "org.webjars" % "font-awesome" % "4.7.0",
     //tslint dependency
     "org.webjars.npm" % "tslint-eslint-rules" % "2.1.0",
     "org.webjars.npm" % "codelyzer" % "0.0.28",

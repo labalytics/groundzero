@@ -27,8 +27,8 @@ export class AuthenticationService {
         this.authenticated = true;
         //localStorage.setItem('currentUser', JSON.stringify(response));
         let result: Object;
-        result = JSON.parse(response._body);
-        localStorage.setItem('userEmail', result.response.email);
+        result = JSON.parse((response as any)._body);
+        localStorage.setItem('userEmail', (result as any).response.email);
         return result;
       });
   }
@@ -43,19 +43,19 @@ export class AuthenticationService {
         .map((response: Response) => {
           this.oRoleAndMenuObservable = null;
           let result: Object;
-          result = JSON.parse(response._body);
-          this.oRoleAndMenu = result.response;
+          result = JSON.parse((response as any)._body);
+          this.oRoleAndMenu = (result as any).response;
 
-          const userInfo = this.oRoleAndMenu.userDetails;
+          const userInfo = (this.oRoleAndMenu as any).userDetails;
           /*Temp dummy user details*/
-          this.oRoleAndMenu.userInfo = {
+          (this.oRoleAndMenu as any).userInfo = {
             userName: userInfo.userId.firstName + ", " + userInfo.userId.lastName,
             userEmail: userInfo.userId.email,
             dateAdded: userInfo.userId.dateCreation,
             userRole: userInfo.roleId.roleName
           };
 
-          return result.response;
+          return (result as any).response;
         })
         .share();
       return this.oRoleAndMenuObservable;
@@ -67,16 +67,24 @@ export class AuthenticationService {
     return this.http.post('/getLabs', JSON.stringify({email: managerEmail, roleId: roleid}), this.options)
       .map((response: Response) => {
         let result: Object;
-        result = JSON.parse(response._body);
+        result = JSON.parse((response as any)._body);
         return result;
       });
+  }
+
+  getEvents() {
+
+    return this.http.get('showcase/resources/data/scheduleevents.json')
+      .toPromise()
+      .then(res => <any[]> res.json().data)
+      .then(data => { return data; });
   }
 
   insertStudents(newstudents: any) {
     return this.http.post('/insertStudents', JSON.stringify({students: newstudents}), this.options)
       .map((response: Response) => {
         let result: Object;
-        result = JSON.parse(response._body);
+        result = JSON.parse((response as any)._body);
         return result;
       });
   }
@@ -88,7 +96,7 @@ export class AuthenticationService {
         //this.authenticated = true;
         //localStorage.setItem('currentUser', JSON.stringify(response));
         let result: Object;
-        result = JSON.parse(response._body);
+        result = JSON.parse((response as any)._body);
         return result;
       });
   }
@@ -97,7 +105,7 @@ export class AuthenticationService {
     return this.http.post('/getstudents', JSON.stringify({labid: labid, role: roleId}), this.options)
       .map((response: Response) => {
         let result: Object;
-        result = JSON.parse(response._body);
+        result = JSON.parse((response as any)._body);
         return result;
       });
   }
@@ -121,7 +129,7 @@ export class AuthenticationService {
         //this.authenticated = true;
         //localStorage.setItem('currentUser', JSON.stringify(response));
         let result: Object;
-        result = JSON.parse(response._body);
+        result = JSON.parse((response as any)._body);
         return result;
       });
   }
@@ -142,9 +150,9 @@ export class AuthenticationService {
         //this.authenticated = true;
         //localStorage.setItem('currentUser', JSON.stringify(response));
         let result: Object;
-        result = JSON.parse(response._body);
-        console.log(result.response);
-        return result.response;
+        result = JSON.parse((response as any)._body);
+        console.log((result as any).response);
+        return (result as any).response;
       });
   }
 
@@ -154,9 +162,9 @@ export class AuthenticationService {
         //this.authenticated = true;
         //localStorage.setItem('currentUser', JSON.stringify(response));
         let result: Object;
-        result = JSON.parse(response._body);
-        console.log(result.response);
-        return result.response;
+        result = JSON.parse((response as any)._body);
+        console.log((result as any).response);
+        return (result as any).response;
       });
   }
 
@@ -165,9 +173,9 @@ export class AuthenticationService {
     return this.http.post('/forgotpassword', JSON.stringify({email}), this.options)
       .map((response: Response) => {
         let result: Object;
-        result = JSON.parse(response._body);
-        console.log(result.message);
-        return result.message;
+        result = JSON.parse((response as any)._body);
+        console.log((result as any).message);
+        return (result as any).message;
       });
   }
 
@@ -176,9 +184,9 @@ export class AuthenticationService {
     return this.http.post('/resetpassword', JSON.stringify({email,reset}), this.options)
       .map((response: Response) => {
         let result: Object;
-        result = JSON.parse(response._body);
-        console.log(result.message);
-        return result.message;
+        result = JSON.parse((response as any)._body);
+        console.log((result as any).message);
+        return (result as any).message;
       });
   }
 
@@ -187,9 +195,9 @@ export class AuthenticationService {
     return this.http.post('/labAccessRequest', JSON.stringify({currentLabId,requestedLabId}), this.options)
       .map((response: Response) => {
         let result: Object;
-        result = JSON.parse(response._body);
-        console.log(result.message);
-        return result.message;
+        result = JSON.parse((response as any)._body);
+        console.log((result as any).message);
+        return (result as any).message;
       });
   }
 
@@ -198,7 +206,7 @@ export class AuthenticationService {
     return this.http.post('/getUnrefferedLabs', JSON.stringify({LabidA: LabId, email: email, roleId: roleId}), this.options)
       .map((response: Response) => {
         let result: Object;
-        result = JSON.parse(response._body);
+        result = JSON.parse((response as any)._body);
         return result;
       });
   }

@@ -105,8 +105,7 @@ public class LabController extends Controller {
     long currentLabId = json.findPath("currentLabId").asLong();
     long requestedLabId = json.findPath("requestedLabId").asLong();
     LabService labService = new LabService();
-    labService.createLabRequest(jpaApi, currentLabId, requestedLabId);
-    oResponse.status = labService.createLabRequest(jpaApi, currentLabId, requestedLabId);;
+    oResponse.status = labService.createLabRequest(jpaApi, currentLabId, requestedLabId);
     oResponse.message = oResponse.status;
     return ok(Json.toJson(oResponse));
   }
