@@ -27,6 +27,8 @@ export class StudentComponent implements OnInit {
   labs: any = [];
   val: number =  1;
 
+  events: any =[];
+  header: any = {};
   addStudents: number  = 1;
 
   constructor(public http: Http, private authService: AuthenticationService) {
@@ -46,7 +48,7 @@ export class StudentComponent implements OnInit {
 
   search(): void {
     let term = this.searchTerm;
-    this.students = this.studentCopy.filter(function (tag) {
+    this.students = this.studentCopy.filter(function (tag : any) {
       return tag.userId.firstName.indexOf(term) >= 0;
     });
   }
@@ -54,7 +56,6 @@ export class StudentComponent implements OnInit {
   addStudentsClick()
   {
     this.addStudents = 2;
-    console.log("Kalyanbsfjkvjdks");
   }
 
   StudentsListClick()
@@ -69,8 +70,8 @@ export class StudentComponent implements OnInit {
     this.authService.getAllLabs(this.roleId, this.authService.username)
       .subscribe((result) => {
         console.log(result);
-        this.labs = result.labs;
-        this.getStudents(result.labs);
+        this.labs = (result as any).labs;
+        this.getStudents((result as any).labs);
       });
   }
 
@@ -83,6 +84,14 @@ export class StudentComponent implements OnInit {
         this.roleId = result.userDetails.roleId.id;
         this.getLabs();
       });
+    this.events = [];
+    // this.authService.getEvents().then(events => {this.events = events;});
+
+    this.header = {
+      left: 'prev,next, today',
+      center: 'title',
+      right: 'month,agendaWeek,agendaDay'
+    };
   }
 
 
@@ -122,5 +131,19 @@ export class StudentComponent implements OnInit {
     console.log(this.newstudents)
   }
 
+  getSchedule(id: any)
+  {
+    let type = "student";
+    this.authService.getSchedule(type, id)
+      .subscribe((result) => {
+        let schedule = (result  as any).schedule;
+        this.events = [];
+        console.log(schedule);
+        for(let i = 0; i<schedule.length; i++)
+        {
+          this.events.push({"title": schedule[i].equipmentUnitId.equipment.equipmentName+" - " +schedule[i].equipmentUnitId.equipment.lab.labName,"start": new Date(schedule[i].startTime).toJSON(), "end": new Date(schedule[i].endTime).toJSON()});
+        }
+      });
+  }
 
 }

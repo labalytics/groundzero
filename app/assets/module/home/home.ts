@@ -31,8 +31,17 @@ export class HomeComponent implements OnInit {
             this.currentRouteHeader = "Equipment information";
             this.currentRouteDesc = "Manage equipments for your labs";
             break;
+          case "/billingreport":
+            this.currentRouteHeader = "Bills by lab";
+            this.currentRouteDesc = "View billings for your all your labs";
+            break;
+          case "/equipmentreport":
+            this.currentRouteHeader = "Equipment usage";
+            this.currentRouteDesc = "View usage of equipments";
+            break;
           default:
             this.currentRouteHeader = "";
+            this.currentRouteDesc = "";
         }
       }
     });

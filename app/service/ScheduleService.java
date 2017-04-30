@@ -23,6 +23,24 @@ public class ScheduleService {
     return ScheduleCore.GetAvailableEquipemnts(jpaApi, strt, end, labId);
   }
 
+
+  public static ArrayList<Schedule> GetSchedule(JPAApi jpaApi , String type,  long Id){
+    ArrayList<Schedule> res = new ArrayList<>();
+    if(type.equals("unit"))
+    {
+      res = ScheduleCore.GetScheduleByEquipment(jpaApi,Id);
+    }
+    else if(type.equals("student"))
+    {
+      res = ScheduleCore.GetScheduleByUser(jpaApi,Id);
+    }
+    else if(type.equals("lab"))
+    {
+      res = ScheduleCore.GetScheduleByLab(jpaApi,Id);
+    }
+    return res;
+  }
+
   public static String CreateBooking(JPAApi jpaApi, Date strt, Date end, long unitId, boolean isRef, long refLabId, String userId)
   {
     EquipmentUnit equipmentUnit = EquipmentCore.getEquipmentUnitById(jpaApi, unitId);

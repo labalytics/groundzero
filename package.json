@@ -1,0 +1,28 @@
+{
+  "name": "labalytics",
+  "version": "1.0.0",
+  "description": "Lab Management system",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "ap-angular2-fullcalendar": "^1.2.1",
+    "chart.js": "^2.5.0",
+    "primeng": "^4.0.0-rc.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/labalytics/groundzero.git"
+  },
+  "author": "AnikethAnkurMaheshSaiSid",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/labalytics/groundzero/issues"
+  },
+  "homepage": "https://github.com/labalytics/groundzero#readme"
+}

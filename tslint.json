@@ -23,7 +23,7 @@
     "import-destructuring-spacing": false,
 
 
-    "no-empty": true, /* this is an eslint rule */
+    "no-empty": false, /* this is an eslint rule */
 
     /* the following rules are tslint rules */
     "class-name": true,
@@ -38,7 +38,7 @@
     "no-duplicate-variable": true,
     "no-eval": true,
     "no-internal-module": true,
-    "no-trailing-whitespace": true,
+    "no-trailing-whitespace": false,
     "no-var-keyword": true,
     "one-line": [
       false,
