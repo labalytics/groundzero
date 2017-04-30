@@ -27,6 +27,10 @@ POST    /getUnrefferedLabs          controllers.account.LabController.getNotRefe
 #StudentController
 POST    /insertStudents                   controllers.account.StudentController.addStudents()
 
+
+#Reports
+GET     /labReport                      controllers.account.ReportController.getBookingForLabs()
+
 #get userData and Dynamic Menu Items based on UserRole
 
 POST    /getMenuAndRoleItems                   controllers.account.Authorize.getRoleAndMenuItems()

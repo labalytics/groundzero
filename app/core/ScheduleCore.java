@@ -30,6 +30,22 @@ public class ScheduleCore {
 
   }
 
+  public static ArrayList<Schedule> getBookingForLabs(JPAApi jpaApi, String email) {
+
+    ArrayList<Schedule> bookingList = new ArrayList<>();
+    Query q = jpaApi.em().createQuery("SELECT e FROM Schedule e where e.userLabId  in (SELECT distinct(u.labId) FROM UserLabRole u where u.userId.email = :email and u.status = 'Active' and u.labId is not NULL)");
+
+    q.setParameter("email", email );
+    try {
+      bookingList = (ArrayList<Schedule>) q.getResultList();
+      return  bookingList;
+    } catch(Exception e){
+      System.out.println("Exception e = " + e.getMessage());
+      return bookingList;
+    }
+
+  }
+
   public static String CreateBooking(JPAApi jpaApi, Schedule schedule) {
 
     try {
