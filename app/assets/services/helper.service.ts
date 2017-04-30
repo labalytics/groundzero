@@ -6,14 +6,14 @@ export class HelperService {
   }
 
   FindItemInArray(array: any [], keyName: string, keyVal: string, returnType: string) {
-    var found = false;
+    let found = false;
     if (undefined === keyVal || null === keyVal) {
       return null;
     }
     let nIndex: Number;
-    for (var i in array) {
+    for (let i in array) {
       nIndex = i;
-      if (array[i][keyName] == keyVal) {
+      if (array[i][keyName] === keyVal) {
         found = true;
         break;
       }
