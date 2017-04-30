@@ -232,4 +232,15 @@ export class AuthenticationService {
       });
   }
 
+  public getSchedule(type:any, id: any)
+  {
+    console.log('Here');
+    return this.http.post('/getSchedule', JSON.stringify({type: type,id: id}), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse((response as any)._body);
+        return result;
+      });
+  }
+
 }

@@ -121,6 +121,7 @@
             <th>Mobile Number</th>
             <th></th>
             <th></th>
+            <th></th>
           </tr>
           </thead>
           <tbody *ngFor="let lab of labs">
@@ -204,10 +205,35 @@
               </div>
               </div>
             </td>
+
+            <td>
+              <div *ngIf="lab.roleId.id==1 || lab.roleId.id==3" >
+                <p data-placement="top" data-toggle="tooltip" title="Schedule"><button class="btn btn-primary btn-xs" (click)="getSchedule(lab.labId.id)" data-title="Schedule" data-toggle="modal" data-target="#schedule" ><span style="font-size: small"> Schedule</span></button></p>
+              </div>
+            </td>
+
           </tr>
 
           </tbody>
         </table>
+        <div class="modal fade" id="schedule" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+          <div class="modal-dialog" style="width: 650px; margin-left: 300px; margin-right: 200px">
+            <div class="modal-content" style="width: 830px;">
+              <div class="modal-header">
+                <button type="button"  class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading1">Lab Schedule</h4>
+              </div>
+              <div class="modal-body">
+                <div style="width:800px;text-align: center;"><p-schedule [height]="600"  [events]="events" [header]="header"
+                ></p-schedule>
+                </div>
+              </div>
+
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
       </div>
     </div>
   </div>

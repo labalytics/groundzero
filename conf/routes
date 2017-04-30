@@ -49,5 +49,6 @@ POST     /addEquipment                  controllers.account.EquipmentController.
 #Schedule
 POST    /getAvailable                 controllers.account.ScheduleController.GetAvailable()
 POST    /makeReservation              controllers.account.ScheduleController.MakeReservation()
+POST    /getSchedule                    controllers.account.ScheduleController.GetSchedule()
 #GET     /register                   controllers.Authorize.getRegister()
 #POST    /register                   controllers.account.Authorizeize.doRegister()

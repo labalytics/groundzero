@@ -42,6 +42,54 @@ public class ScheduleCore {
 
   }
 
+  public static ArrayList<Schedule> GetScheduleByEquipment(JPAApi jpaApi, long equipId)
+  {
+      ArrayList<Schedule> schedules = new ArrayList<>();
+      Date dt = new Date();
+      Query q = jpaApi.em().createQuery("SELECT s FROM Schedule s where s.equipmentUnitId.id = :unitid and s.endTime > :dt");
+      q.setParameter("unitid", equipId );
+      q.setParameter("dt", dt);
+      try {
+        schedules = (ArrayList<Schedule>) q.getResultList();
+        return  schedules;
+      } catch(Exception e){
+        System.out.println("Exception e = " + e.getMessage());
+        return schedules;
+      }
+  }
+
+  public static ArrayList<Schedule> GetScheduleByUser(JPAApi jpaApi, long userId)
+  {
+    ArrayList<Schedule> schedules = new ArrayList<>();
+    Date dt = new Date();
+    Query q = jpaApi.em().createQuery("SELECT s FROM Schedule s where s.userId.id = :userid and s.endTime > :dt");
+    q.setParameter("userid", userId );
+    q.setParameter("dt", dt);
+    try {
+      schedules = (ArrayList<Schedule>) q.getResultList();
+      return  schedules;
+    } catch(Exception e){
+      System.out.println("Exception e = " + e.getMessage());
+      return schedules;
+    }
+  }
+
+  public static ArrayList<Schedule> GetScheduleByLab(JPAApi jpaApi, long labId)
+  {
+    ArrayList<Schedule> schedules = new ArrayList<>();
+    Date dt = new Date();
+    Query q = jpaApi.em().createQuery("SELECT s FROM Schedule s where s.equipmentUnitId.equipment.lab.id = :labid and s.endTime > :dt");
+    q.setParameter("labid", labId );
+    q.setParameter("dt", dt);
+    try {
+      schedules = (ArrayList<Schedule>) q.getResultList();
+      return  schedules;
+    } catch(Exception e){
+      System.out.println("Exception e = " + e.getMessage());
+      return schedules;
+    }
+  }
+
 
 }
 
