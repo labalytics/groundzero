@@ -13,7 +13,7 @@
       <li class="active" [routerLinkActive]="['active']">
         <a href="#" routerLink="/{{m.menu_name}}">
           <i class="fa fa-fw" [ngClass]="getMenuIconClass(m.menu_name)"></i>
-          <span>{{ m.menu_name | uppercase}}</span>
+          <span>{{ m.menu_display_name | uppercase}}</span>
         </a>
       </li>
     </ul>
