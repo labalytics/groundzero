@@ -16,7 +16,7 @@ public class ScheduleCore {
   public static ArrayList<EquipmentUnit> GetAvailableEquipemnts(JPAApi jpaApi, Date strt, Date end, long labId) {
 
     ArrayList<EquipmentUnit> equipmentUnits = new ArrayList<>();
-    Query q = jpaApi.em().createQuery("SELECT e FROM EquipmentUnit e where e.equipment.lab.id = :labid and e.id not in ( SELECT s.equipmentUnitId.id FROM Schedule s where s.startTime between :strtTime and :endTime and s.endTime between  :strtTime and :endTime)");
+    Query q = jpaApi.em().createQuery("SELECT e FROM EquipmentUnit e where e.equipment.lab.id = :labid and e.id not in ( SELECT s.equipmentUnitId.id FROM Schedule s where s.startTime between :strtTime and :endTime or s.endTime between  :strtTime and :endTime)");
     q.setParameter("labid", labId );
     q.setParameter("strtTime", strt);
     q.setParameter("endTime", end);
