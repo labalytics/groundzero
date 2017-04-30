@@ -5,8 +5,7 @@ import {HttpModule} from '@angular/http'
 import {RouterModule, Routes} from "@angular/router";
 import {APP_BASE_HREF} from '@angular/common';
 import {LocationStrategy, HashLocationStrategy} from '@angular/common';
-import {ScheduleModule, DialogModule , CalendarModule, CheckboxModule} from 'primeng/primeng';
-
+import {ScheduleModule, DialogModule , CalendarModule, CheckboxModule, ChartModule, GrowlModule} from 'primeng/primeng';
 
 import {HomeComponent} from "./home";
 import {HeadComponent} from "../../components/common/header";
@@ -14,7 +13,8 @@ import {MenuComponent} from "../../components/common/sidebar";
 import {FooterComponent} from "../../components/common/footer";
 import {ScheduleComponent} from "../../components/account/schedule.component"
 
-import { AuthenticationService } from  "../../services/authentication.service"
+import {AuthenticationService} from  "../../services/authentication.service"
+import {HelperService} from  "../../services/helper.service"
 
 import {AdminComponent} from "../../components/account/admin.component"
 import {StudentComponent} from "../../components/account/student.component"
@@ -22,6 +22,8 @@ import {LabComponent} from "../../components/account/lab.component"
 import {DeveloperComponent} from "../../components/account/developer.component"
 import {EquipmentComponent} from "../../components/account/equipment.component"
 import {DashBoardComponent} from "../../components/account/dashboard.component"
+import {BillReportComponent} from "../../components/account/billreport.component"
+import {EquipmentReportComponent} from "../../components/account/equipmentreport.component"
 
 
 const routes: Routes = [
@@ -32,6 +34,8 @@ const routes: Routes = [
   {path: 'equipments', pathMatch: 'full', component: EquipmentComponent},
   {path: 'schedule', pathMatch: 'full', component: ScheduleComponent},
   {path: 'dashboard', pathMatch: 'full', component: DashBoardComponent},
+  {path: 'billingreport', pathMatch: 'full', component: BillReportComponent},
+  {path: 'equipmentreport', pathMatch: 'full', component: EquipmentReportComponent},
   {path: '', redirectTo: 'dashboard', pathMatch: 'full'}
 ];
 
@@ -40,16 +44,19 @@ const routes: Routes = [
     BrowserModule
     , FormsModule
     , HttpModule
-    , RouterModule.forRoot(routes),
-    ScheduleModule,
-    DialogModule,
-    CalendarModule,
-    CheckboxModule
+    , RouterModule.forRoot(routes)
+    , ScheduleModule
+    , DialogModule
+    , CalendarModule
+    , CheckboxModule
+    , ChartModule
+    , GrowlModule
   ],
-  declarations: [HomeComponent, HeadComponent, MenuComponent, FooterComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, EquipmentComponent, ScheduleComponent, DashBoardComponent],
+  declarations: [HomeComponent, HeadComponent, MenuComponent, FooterComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, EquipmentComponent, ScheduleComponent, DashBoardComponent, BillReportComponent, EquipmentReportComponent],
   bootstrap: [HomeComponent],
   providers: [
     AuthenticationService,
+    HelperService,
     {provide: APP_BASE_HREF, useValue: ''},
     {provide: LocationStrategy, useClass: HashLocationStrategy}
   ]

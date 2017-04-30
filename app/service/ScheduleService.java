@@ -63,5 +63,9 @@ public class ScheduleService {
     return ScheduleCore.CreateBooking(jpaApi,schedule);
   }
 
+  public static ArrayList<Schedule> getBookingsForLabs(JPAApi jpaApi , String email){
+    return ScheduleCore.getBookingForLabs(jpaApi,email);
+  }
+
 }
 
