@@ -2,6 +2,7 @@ package controllers.account;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import models.Equipment;
 import models.EquipmentUnit;
 import org.junit.Before;
 import org.junit.Test;
@@ -69,7 +70,7 @@ public class EquipmentControllerTest {
     /**
      * When
      */
-    ArrayList<EquipmentUnit> validate = EquipmentService.GetEquipments(jpaApi, arrayNode);
+    ArrayList<Equipment> validate = EquipmentService.GetEquipments(jpaApi, arrayNode);
 
     /**
      * Then

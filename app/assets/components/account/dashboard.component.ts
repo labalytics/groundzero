@@ -5,6 +5,8 @@ import {OnInit,AfterViewInit} from '@angular/core';
 import {AlertService, AuthenticationService} from "../../services/index";
 import {Options} from "@types/fullcalendar";
 import {ScheduleModule} from 'primeng/primeng';
+
+import {Calendar} from '@types/fullcalendar';
 import {ChangeDetectorRef } from '@angular/core';
 
 import { MyEvent } from '../../models/event';
