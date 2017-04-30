@@ -30,6 +30,10 @@ export class LabComponent implements OnInit, OnDestroy {
   model: any = {};
   roleId : any;
 
+
+  events: any =[];
+  header: any = {};
+
   /* All Service calls */
   oServiceCall_GetAllLab: Observable<Response>;
 
@@ -93,6 +97,14 @@ export class LabComponent implements OnInit, OnDestroy {
         this.roleId = result.userDetails.roleId.id;
         this.getLabs();
       });
+    this.events = [];
+    // this.authService.getEvents().then(events => {this.events = events;});
+
+    this.header = {
+      left: 'prev,next, today',
+      center: 'title',
+      right: 'month,agendaWeek,agendaDay'
+    };
   }
 
   ngOnDestroy() {
@@ -120,4 +132,20 @@ export class LabComponent implements OnInit, OnDestroy {
     this.referedLab = labId;
 
   }
+
+  getSchedule(id: any)
+  {
+    let type = "lab";
+    this.authService.getSchedule(type, id)
+      .subscribe((result) => {
+        let schedule = (result  as any).schedule;
+        this.events = [];
+        console.log(schedule);
+        for(let i = 0; i<schedule.length; i++)
+        {
+          this.events.push({"title": schedule[i].equipmentUnitId.equipment.equipmentName+" to " +schedule[i].userLabId.labName,"start": new Date(schedule[i].startTime).toJSON(), "end": new Date(schedule[i].endTime).toJSON()});
+        }
+      });
+  }
+
 }
