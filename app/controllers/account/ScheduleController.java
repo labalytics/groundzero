@@ -149,4 +149,24 @@ public class ScheduleController extends Controller {
     return ok(Json.toJson(oResponse));
   }
 
+  @Transactional
+  public Result GetSelfSchedule() {
+    ResponseCore oResponse = new ResponseCore();
+    HashMap<String, Object> hash = new HashMap();
+    try {
+      JsonNode json = request().body().asJson();
+      String username = json.findPath("username").asText();
+      hash.put("schedule",ScheduleService.GetSelfSchedule(jpaApi,username));
+      return ok(Json.toJson(hash));
+
+    } catch (Exception e) {
+      logger.error("Authorize.save error", e);
+      flash("error", Messages.get("error.technical"));
+      oResponse.status = Constants.RESPONSE_EXCEPTION;
+      oResponse.message = Constants.REGISTRATION_FAILURE;
+      oResponse.response = null;
+    }
+    return ok(Json.toJson(oResponse));
+  }
+
 }

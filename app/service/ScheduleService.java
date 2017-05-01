@@ -11,6 +11,7 @@ import play.db.jpa.JPA;
 import play.db.jpa.JPAApi;
 import utils.Constants;
 
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -23,6 +24,10 @@ public class ScheduleService {
     return ScheduleCore.GetAvailableEquipemnts(jpaApi, strt, end, labId);
   }
 
+
+  public static ArrayList<Schedule> GetSelfSchedule(JPAApi jpaApi , String username){
+    return GetSchedule(jpaApi ,"student",UserCore.findByEmail(jpaApi,username).id);
+  }
 
   public static ArrayList<Schedule> GetSchedule(JPAApi jpaApi , String type,  long Id){
     ArrayList<Schedule> res = new ArrayList<>();
@@ -60,6 +65,16 @@ public class ScheduleService {
       schedule.userLabId = LabCore.getLabById(jpaApi, equipmentUnit.equipment.lab.id);
     }
     schedule.workingRate = equipmentUnit.equipment.workingRate;
+    if(schedule!=null)
+    {
+      long diff = end.getTime() - strt.getTime();
+      long diffMinutes = diff / (60 * 1000);
+      int diffHours = (int)(diff / (60 * 60 * 1000));
+      if(diffMinutes>0 && diffMinutes<59)
+          diffHours++;
+      equipmentUnit.available_count = equipmentUnit.available_count-diffHours;
+      EquipmentCore.UpdateUsageValue(jpaApi, equipmentUnit);
+    }
     return ScheduleCore.CreateBooking(jpaApi,schedule);
   }
 

@@ -87,5 +87,11 @@ public class EquipmentService {
     }
     return Constants.SUCCESS;
   }
+
+  public static ArrayList<EquipmentUnit> GetNotifications(JPAApi jpaApi, String username)
+  {
+    return EquipmentCore.GetNotifications(jpaApi,username);
+  }
+
 }
 

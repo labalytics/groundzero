@@ -24,6 +24,9 @@ POST    /addLabs                   controllers.account.LabController.addLabsForM
 POST    /getLabs                   controllers.account.LabController.getAllLabs()
 POST    /labAccessRequest           controllers.account.LabController.labAccessRequest()
 POST    /getUnrefferedLabs          controllers.account.LabController.getNotReferedLabs()
+POST    /getLabRequests             controllers.account.LabController.GetLabRequests()
+POST    /acceptLabRequest           controllers.account.LabController.AcceptLabRequest()
+
 #StudentController
 POST    /insertStudents                   controllers.account.StudentController.addStudents()
 
@@ -56,3 +59,8 @@ POST    /makeReservation              controllers.account.ScheduleController.Mak
 POST    /getSchedule                    controllers.account.ScheduleController.GetSchedule()
 #GET     /register                   controllers.Authorize.getRegister()
 #POST    /register                   controllers.account.Authorizeize.doRegister()
+
+
+#Dashboard
+POST     /getSelfSchedule                           controllers.account.ScheduleController.GetSelfSchedule()
+POST     /getEquipmentNotification                    controllers.account.EquipmentController.GetEquipmentNotification()

@@ -28,95 +28,73 @@ export class DashBoardComponent implements OnInit {
   header: any = {};
 
   event: MyEvent;
+  roleId : any;
 
   dialogVisible: boolean = false;
 
   idGen: number = 100;
 
+  schedule : any = [];
+  notifications : any =[];
+  requests : any = [];
+
   constructor(private authService: AuthenticationService, private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
-    this.events = [
-      {
-        "title": "Conference",
-        "start": "2017-04-18",
-        "end": "2017-04-19"
-      }
-    ];
-   // this.authService.getEvents().then(events => {this.events = events;});
-
-    this.header = {
-      left: 'prev,next, today',
-      right: 'month,agendaWeek,agendaDay'
-    };
+    this.authService.getRoleandMenuData(this.authService.username)
+      .subscribe((result) => {
+        // let labId = result.userDetails.labId.id;
+        console.log(result);
+        this.roleId = result.userDetails.roleId.id;
+        this.getSelfSchedule();
+      });
   }
 
-  handleDayClick(event: any) {
-    this.event = new MyEvent();
-    this.event.start = event.date._d;
-    this.dialogVisible = true;
-
-    //trigger detection manually as somehow only moving the mouse quickly after click triggers the automatic detection
-    this.cd.detectChanges();
+  getSelfSchedule()
+  {
+    this.authService.getSelfSchedule()
+      .subscribe((result) => {
+        this.schedule = (result as any).schedule;
+        for(let i = 0; i<this.schedule.length; i++)
+        {
+          this.schedule[i].startTime =  this.formatAMPM(new Date(this.schedule[i].startTime));
+          this.schedule[i].endTime = this.formatAMPM(new Date(this.schedule[i].endTime));
+        }
+        if (this.roleId === 1) {
+          this.authService.getEquipmentNotification()
+            .subscribe((result) => {
+                this.notifications = (result as any).notifications;
+            });
+          this.authService.getLabRequests()
+            .subscribe((result) => {
+              this.requests = (result as any).requests;
+            });
+        }
+      })
   }
 
-  handleEventClick(e : any) {
-    this.event = new MyEvent();
-    this.event.title = e.calEvent.title;
+  formatAMPM(date: Date) {
 
-    let start = e.calEvent.start;
-    let end = e.calEvent.end;
-    if(e.view.name === 'month') {
-      start.stripTime();
-    }
-    if(end) {
-      end.stripTime();
-      this.event.end = end.format();
-    }
-
-    this.event.id = e.calEvent.id;
-    this.event.start = start.format();
-    this.event.allDay = e.calEvent.allDay;
-    this.dialogVisible = true;
+    let day = date.getDate() < 10 ? '0'+date.getDate() : date.getDate();
+    let month = date.getMonth() < 10 ? '0'+date.getMonth() : date.getMonth();
+    let year = date.getFullYear();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    let min = minutes < 10 ? '0'+minutes : minutes;
+    let strTime = month+'-'+day+'-'+year+' '+ hours + ':' + min + ' ' + ampm;
+    return strTime;
   }
 
-  saveEvent() {
-    //update
-    if(this.event.id) {
-      let index: number = this.findEventIndexById(this.event.id);
-      if(index >= 0) {
-        this.events[index] = this.event;
-      }
-    }
-    //new
-    else {
-      this.event.id = this.idGen++;
-      this.events.push(this.event);
-      this.event = null;
-    }
-
-    this.dialogVisible = false;
+  AcceptLabRequest(id : any, value : any)
+  {
+    this.authService.acceptLabRequest(id, value)
+      .subscribe((result) => {
+        this.requests = (result as any).requests;
+    });
+    this.ngOnInit();
   }
-  deleteEvent() {
-    let index: number = this.findEventIndexById(this.event.id);
-    if(index >= 0) {
-      this.events.splice(index, 1);
-    }
-    this.dialogVisible = false;
-  }
-
-  findEventIndexById(id: number) {
-    let index = -1;
-    for(let i = 0; i < this.events.length; i++) {
-      if(id === this.events[i].id) {
-        index = i;
-        break;
-      }
-    }
-
-    return index;
-  }
-
-
 
 }
