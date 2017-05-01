@@ -66,6 +66,8 @@ libraryDependencies ++= {
 libraryDependencies += "org.powermock" % "powermock-module-junit4" % "1.7.0RC4"
 // https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito2
 libraryDependencies += "org.powermock" % "powermock-api-mockito2" % "1.7.0RC4"
+libraryDependencies += "org.seleniumhq.selenium" % "selenium-java" % "3.0.1"
+libraryDependencies += "com.paulhammant" % "ngwebdriver" % "0.9"
 
 dependencyOverrides += "org.webjars.npm" % "minimatch" % "3.0.0"
 
