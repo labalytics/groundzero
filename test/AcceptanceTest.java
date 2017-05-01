@@ -1,5 +1,8 @@
+import org.junit.Assert;
 import org.junit.Test;
 
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import play.i18n.Messages;
 
 import static org.hamcrest.CoreMatchers.containsString;
@@ -19,6 +22,15 @@ public class AcceptanceTest {
       assertThat(browser.pageSource(), containsString("Login"));
       assertNotNull(browser.$("title").getText());
     });
+  }
+
+  @Test 
+  public void verifytitle() { 
+    WebDriver driver = new HtmlUnitDriver();
+     driver.get("http://localhost:9000/"); 
+    String title = driver.getTitle(); 
+    System.out.println(title); 
+    Assert.assertTrue(title.contains("Labalytics")); 
   }
 
 }
