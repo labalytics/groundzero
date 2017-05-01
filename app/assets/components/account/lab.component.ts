@@ -148,4 +148,9 @@ export class LabComponent implements OnInit, OnDestroy {
       });
   }
 
+  deleteExternalLab(curLabId : any, reqstedLabId : any)
+  {
+
+  }
+
 }

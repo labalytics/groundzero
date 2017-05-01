@@ -243,4 +243,43 @@ export class AuthenticationService {
       });
   }
 
+  public getEquipmentNotification()
+  {
+    return this.http.post('/getEquipmentNotification', JSON.stringify({username: this.username}), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse((response as any)._body);
+        return result;
+      });
+  }
+
+  public getSelfSchedule()
+  {
+    return this.http.post('/getSelfSchedule', JSON.stringify({username: this.username}), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse((response as any)._body);
+        return result;
+      });
+  }
+
+  public getLabRequests()
+  {
+    return this.http.post('/getLabRequests', JSON.stringify({email: this.username}), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse((response as any)._body);
+        return result;
+      });
+  }
+
+  public acceptLabRequest(id: any, value: any)
+  {
+    return this.http.post('/acceptLabRequest', JSON.stringify({reqId: id, value: value}), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse((response as any)._body);
+        return result;
+      });
+  }
 }

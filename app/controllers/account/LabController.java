@@ -130,4 +130,28 @@ public class LabController extends Controller {
     return ok(Json.toJson(hash));
   }
 
+  @Transactional
+  public Result GetLabRequests()
+  {
+    HashMap<String, Object> hash = new HashMap();
+    JsonNode json = request().body().asJson();
+    String email = json.findPath("email").textValue();
+
+    hash.put("requests", LabService.GetLabRequests(jpaApi, email));
+    return ok(Json.toJson(hash));
+  }
+
+  @Transactional
+  public Result AcceptLabRequest()
+  {
+    ResponseCore oResponse = new ResponseCore();
+    HashMap<String, Object> hash = new HashMap();
+    JsonNode json = request().body().asJson();
+    long id = json.findPath("reqId").asLong();
+    String value = json.findPath("value").textValue();
+    oResponse.status = LabService.AcceptLabRequest(jpaApi, id, value);
+    oResponse.message = oResponse.status;
+    return ok(Json.toJson(oResponse));
+  }
+
 }

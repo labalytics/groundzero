@@ -17,6 +17,7 @@ import play.libs.mailer.MailerClient;
 import play.mvc.Controller;
 import play.mvc.Result;
 import service.EquipmentService;
+import service.ScheduleService;
 import service.StudentService;
 import utils.Constants;
 
@@ -77,6 +78,26 @@ public class EquipmentController extends Controller {
       oResponse.status = Constants.RESPONSE_SUCCESS;
       oResponse.message = "Success";
       oResponse.response = hash;
+
+    } catch (Exception e) {
+      logger.error("Authorize.save error", e);
+      flash("error", Messages.get("error.technical"));
+      oResponse.status = Constants.RESPONSE_EXCEPTION;
+      oResponse.message = Constants.REGISTRATION_FAILURE;
+      oResponse.response = null;
+    }
+    return ok(Json.toJson(oResponse));
+  }
+
+  @Transactional
+  public Result GetEquipmentNotification() {
+    ResponseCore oResponse = new ResponseCore();
+    HashMap<String, Object> hash = new HashMap();
+    try {
+      JsonNode json = request().body().asJson();
+      String username = json.findPath("username").asText();
+      hash.put("notifications", EquipmentService.GetNotifications(jpaApi,username));
+      return ok(Json.toJson(hash));
 
     } catch (Exception e) {
       logger.error("Authorize.save error", e);

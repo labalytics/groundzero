@@ -119,4 +119,6 @@ export class EquipmentComponent implements OnInit {
       });
   }
 
+
+
 }
