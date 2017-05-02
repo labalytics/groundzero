@@ -4,12 +4,12 @@
 
     <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email" name="username" [(ngModel)]="model.username" #username="ngModel" required>
+        <input type="email" class="form-control" id = "emailTextField" placeholder="Email" name="username" [(ngModel)]="model.username" #username="ngModel" required>
         <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="model.password" #password="ngModel" required />
+        <input type="password" class="form-control" id = "passwordTextField" placeholder="Password" name="password" [(ngModel)]="model.password" #password="ngModel" required />
         <div *ngIf="f.submitted && !password.valid" class="help-block">Password is required</div>
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
