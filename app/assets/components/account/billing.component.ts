@@ -11,10 +11,11 @@ import {AlertService, AuthenticationService} from "../../services/index";
 
 @Injectable()
 export class BillingComponent implements OnInit {
-  labs: any = [];
+  arrFilteredLabs: any = [];
   mylab: any = {};
   ManagerLabs: any = [];
   roleId: any;
+  filteredLab : any = [];
 
   constructor(public http: Http, private authService: AuthenticationService) {
 
@@ -25,17 +26,26 @@ export class BillingComponent implements OnInit {
     console.log(this.mylab);
     this.authService.getBookings(this.mylab , this.authService.username)
       .subscribe((result) => {
+        this.filterLabId(result.bookingList, this.mylab);
 
       });
   }
 
+  filterLabId(result : any , mylab: any)
+  {
+    for (let index in result) {
+      if(result[index].userLabId.id === mylab.labid){
+        this.filteredLab.push(result[index]);
+      }
+    }
+
+  }
+
+
+
 
   ngOnInit() {
-    this.authService.getRoleandMenuData(this.authService.username)
-      .subscribe((result) => {
-        this.roleId = result.userDetails.roleId.id;
-        this.getLabs();
-      });
+    this.getLabs();
   }
   getLabs() {
     let headers = new Headers({'Content-Type': 'application/json'});
