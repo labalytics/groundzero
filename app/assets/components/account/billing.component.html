@@ -1,0 +1,9 @@
+<div>
+    <input style="border: none; text-align: left" type="text" value="Lab" readonly>
+    <select style="width: 150px" name="labid" class="form-control" [(ngModel)]="mylab.labid" #labid="ngModel" required>
+      <option *ngFor="let role of labs" [ngValue]= "role.labId.id"  >
+        <div *ngIf="role.roleId.id==1">{{role.labId.labName}}</div>
+      </option>
+    </select>
+   <a (click)="getEquipments()" style="height: 30px; font-size:medium" class = "btn btn-primary btn-xs"> Search </a>
+</div>

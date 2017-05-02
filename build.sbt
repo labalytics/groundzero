@@ -34,8 +34,9 @@ libraryDependencies ++= {
     "org.webjars.npm" % "zone.js" % "0.6.25",
     "org.webjars.npm" % "core-js" % "2.4.1",
     "org.webjars.npm" % "symbol-observable" % "1.0.1",
-
+    "org.webjars" % "angular-protractor" % "1.6.1",
     "org.webjars.npm" % "typescript" % "2.0.3",
+    "org.webjars.npm" % "selenium-server" % "2.53.0",
 
     //calender
     "org.webjars" % "fullcalendar" % "3.0.0",
@@ -66,6 +67,8 @@ libraryDependencies ++= {
 libraryDependencies += "org.powermock" % "powermock-module-junit4" % "1.7.0RC4"
 // https://mvnrepository.com/artifact/org.powermock/powermock-api-mockito2
 libraryDependencies += "org.powermock" % "powermock-api-mockito2" % "1.7.0RC4"
+libraryDependencies += "org.seleniumhq.selenium" % "selenium-java" % "3.0.1"
+libraryDependencies += "com.paulhammant" % "ngwebdriver" % "0.9"
 
 dependencyOverrides += "org.webjars.npm" % "minimatch" % "3.0.0"
 

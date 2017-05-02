@@ -22,9 +22,9 @@ export class HelperService {
       return null;
     }
     if (returnType === "index") {
-      return i;
+      return nIndex;
     } else {
-      return array[i];
+      return array[nIndex];
     }
   }
 }

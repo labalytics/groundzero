@@ -11,7 +11,9 @@
     "chart.js": "^2.5.0",
     "primeng": "^4.0.0-rc.3"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "protractor": "^5.1.1"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

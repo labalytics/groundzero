@@ -33,13 +33,16 @@ export class MenuComponent implements OnInit {
       case "equipments":
         sClassByMenu = "fa-flask";
         break;
-      case "billingreport":
+      case "billing":
         sClassByMenu = "fa-usd";
+        break;
+      case "labusage":
+        sClassByMenu = "fa-industry";
         break;
       case "schedule":
         sClassByMenu = "fa-calendar";
         break;
-      case "equipmentreport":
+      case "equipmentusage":
         sClassByMenu = "fa-line-chart";
     }
     return sClassByMenu;
@@ -66,21 +69,12 @@ export class MenuComponent implements OnInit {
             status: "Active"
           }
         }
-        result.navItems.push(equipRep);
-        result.navItems.push(barRep);
+        //result.navItems.push(equipRep);
+        //result.navItems.push(barRep);
 
         result.navItems.forEach(function (oItem: any) {
-          oItem.menu_name = oItem.menu_name.toLowerCase();
-          switch (oItem.menu_name) {
-            case "billingreport":
-              oItem.menu_display_name = "Billing Report";
-              break;
-            case "equipmentreport":
-              oItem.menu_display_name = "Equipment Usage";
-              break;
-            default:
-              oItem.menu_display_name = oItem.menu_name;
-          }
+          oItem.menu_display_name = oItem.menu_name;
+          oItem.menu_name = oItem.menu_name.replace(/ /g, '').toLowerCase();
         });
         this.menu = result.navItems;
         this.userName = result.userInfo.userName;

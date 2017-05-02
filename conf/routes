@@ -32,7 +32,7 @@ POST    /insertStudents                   controllers.account.StudentController.
 
 
 #Reports
-GET     /labReport                      controllers.account.ReportController.getBookingForLabs()
+POST     /labReport                      controllers.account.ReportController.getBookingForLabs()
 
 #get userData and Dynamic Menu Items based on UserRole
 
