@@ -25,6 +25,7 @@ export class DashBoardComponent implements OnInit {
 
   events: any =[];
 
+  reset: any = {};
   header: any = {};
 
   event: MyEvent;
@@ -37,7 +38,7 @@ export class DashBoardComponent implements OnInit {
   schedule : any = [];
   notifications : any =[];
   requests : any = [];
-
+  userDetails : any = {};
   constructor(private authService: AuthenticationService, private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
@@ -45,6 +46,7 @@ export class DashBoardComponent implements OnInit {
       .subscribe((result) => {
         // let labId = result.userDetails.labId.id;
         console.log(result);
+        this.userDetails = (result as any).userDetails.userId;
         this.roleId = result.userDetails.roleId.id;
         this.getSelfSchedule();
       });
@@ -95,6 +97,46 @@ export class DashBoardComponent implements OnInit {
         this.requests = (result as any).requests;
     });
     this.ngOnInit();
+  }
+
+  passwordReset()
+  {
+    console.log("here");
+    this.authService.resetpassword(this.authService.username, this.reset)
+      .subscribe((result) => {
+          console.log(result);
+          if(result === "Success")
+          {
+
+            alert("Updated password");
+          }
+          else {
+            alert("Invalid password");
+          }
+          //this.router.navigate(['/signup']);
+
+        }
+      );
+  }
+
+
+  profileUpdate()
+  {
+    this.authService.profileUpdate(this.userDetails)
+      .subscribe((result) => {
+          console.log(result);
+          if((result as any).status === "Success")
+          {
+
+            alert("Updated profile");
+          }
+          else {
+            alert("Update failed");
+          }
+          //this.router.navigate(['/signup']);
+
+        }
+      );
   }
 
 }

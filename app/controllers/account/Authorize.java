@@ -260,5 +260,23 @@ public class Authorize extends Controller {
   }
 
 
+  @Transactional
+  public Result updateProfie() {
+    JsonNode json = request().body().asJson();
+    ResponseCore oResponse = new ResponseCore();
+    String email = json.findPath("email").textValue();
+    String firstName = json.findPath("firstName").textValue();
+    String lastName = json.findPath("lastName").textValue();
+    HashMap<String, Object> hash = new HashMap();
+    UserService userService = new UserService();
+    User user = UserCore.findByEmail(jpaApi, email);
+    user.firstName = firstName;
+    user.lastName = lastName;
+    UserCore.updateUser(jpaApi, user);
+    oResponse.status = "Success";
+    return ok(Json.toJson(oResponse));
+  }
+
+
 }
 

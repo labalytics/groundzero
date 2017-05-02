@@ -37,11 +37,11 @@ export class LoginComponent{
       .subscribe((result) => {
           this.loading = false;
         //this.router.navigate(['/signup']);
-          if(result.message === "Please reset your password")
+          if((result as any).message === "Please reset your password")
           {
             this.showLogIn = 2;
           }
-          else if(result.message ==="Failure")
+          else if((result as any).message ==="Failure")
           {
             alert("Invalid Credentials");
           }
