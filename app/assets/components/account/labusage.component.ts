@@ -7,11 +7,11 @@ import {Message} from 'primeng/primeng';
 
 @Component({
   selector: "billing-report",
-  templateUrl: "assets/components/account/billreport.component.html"
+  templateUrl: "assets/components/account/labusage.component.html"
 })
 
 @Injectable()
-export class BillReportComponent implements OnInit {
+export class LabUsageComponent implements OnInit {
   data: any;
   msgs: Message[];
   constructor(public http: Http, private authService: AuthenticationService) {

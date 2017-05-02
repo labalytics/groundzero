@@ -7,11 +7,11 @@ import {HelperService, AuthenticationService} from "../../services/index";
 
 @Component({
   selector: "equipment-report",
-  templateUrl: "assets/components/account/equipmentreport.component.html"
+  templateUrl: "assets/components/account/equipmentusage.component.html"
 })
 
 @Injectable()
-export class EquipmentReportComponent implements OnInit {
+export class EquipmentUsageComponent implements OnInit {
   data: any;
   initdata: any;
 

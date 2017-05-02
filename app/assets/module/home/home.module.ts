@@ -22,8 +22,8 @@ import {LabComponent} from "../../components/account/lab.component"
 import {DeveloperComponent} from "../../components/account/developer.component"
 import {EquipmentComponent} from "../../components/account/equipment.component"
 import {DashBoardComponent} from "../../components/account/dashboard.component"
-import {BillReportComponent} from "../../components/account/billreport.component"
-import {EquipmentReportComponent} from "../../components/account/equipmentreport.component"
+import {LabUsageComponent} from "../../components/account/labusage.component"
+import {EquipmentUsageComponent} from "../../components/account/equipmentusage.component"
 import {BillingComponent} from "../../components/account/billing.component"
 
 
@@ -35,8 +35,8 @@ const routes: Routes = [
   {path: 'equipments', pathMatch: 'full', component: EquipmentComponent},
   {path: 'schedule', pathMatch: 'full', component: ScheduleComponent},
   {path: 'dashboard', pathMatch: 'full', component: DashBoardComponent},
-  {path: 'billingreport', pathMatch: 'full', component: BillReportComponent},
-  {path: 'equipmentreport', pathMatch: 'full', component: EquipmentReportComponent},
+  {path: 'labusage', pathMatch: 'full', component: LabUsageComponent},
+  {path: 'equipmentusage', pathMatch: 'full', component: EquipmentUsageComponent},
   {path: 'billing', pathMatch: 'full', component: BillingComponent},
   {path: '', redirectTo: 'dashboard', pathMatch: 'full'}
 ];
@@ -54,7 +54,7 @@ const routes: Routes = [
     , ChartModule
     , GrowlModule
   ],
-  declarations: [HomeComponent, HeadComponent, MenuComponent, FooterComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, EquipmentComponent, ScheduleComponent, DashBoardComponent, BillReportComponent, EquipmentReportComponent , BillingComponent],
+  declarations: [HomeComponent, HeadComponent, MenuComponent, FooterComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, EquipmentComponent, ScheduleComponent, DashBoardComponent, LabUsageComponent, EquipmentUsageComponent , BillingComponent],
   bootstrap: [HomeComponent],
   providers: [
     AuthenticationService,
