@@ -65,7 +65,7 @@ public class EquipmentControllerTest {
 
     PowerMockito.mockStatic(EquipmentService.class);
     //mock the behavior of EquipmentService.GetEquipments to return the value, when the following data is given as input
-    PowerMockito.when(EquipmentService.GetEquipments(jpaApi, arrayNode)).thenReturn(equipmentUnits);
+    //PowerMockito.when(EquipmentService.GetEquipments(jpaApi, arrayNode)).thenReturn(equipmentUnits);
 
     /**
      * When

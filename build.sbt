@@ -34,8 +34,9 @@ libraryDependencies ++= {
     "org.webjars.npm" % "zone.js" % "0.6.25",
     "org.webjars.npm" % "core-js" % "2.4.1",
     "org.webjars.npm" % "symbol-observable" % "1.0.1",
-
+    "org.webjars" % "angular-protractor" % "1.6.1",
     "org.webjars.npm" % "typescript" % "2.0.3",
+    "org.webjars.npm" % "selenium-server" % "2.53.0",
 
     //calender
     "org.webjars" % "fullcalendar" % "3.0.0",
