@@ -40,7 +40,7 @@ public class LabCore {
   public static ArrayList<UserLabRole> GetAllLabs(JPAApi jpaApi , String email, long roleId) {
     Query q =  null;
     if(roleId == 3)
-      q = jpaApi.em().createQuery("SELECT distinct(u) FROM UserLabRole u where u.status = 'Active' and u.labId is not NULL");
+      q = jpaApi.em().createQuery("SELECT distinct(u) FROM UserLabRole u where u.status = 'Active' and u.labId is not NULL and u.roleId.id = 1");
     else {
       q = jpaApi.em().createQuery("SELECT distinct(u) FROM UserLabRole u where u.userId.email = :email and u.status = 'Active' and u.labId is not NULL");
       q.setParameter("email", email);
@@ -70,7 +70,7 @@ public class LabCore {
 
   public static ArrayList<LabPermission> getReferedLabs(JPAApi jpaApi, ArrayList labdIds)
   {
-    Query q = jpaApi.em().createQuery("SELECT distinct(l) FROM LabPermission l where l.status='Active' and l.requestedLab.id in :labId");
+    Query q = jpaApi.em().createQuery("SELECT distinct(l) FROM LabPermission l where l.status='Active' and l.requestedLab.id in :labId and l.currentLab.id not in :labId");
     q.setParameter("labId", labdIds);
     try {
       ArrayList<LabPermission> labs = (ArrayList<LabPermission>) q.getResultList();
@@ -83,7 +83,7 @@ public class LabCore {
 
   public static ArrayList<LabPermission> getReferedOutLabs(JPAApi jpaApi, ArrayList labdIds)
   {
-    Query q = jpaApi.em().createQuery("SELECT distinct(l) FROM LabPermission l where l.status='Active' and l.currentLab.id in :labId");
+    Query q = jpaApi.em().createQuery("SELECT distinct(l) FROM LabPermission l where l.status='Active' and l.currentLab.id in :labId and l.requestedLab.id not in :labId");
     q.setParameter("labId", labdIds);
     try {
       ArrayList<LabPermission> labs = (ArrayList<LabPermission>) q.getResultList();

@@ -15,7 +15,7 @@ public  class StudentCore {
     ArrayList<UserLabRole> result = new ArrayList<>();
     for(int i = 0 ; i < lab_id.size() ; i++)
     {
-      Query q = jpaApi.em().createQuery("SELECT u FROM UserLabRole u WHERE u.labId.id = :id");
+      Query q = jpaApi.em().createQuery("SELECT u FROM UserLabRole u WHERE u.labId.id = :id and (u.roleId.id = 2)");
       q.setParameter("id", (long)lab_id.get(i));
       try {
         ArrayList<UserLabRole> userLabRoles = (ArrayList<UserLabRole>) q.getResultList();

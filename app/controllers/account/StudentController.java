@@ -83,8 +83,7 @@ public class StudentController extends Controller {
     ArrayNode arr = (ArrayNode)node;
     for (int i = 0; i < arr.size(); i++) {
       JsonNode mynode = arr.get(i);
-      JsonNode cur =  mynode.get("labId");
-      int labId = cur.get("id").asInt();
+      int labId = mynode.asInt();
       labList.add(labId);
     }
     ArrayList<UserLabRole> students =  StudentCore.GetStudents(jpaApi, labList);

@@ -30,7 +30,8 @@ export class LabComponent implements OnInit, OnDestroy {
   model: any = {};
   roleId : any;
 
-
+  myLabId : any =[];
+  managerLabId : any =[];
   events: any =[];
   header: any = {};
 
@@ -47,10 +48,19 @@ export class LabComponent implements OnInit, OnDestroy {
     this.authService.getAllLabs(this.roleId, this.authService.username)
       .subscribe((result) => {
         this.labs = (result  as any).labs;
-        console.log(result);
+        console.log(this.labs);
+        this.managerLabId = [];
+        for(let i =0; i<this.labs.length;i++)
+        {
+          this.myLabId.push(this.labs[i].labId.id);
+          if(this.labs[i].roleId.id === 1)
+          {
+            this.managerLabId.push(this.labs[i].labId.id);
+          }
+        }
+        console.log(this.managerLabId);
         this.refinlabs = (result  as any).refInLabs;
         this.refoutlabs = (result  as any).refOutLabs;
-        console.log(this.refoutlabs.length);
 
         this.labsCopy = this.labs;
       });
