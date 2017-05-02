@@ -5,6 +5,7 @@ import core.RoleCore;
 import core.UserCore;
 import models.*;
 import org.apache.commons.mail.EmailException;
+import play.Logger;
 import play.data.FormFactory;
 import play.db.jpa.JPAApi;
 import play.db.jpa.Transactional;
@@ -15,6 +16,7 @@ import utils.Mailer;
 
 import javax.inject.Inject;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 import java.util.Random;
@@ -104,5 +106,15 @@ public class LabService {
       return Constants.RESPONSE_FAILURE;
     return Constants.RESPONSE_SUCCESS;
 
+  }
+
+  public static ArrayList<LabPermission> GetLabRequests(JPAApi jpaApi, String userName)
+  {
+    return LabCore.GetLabRequests(jpaApi, userName);
+  }
+
+  public static String AcceptLabRequest(JPAApi jpaApi, long id, String value)
+  {
+    return LabCore.AcceptLabRequest(jpaApi, id, value);
   }
 }

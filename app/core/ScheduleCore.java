@@ -14,12 +14,17 @@ import java.util.Date;
 public class ScheduleCore {
 
   public static ArrayList<EquipmentUnit> GetAvailableEquipemnts(JPAApi jpaApi, Date strt, Date end, long labId) {
-
+    long diff = end.getTime() - strt.getTime();
+    long diffMinutes = diff / (60 * 1000);
+    int diffHours = (int)(diff / (60 * 60 * 1000));
+    if(diffMinutes>0 && diffMinutes<60)
+      diffHours++;
     ArrayList<EquipmentUnit> equipmentUnits = new ArrayList<>();
-    Query q = jpaApi.em().createQuery("SELECT e FROM EquipmentUnit e where e.equipment.lab.id = :labid and e.id not in ( SELECT s.equipmentUnitId.id FROM Schedule s where s.startTime between :strtTime and :endTime or s.endTime between  :strtTime and :endTime)");
+    Query q = jpaApi.em().createQuery("SELECT e FROM EquipmentUnit e where e.equipment.lab.id = :labid and e.available_count > :diffCount and e.id not in ( SELECT s.equipmentUnitId.id FROM Schedule s where s.startTime between :strtTime and :endTime or s.endTime between  :strtTime and :endTime)");
     q.setParameter("labid", labId );
     q.setParameter("strtTime", strt);
     q.setParameter("endTime", end);
+    q.setParameter("diffCount", (long)diffHours);
     try {
       equipmentUnits = (ArrayList<EquipmentUnit>) q.getResultList();
       return  equipmentUnits;

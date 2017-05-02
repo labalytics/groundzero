@@ -1,8 +1,148 @@
 
 
-<div style="width:800px;text-align: center;">
-  <p-schedule [height]="600"  [events]="events" [header]="header" [eventLimit]="4" [editable]="true"></p-schedule>
+<div class="container">
+  <table *ngIf="roleId==1">
+    <tr>
+      <td>
+        <div class="row">
+          <div >
+            <div class="panel panel-default">
+              <div class="panel panel-primary">
+
+                <h4>
+                  Notifications</h4>
+
+                <div *ngIf="notifications.length>0 || requests.length>0">
+                  <div *ngIf="notifications.length>0" class="panel-body" >
+                    <table class="table table-striped table-condensed" style="width: 1000px">
+                      <thead>
+                      <tr>
+                        <th>Unit Id</th>
+                        <th>Name</th>
+                        <th>Remaining Count</th>
+                        <th>Lab</th>
+
+                      </tr>
+                      </thead>
+                      <tbody *ngFor="let noti of notifications">
+                      <tr>
+
+                        <td>{{noti.id}}</td>
+                        <td>{{noti.equipment.equipmentName}}</td>
+                        <td>{{noti.available_count}}</td>
+                        <td>{{noti.equipment.lab.labName}}</td>
+
+
+                      </tr>
+
+
+                      </tbody>
+                    </table>
+                  </div>
+                  <div *ngIf=" requests!=null &&  requests.length>0" class="panel-body" >
+                    <table class="table table-striped table-condensed" style="width: 1000px">
+                      <thead>
+                      <tr>
+                        <th>Your Lab</th>
+                        <th>External Lab</th>
+                        <th>Accept</th>
+                        <th>Reject</th>
+
+                      </tr>
+                      </thead>
+                      <tbody *ngFor="let req of requests">
+                      <tr>
+
+                        <td>{{req.currentLab.labName}}</td>
+                        <td>{{req.requestedLab.labName}}</td>
+                        <td>
+                          <button type="button" (click)="AcceptLabRequest(req.id, 'Active')" class="btn btn-info btn-circle"><i class="glyphicon glyphicon-ok"></i></button>
+                        </td>
+                        <td>
+                          <button type="button" (click)="AcceptLabRequest(req.id, 'Reject')" class="btn btn-warning btn-circle"><i class="glyphicon glyphicon-remove"></i></button>
+                        </td>
+
+
+                      </tr>
+
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+                <div *ngIf="notifications.length==0 && requests.length==0">
+                  <div class="panel-body">
+                    <label> No notifications </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+      <td style="width: 30px">
+
+      </td>
+      <td>
+
+      </td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <td>
+        <div class="row">
+            <div class="panel panel-default">
+              <div class="panel panel-primary">
+
+                <h4>
+                  Upcoming Events</h4>
+
+                <div *ngIf="schedule.length>0">
+                  <div class="panel-body" >
+                  <table class="table table-striped table-condensed" style="width: 1000px">
+                    <thead>
+                    <tr>
+                      <th>Start</th>
+                      <th>End</th>
+                      <th>Equipment</th>
+                      <th>Lab </th>
+                      <th></th>
+
+                    </tr>
+                    </thead>
+                    <tbody *ngFor="let sch of schedule">
+                    <tr>
+
+                      <td>{{sch.startTime}}</td>
+                      <td>{{sch.endTime}}</td>
+                      <td>{{sch.equipmentUnitId.equipment.equipmentName}}</td>
+                      <td>{{sch.equipmentUnitId.equipment.lab.labName}}</td>
+
+                      <td><a class="btn btn-sm btn-primary btn-block" role="button">cancel</a></td>
+
+                    </tr>
+
+
+                    </tbody>
+                  </table>
+                </div>
+                </div>
+                <div *ngIf="schedule.length==0">
+                  <div class="panel-body">
+                  <label> No upcoming events </label>
+                </div>
+                </div>
+              </div>
+            </div>
+        </div>
+      </td>
+      <td style="width: 30px">
+
+      </td>
+      <td>
+
+      </td>
+    </tr>
+  </table>
 </div>
-
-
-
