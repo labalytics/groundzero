@@ -30,6 +30,7 @@ export class StudentComponent implements OnInit {
   events: any =[];
   header: any = {};
   addStudents: number  = 1;
+  managerLabId : any =[];
 
   constructor(public http: Http, private authService: AuthenticationService) {
     this.val = 1;
@@ -71,7 +72,15 @@ export class StudentComponent implements OnInit {
       .subscribe((result) => {
         console.log(result);
         this.labs = (result as any).labs;
-        this.getStudents((result as any).labs);
+        this.managerLabId = [];
+        for(let i =0; i<this.labs.length;i++)
+        {
+          if(this.labs[i].roleId.id === 1)
+          {
+            this.managerLabId.push(this.labs[i].labId.id);
+          }
+        }
+        this.getStudents(this.managerLabId);
       });
   }
 
