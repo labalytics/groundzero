@@ -82,5 +82,13 @@ public class ScheduleService {
     return ScheduleCore.getBookingForLabs(jpaApi,email);
   }
 
+  public static ArrayList<Schedule> getBookingToPayByLabs(JPAApi jpaApi , String email){
+    return ScheduleCore.getBookingToPayByLabs(jpaApi,email);
+  }
+
+  public static ArrayList<Schedule> getBookingOwedByLabs(JPAApi jpaApi , String email){
+    return ScheduleCore.getBookingOwedByLabs(jpaApi,email);
+  }
+
 }
 
