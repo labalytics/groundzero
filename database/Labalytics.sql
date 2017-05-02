@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `labalytics` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `labalytics`;
--- MySQL dump 10.13  Distrib 5.7.9, for osx10.9 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
 -- Host: 127.0.0.1    Database: labalytics
 -- ------------------------------------------------------
--- Server version	5.7.9
+-- Server version	5.7.17
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -48,7 +46,7 @@ CREATE TABLE `bookings` (
   CONSTRAINT `lky` FOREIGN KEY (`userLabId`) REFERENCES `labs` (`lab_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `uky` FOREIGN KEY (`equipmentUnitId`) REFERENCES `equipment_units` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `usk` FOREIGN KEY (`userId`) REFERENCES `users` (`user_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -57,7 +55,7 @@ CREATE TABLE `bookings` (
 
 LOCK TABLES `bookings` WRITE;
 /*!40000 ALTER TABLE `bookings` DISABLE KEYS */;
-INSERT INTO `bookings` VALUES (1,93,94,46,47,'2017-03-10 18:00:00','2017-03-10 19:00:00','Active',1.00,2.00),(102,NULL,98,46,63,'2017-04-29 15:00:00','2017-04-29 16:00:00','Active',12.00,34.00),(103,NULL,94,46,47,'2017-04-29 15:00:00','2017-04-29 16:00:00','Active',12.00,123.00),(104,NULL,94,46,47,'2017-04-28 15:00:00','2017-04-28 16:00:00','Active',12.00,123.00);
+INSERT INTO `bookings` VALUES (1,93,94,46,47,'2017-03-10 18:00:00','2017-03-10 19:00:00','Active',1.00,2.00),(102,NULL,98,46,63,'2017-04-29 15:00:00','2017-04-29 16:00:00','Active',12.00,34.00),(103,NULL,94,46,47,'2017-04-29 15:00:00','2017-04-29 16:00:00','Active',12.00,123.00),(104,NULL,94,46,47,'2017-04-28 15:00:00','2017-04-28 16:00:00','Active',12.00,123.00),(105,NULL,72,69,47,'2017-04-30 11:00:00','2017-04-30 11:59:00','Active',12.00,13.00),(106,NULL,72,69,47,'2017-04-30 03:01:00','2017-04-30 04:00:00','Active',12.00,13.00);
 /*!40000 ALTER TABLE `bookings` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,7 +149,7 @@ CREATE TABLE `hibernate_sequence` (
 
 LOCK TABLES `hibernate_sequence` WRITE;
 /*!40000 ALTER TABLE `hibernate_sequence` DISABLE KEYS */;
-INSERT INTO `hibernate_sequence` VALUES (105),(105),(105),(105),(105);
+INSERT INTO `hibernate_sequence` VALUES (108),(108),(108),(108),(108);
 /*!40000 ALTER TABLE `hibernate_sequence` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,7 +227,7 @@ CREATE TABLE `role_access` (
   PRIMARY KEY (`id`),
   KEY `FKn4kfy7i55cucsytjftqb3kj5d` (`role_menu_id`),
   CONSTRAINT `FKn4kfy7i55cucsytjftqb3kj5d` FOREIGN KEY (`role_menu_id`) REFERENCES `roles` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,7 +236,7 @@ CREATE TABLE `role_access` (
 
 LOCK TABLES `role_access` WRITE;
 /*!40000 ALTER TABLE `role_access` DISABLE KEYS */;
-INSERT INTO `role_access` VALUES (1,1,'Dashboard','Active'),(2,1,'Labs','Active'),(3,1,'Students','Active'),(4,1,'Equipments','Active'),(5,1,'Schedule','Active'),(6,2,'Dashboard','Active'),(7,2,'Labs','Active'),(8,2,'Equipments','Active'),(9,2,'Schedule','Active'),(10,3,'Dashboard','Active'),(11,3,'Labs','Active'),(12,3,'Students','Active');
+INSERT INTO `role_access` VALUES (1,1,'Dashboard','Active'),(2,1,'Labs','Active'),(3,1,'Students','Active'),(4,1,'Equipments','Active'),(5,1,'Schedule','Active'),(6,2,'Dashboard','Active'),(7,2,'Labs','Active'),(8,2,'Equipments','Active'),(9,2,'Schedule','Active'),(10,3,'Dashboard','Active'),(11,3,'Labs','Active'),(12,3,'Students','Active'),(13,1,'Billing','Active'),(14,1,'Equipment Usage','Active'),(15,1,'Lab Usage','Active');
 /*!40000 ALTER TABLE `role_access` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -336,14 +334,6 @@ LOCK TABLES `users` WRITE;
 INSERT INTO `users` VALUES (1,'labalytics@gmail.com','$2a$10$77QChMXNyBalHVJgql/WsebV0ITlfIY8iL9.3/8XqYG3nkV3tqGXi','Admin','Kalyan Moguloju',NULL,NULL,'1487515e-c2dd-4ddc-a16b-4298e2bd3577','2017-03-10 18:54:14','\0','Active'),(46,'kalyansaim@gmail.com','$2a$10$F7A02rb.yKwvcw85CT8wNOhsK7Qau1cEOj5keUc1PcFcj0e7./NrS','Manager','Kalyan Moguloju',NULL,NULL,NULL,'2017-04-05 23:06:09','','Active'),(69,'sai-kalyanmoguloju@uiowa.edu','$2a$10$OyeI/T79OaO1oIFAXRDej.BA.2y0S4arwpXATsGFzhyIcXlLwJS16','Student','Moguloju',NULL,NULL,NULL,'2017-04-06 00:04:03','','Active'),(75,'msaikalyan@yahoo.com','$2a$10$gwg/9MNX7o6gJAmejqLSdeYcSexVV4fE/CNwUMuDNbiM0ifIZoGYq','Test','Manager',NULL,NULL,NULL,'2017-04-07 01:08:13','','Active'),(86,'kalyankanna32@gmail.com','$2a$10$lSHlloiUsKpXSFLiMXpzT.uyqmpgTLBZ5ZCIW1Mjwmu9Q8mDkdFwq','Sai','Kalyan Moguloju',NULL,NULL,'bffcf8b4-b1c0-4f74-82a5-0f1acc3753ec','2017-04-17 21:14:07','','Active');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'labalytics'
---
-
---
--- Dumping routines for database 'labalytics'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -354,4 +344,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-04-29 18:46:07
+-- Dump completed on 2017-05-01 22:23:44

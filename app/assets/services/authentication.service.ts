@@ -82,6 +82,18 @@ export class AuthenticationService {
       });
   }
 
+  getBookings(reservation: any , username: string) {
+    //this.http.post('/addLabs', JSON.stringify({email: managerEmail}), this.options)
+    return this.http.post('/labReport', JSON.stringify({email: username}), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse((response as any)._body);
+        console.log(result);
+        return result;
+      });
+  }
+
+
   getEvents() {
 
     return this.http.get('showcase/resources/data/scheduleevents.json')

@@ -24,6 +24,7 @@ import {EquipmentComponent} from "../../components/account/equipment.component"
 import {DashBoardComponent} from "../../components/account/dashboard.component"
 import {BillReportComponent} from "../../components/account/billreport.component"
 import {EquipmentReportComponent} from "../../components/account/equipmentreport.component"
+import {BillingComponent} from "../../components/account/billing.component"
 
 
 const routes: Routes = [
@@ -36,6 +37,7 @@ const routes: Routes = [
   {path: 'dashboard', pathMatch: 'full', component: DashBoardComponent},
   {path: 'billingreport', pathMatch: 'full', component: BillReportComponent},
   {path: 'equipmentreport', pathMatch: 'full', component: EquipmentReportComponent},
+  {path: 'billing', pathMatch: 'full', component: BillingComponent},
   {path: '', redirectTo: 'dashboard', pathMatch: 'full'}
 ];
 
@@ -52,7 +54,7 @@ const routes: Routes = [
     , ChartModule
     , GrowlModule
   ],
-  declarations: [HomeComponent, HeadComponent, MenuComponent, FooterComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, EquipmentComponent, ScheduleComponent, DashBoardComponent, BillReportComponent, EquipmentReportComponent],
+  declarations: [HomeComponent, HeadComponent, MenuComponent, FooterComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, EquipmentComponent, ScheduleComponent, DashBoardComponent, BillReportComponent, EquipmentReportComponent , BillingComponent],
   bootstrap: [HomeComponent],
   providers: [
     AuthenticationService,
