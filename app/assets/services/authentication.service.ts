@@ -294,4 +294,14 @@ export class AuthenticationService {
         return result;
       });
   }
+
+  public profileUpdate(details: any)
+  {
+    return this.http.post('/updateProfile', JSON.stringify(details), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse((response as any)._body);
+        return result;
+      });
+  }
 }

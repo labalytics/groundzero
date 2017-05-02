@@ -18,6 +18,8 @@ POST    /validate                   controllers.account.Authorize.validateUser()
 POST    /registration                   controllers.account.Authorize.registration()
 POST  /forgotpassword                 controllers.account.Authorize.forgotpassword()
 POST  /resetpassword                 controllers.account.Authorize.resetpassword()
+POST   /updateProfile                 controllers.account.Authorize.updateProfie()
+
 
 #LabController
 POST    /addLabs                   controllers.account.LabController.addLabsForManager()
