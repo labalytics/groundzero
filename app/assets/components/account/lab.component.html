@@ -79,19 +79,25 @@
     padding-top: 5px;
   }
 </style>
-<div *ngIf="roleId==1">
-  <p data-placement="top" data-toggle="tooltip" title="Lab Access" class="pull-right">
-    <button class="btn btn-success btn-xs" data-title="Newlab" data-toggle="modal" data-target="#labaccess"><span
-      class="glyphicon glyphicons-plus-sign">Request Lab Access</span>
-    </button>
-  </p>
-</div>
 <div class="row">
   <div class="col-xs-12">
     <div class="box">
-      <div class="box-header">
-        <h3 class="box-title">List of all labs</h3>
-      </div>
+      <table style="width: 100%;">
+        <tr>
+          <td>
+            <div class="box-header">
+              <h3 class="box-title">List of all labs</h3>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="roleId==1" style="margin-left:68%;right: 0;">
+              <button class="btn btn-success btn-xs" data-title="Newlab" data-toggle="modal" data-target="#labaccess"><span
+                class="glyphicon glyphicons-plus-sign">Request Lab Access</span>
+              </button></div>
+          </td>
+        </tr>
+      </table>
+
       <table style="width: 100%" >
         <tr>
           <td>
@@ -108,12 +114,9 @@
             </div>
           </td>
           <td align="center" *ngIf="roleId!=2">
-
-              <p data-placement="top" data-toggle="tooltip" title="New Lab" class="pull-right">
-                <button class="btn btn-success btn-xs" data-title="Newlab" data-toggle="modal" data-target="#newlab"><span
-                  class="glyphicon glyphicons-plus-sign">Add Lab</span>
-                </button>
-              </p>
+            <button class="btn btn-success btn-xs" data-title="Newlab" data-toggle="modal" data-target="#newlab"><span
+              class="glyphicon glyphicons-plus-sign">Add Lab</span>
+            </button>
           </td>
         </tr>
       </table>
@@ -145,10 +148,8 @@
             </td>
             <td>
               <div *ngIf="lab.roleId.id==1 || lab.roleId.id==3" >
-              <p data-placement="top" data-toggle="tooltip" title="Edit">
                   <button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" attr.data-target="#edit_{{lab.id}}"><span
                     class="glyphicon glyphicon-pencil"></span></button>
-                </p>
 
                 <div class="modal fade" id="edit_{{lab.id}}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
                 <div class="modal-dialog">
@@ -184,10 +185,8 @@
             </td>
             <td>
               <div *ngIf="lab.roleId.id==1 || lab.roleId.id==3" >
-              <p data-placement="top" data-toggle="tooltip" title="Delete">
                 <button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" attr.data-target="#delete_{{lab.id}}">
                   <span class="glyphicon glyphicon-trash"></span></button>
-              </p>
 
               <div class="modal fade" id="delete_{{lab.id}}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
                 <div class="modal-dialog">
@@ -221,7 +220,7 @@
 
             <td>
               <div *ngIf="lab.roleId.id==1 || lab.roleId.id==3" >
-                <p data-placement="top" data-toggle="tooltip" title="Schedule"><button class="btn btn-primary btn-xs" (click)="getSchedule(lab.labId.id)" data-title="Schedule" data-toggle="modal" data-target="#schedule" ><span style="font-size: small"> Schedule</span></button></p>
+                <button class="btn btn-primary btn-xs" (click)="getSchedule(lab.labId.id)" data-title="Schedule" data-toggle="modal" data-target="#schedule" ><span style="font-size: small"> Schedule</span></button>
               </div>
             </td>
 
@@ -333,36 +332,67 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" (click)="revertAccess()" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Request Lab Access</h4>
+        <h4 class="modal-title" >Request Lab Access</h4>
       </div>
       <form role="form">
         <div class="modal-body">
           <div>
             <div  class="form-group" style="width: 150px;">
-              <select name="labidA" class="form-control" #labidA (change)="getUnrefferedLabs(labidA.value)">
-                <option [value] = -1>Select</option>
-                <option *ngFor="let role of labs" [value]= "role.labId.id" >
-                  <div *ngIf="role.roleId.id==1">{{role.labId.labName}}</div>
-                </option>
-              </select>
+              <table>
+                <tr>
+                  <td style="width: 150px;">
+                    <div  class="form-group" style="width: 150px;" >
+                    <input style="border: none; text-align: left" type="text" value="Your lab" readonly>
+                    </div>
+                  </td>
+                  <td>
+                    <div  class="form-group" style="width: 150px;" >
+
+                    <select name="labidA" class="form-control" #labidA (change)="getUnrefferedLabs(labidA.value)">
+                      <option *ngFor="let role of labs" [value]= "role.labId.id" >
+                        <div *ngIf="role.roleId.id==1">{{role.labId.labName}}</div>
+                      </option>
+                    </select>
+                    </div>
+                  </td>
+                </tr>
+                <tr *ngIf="notreflabs.length > 0" >
+                  <td style="width: 150px;">
+                    <div  class="form-group" style="width: 150px;" >
+                    <input style="border: none; text-align: left" type="text" value="External lab" readonly>
+                    </div>
+                  </td>
+                  <td>
+                    <div  class="form-group" style="width: 150px;" >
+
+                      <select name="labid" class="form-control" #labid (change)="setReferedLab(labid.value)">
+                        <option *ngFor="let lab of notreflabs" [value]= "lab.id">
+                          <div>{{lab.labName}}</div>
+                        </option>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                  <div  *ngIf="refSelect == true && notreflabs.length == 0" class="form-group" style="width: 150px;" >
+                    <input style="border: none; text-align: left" type="text" value="No Labs left for reference" readonly>
+                  </div>
+                  </td>
+                </tr>
+              </table>
+
+
             </div>
-            <div  *ngIf="notreflabs.length > 0" class="form-group" style="width: 150px;" >
-              <label>Request to</label>
-              <select name="labid" class="form-control" #labid (change)="setReferedLab(labid.value)">
-                <option [value] = -1>Select</option>
-                <option *ngFor="let lab of notreflabs" [value]= "lab.id">
-                  <div>{{lab.labName}}</div>
-                </option>
-              </select>
-            </div>
+
 
 
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" style="background-color: #00a7d0" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+          <button type="button" style="background-color: #00a7d0" class="btn btn-outline pull-left"  data-dismiss="modal">Close</button>
           <button type="submit" style="background-color: #00a7d0" class="btn btn-outline" (click)="requestLabAccess(referedLab,currentLab)">Request</button>
         </div>
       </form>
@@ -399,10 +429,8 @@
             <td>{{lab.requestedLab.labName}}</td>
             <td>
               <div *ngIf="managerLabId.indexOf(lab.requestedLab.id) !== -1" >
-                <p data-placement="top" data-toggle="tooltip" title="Delete">
                   <button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" attr.data-target="#deleteRef_{{lab.id}}">
                     <span class="glyphicon glyphicon-trash"></span></button>
-                </p>
 
                 <div class="modal fade" id="deleteRef_{{lab.id}}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
                   <div class="modal-dialog">
@@ -437,18 +465,14 @@
             <td></td>
             <td>
               <div *ngIf="roldId == 1" >
-              <p data-placement="top" data-toggle="tooltip" title="Edit">
                 <button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit"><span
                   class="glyphicon glyphicon-pencil"></span></button>
-              </p>
               </div>
             </td>
             <td>
               <div *ngIf="roldId == 1" >
-              <p data-placement="top" data-toggle="tooltip" title="Delete">
                 <button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete">
                   <span class="glyphicon glyphicon-trash"></span></button>
-              </p>
               </div>
             </td>
           </tr>
@@ -485,10 +509,8 @@
             <td>{{lab.currentLab.labName}}</td>
             <td>{{lab.requestedLab.labName}}</td>
             <td>
-              <p data-placement="top" data-toggle="tooltip" title="Delete">
                 <button class="btn btn-danger btn-xs" (click)="deleteExternalLab(lab.currentLab.labName,lab.requestedLab.labName)" data-title="Delete" data-toggle="modal" data-target="#delete">
                   <span class="glyphicon glyphicon-trash"></span></button>
-              </p>
             </td>
             <td></td>
             <td></td>

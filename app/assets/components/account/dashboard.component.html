@@ -100,7 +100,7 @@
 
                 <div *ngIf="notifications.length>0 || requests.length>0">
                   <div *ngIf="notifications.length>0" class="panel-body" >
-                    <table class="table table-striped table-condensed">
+                    <table class="table table-hover">
                       <thead>
                       <tr>
                         <th>Unit Id</th>
@@ -126,7 +126,7 @@
                     </table>
                   </div>
                   <div *ngIf=" requests!=null &&  requests.length>0" class="panel-body" >
-                    <table class="table table-striped table-condensed" style="width: 1000px">
+                    <table class="table table-hover" style="width: 1000px">
                       <thead>
                       <tr>
                         <th>Your Lab</th>
@@ -186,7 +186,7 @@
 
                 <div *ngIf="schedule.length>0">
                   <div class="panel-body" >
-                  <table class="table table-striped table-condensed" style="width: 1000px">
+                  <table class="table table-hover" style="width: 1000px">
                     <thead>
                     <tr>
                       <th>Start</th>

@@ -29,7 +29,7 @@ export class LabComponent implements OnInit, OnDestroy {
   // New Lab
   model: any = {};
   roleId : any;
-
+  refSelect : any = false;
   myLabId : any =[];
   managerLabId : any =[];
   events: any =[];
@@ -123,6 +123,7 @@ export class LabComponent implements OnInit, OnDestroy {
 
   getUnrefferedLabs(labId: any)
   {
+    this.refSelect = true;
     this.currentLab = labId;
     console.log(labId);
     if(labId!==-1) {
@@ -161,6 +162,11 @@ export class LabComponent implements OnInit, OnDestroy {
   deleteExternalLab(curLabId : any, reqstedLabId : any)
   {
 
+  }
+
+  revertAccess()
+  {
+    this.refSelect = false;
   }
 
 }
