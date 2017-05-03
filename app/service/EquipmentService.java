@@ -55,7 +55,7 @@ public class EquipmentService {
     } else {
       equipment.type = "Accessory";
     }
-    if(jsonNode.findPath("equipment_type").asInt() != 1) {
+    if(jsonNode.findPath("equipment_type").asInt() == 1) {
       equipment.parentEquipment = EquipmentCore.getEquipmentById(jpaApi,jsonNode.findPath("equipment_parName").asLong());
     }
 

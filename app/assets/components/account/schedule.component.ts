@@ -184,7 +184,7 @@ export class ScheduleComponent implements OnInit {
           this.availableUnits = (result  as any).units;
           this.availableEquipments = (result  as any).equipments;
           this.refoutlabs = (result  as any).refOutLabs;
-
+          this.ngOnInit();
         });
     }
 

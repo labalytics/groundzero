@@ -23,9 +23,9 @@ export class BillingComponent implements OnInit {
   paidId: any = [];
   bookings : any =[];
   filteredLab :any = [];
+  bookingsOwed : any =[];
   page1Lab : any = -1;
   page2Lab : any = -1;
-  bookingsOwed : any =[];
 
   constructor(private authService: AuthenticationService) {
   }
@@ -50,7 +50,7 @@ export class BillingComponent implements OnInit {
         }
         this.bookings = result;
         if(this.page1Lab !== -1) {
-          this.getBookingOwedByLabs(this.page1Lab);
+          this.getBookingsToPayByLabs(this.page1Lab);
         }
 
       });
@@ -64,12 +64,13 @@ export class BillingComponent implements OnInit {
         }
         this.bookingsOwed = result;
         if(this.page2Lab!== -1) {
-          this.getBookingsToPayByLabs(this.page2Lab);
+          this.getBookingOwedByLabs(this.page2Lab);
         }
       });
   }
 
   getBookingOwedByLabs(labid : any) {
+    console.log(labid);
     this.filteredLabOwed = [];
     this.totalAmount = 0;
     this.paidId = [];

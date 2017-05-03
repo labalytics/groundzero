@@ -351,6 +351,7 @@
                     <div  class="form-group" style="width: 150px;" >
 
                     <select name="labidA" class="form-control" #labidA (change)="getUnrefferedLabs(labidA.value)">
+                      <option>-select-</option>
                       <option *ngFor="let role of labs" [value]= "role.labId.id" >
                         <div *ngIf="role.roleId.id==1">{{role.labId.labName}}</div>
                       </option>
@@ -368,6 +369,7 @@
                     <div  class="form-group" style="width: 150px;" >
 
                       <select name="labid" class="form-control" #labid (change)="setReferedLab(labid.value)">
+                        <option> -select- </option>
                         <option *ngFor="let lab of notreflabs" [value]= "lab.id">
                           <div>{{lab.labName}}</div>
                         </option>
@@ -482,8 +484,7 @@
     </div>
   </div>
 </div>
-
-<div class="row" *ngIf="roldId != 2  && refoutlabs != null && refoutlabs.length>0">
+<div class="row" *ngIf="roleId != 2  && refoutlabs != null && refoutlabs.length>0">
   <div class="col-xs-12">
     <div class="box">
       <div class="box-header">

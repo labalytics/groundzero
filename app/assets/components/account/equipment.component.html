@@ -151,7 +151,7 @@
                     <td>{{equipment.lab.labName}}</td>
                     <td>{{equipment.workingRate}}$</td>
                     <td>{{equipment.nonworkingRate}}$</td>
-                    <td>
+                    <td *ngIf="roleId==1 && ManagerLabs.indexOf(equipment.lab.id) !== -1">
                       <div>
                         <p data-placement="top" data-toggle="tooltip" title="Edit">
                           <button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" attr.data-target="#edit_{{equipment.id}}"><span
@@ -218,9 +218,6 @@
                               <tr *ngIf="equipmentUnits.equipment.id == equipment.id" style="background-color: #c4c4c4" >
                                 <td>{{equipmentUnits.units_count}}</td>
                                 <td>{{equipmentUnits.available_count}}</td>
-                                <td>
-                                  <button class="btn btn-primary btn-xs" data-title="Details" data-toggle="modal" attr.data-target="#edit_{{equipment.id}}"><span style="font-size: small"> Details</span></button>
-                                </td>
                                 <td><button class="btn btn-primary btn-xs" (click)="getSchedule(equipmentUnits.id)" data-title="Schedule" data-toggle="modal" data-target="#schedule" ><span style="font-size: small"> Schedule</span></button></td>
                                 <td>
                                   <div *ngIf="roleId==1 && ManagerLabs.indexOf(equipment.lab.id) !== -1">

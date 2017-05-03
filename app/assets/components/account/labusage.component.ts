@@ -190,7 +190,7 @@ export class LabUsageComponent implements OnInit {
         });
       });
     });
-
+    console.log(this.arrBookingsByYear);
     this.oBookingsByYear = this.arrBookingsByYear[this.arrBookingsByYear.length - 1];
     this.RenderChart();
   }
@@ -203,21 +203,23 @@ export class LabUsageComponent implements OnInit {
 
     let arrDataset = [];
     let that = this;
-    this.oBookingsByYear.arrBookingByLab.forEach(function(oBookingByLab){
-      let innerData = [];
-      oBookingByLab.arrMonthlyBooking.forEach(function(oMonthlyBooking){
-        innerData.push(oMonthlyBooking.nCount);
+    console.log(this.oBookingsByYear);
+    if(this.oBookingsByYear!==null) {
+      this.oBookingsByYear.arrBookingByLab.forEach(function (oBookingByLab) {
+        let innerData = [];
+        oBookingByLab.arrMonthlyBooking.forEach(function (oMonthlyBooking) {
+          innerData.push(oMonthlyBooking.nCount);
+        });
+        let oDataset = {
+          label: oBookingByLab.sLabName,
+          data: innerData,
+          fill: false,
+          borderColor: that.GetRandomColor()
+        }
+
+        data.datasets.push(oDataset);
       });
-      let oDataset = {
-        label: oBookingByLab.sLabName,
-        data: innerData,
-        fill: false,
-        borderColor: that.GetRandomColor()
-      }
-
-      data.datasets.push(oDataset);
-    });
-
+    }
     this.data = data;
     this.bShowChart = false;
 

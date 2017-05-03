@@ -122,15 +122,14 @@ export class EquipmentComponent implements OnInit {
 
   UpdateEquipment(equipment: any)
   {
-    alert("Updated Succesfull");
-    // this.authService.updateEquipment(equipment)
-    //   .subscribe((result) => {
-    //     if((result as any).status === "Success"){
-    //       alert("Updated Succesfull");
-    //     }
-    //     else {
-    //       alert("Updated aborted");
-    //     }
-    //   });
+    this.authService.updateEquipment(equipment)
+      .subscribe((result) => {
+        if((result as any).status === "Success"){
+          alert("Updated Succesfull");
+        }
+        else {
+          alert("Updated aborted");
+        }
+      });
   }
 }

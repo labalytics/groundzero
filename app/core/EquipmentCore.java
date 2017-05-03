@@ -102,7 +102,7 @@ public class EquipmentCore {
   public static ArrayList<EquipmentUnit> GetNotifications(JPAApi jpaApi, String username)
   {
     ArrayList<EquipmentUnit> equipment = new ArrayList<>();
-    Query q = jpaApi.em().createQuery("SELECT e FROM EquipmentUnit e WHERE e.equipment.lab.id in (SELECT u.labId.id from UserLabRole u WHERE u.userId.email= :username and u.roleId.id=1) and (e.available_count/e.units_count)*100 <= e.equipment.usageNotification");
+    Query q = jpaApi.em().createQuery("SELECT e FROM EquipmentUnit e WHERE e.equipment.lab.id in (SELECT u.labId.id from UserLabRole u WHERE u.userId.email= :username and u.roleId.id=1) and (100-(e.available_count/e.units_count)*100) >= e.equipment.usageNotification");
     q.setParameter("username", username );
     try {
       equipment = (ArrayList<EquipmentUnit>) q.getResultList();
