@@ -20,7 +20,6 @@ POST  /forgotpassword                 controllers.account.Authorize.forgotpasswo
 POST  /resetpassword                 controllers.account.Authorize.resetpassword()
 POST   /updateProfile                 controllers.account.Authorize.updateProfie()
 
-
 #LabController
 POST    /addLabs                   controllers.account.LabController.addLabsForManager()
 POST    /getLabs                   controllers.account.LabController.getAllLabs()
@@ -28,6 +27,7 @@ POST    /labAccessRequest           controllers.account.LabController.labAccessR
 POST    /getUnrefferedLabs          controllers.account.LabController.getNotReferedLabs()
 POST    /getLabRequests             controllers.account.LabController.GetLabRequests()
 POST    /acceptLabRequest           controllers.account.LabController.AcceptLabRequest()
+POST  /udpateLab        controllers.account.LabController.UpdateLab()
 
 #StudentController
 POST    /insertStudents                   controllers.account.StudentController.addStudents()
