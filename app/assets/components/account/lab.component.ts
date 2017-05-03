@@ -164,9 +164,25 @@ export class LabComponent implements OnInit, OnDestroy {
 
   }
 
+<<<<<<< HEAD
   revertAccess()
   {
     this.refSelect = false;
   }
 
+=======
+  UpdateLab(lab: any)
+  {
+    this.authService.udpateLab(lab)
+      .subscribe((result) => {
+        console.log(result);
+        if(result.status === "Success"){
+          alert("Updated Succesfull");
+        }
+        else {
+          alert("Updated aborted");
+        }
+      });
+  }
+>>>>>>> origin/master
 }

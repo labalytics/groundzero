@@ -128,12 +128,11 @@ export class EquipmentUsageComponent implements OnInit {
     });
 
     this.arrLabEquipmentGrouped = arrLabEquipmentGrouped;
-    this.RenderChart(this.mylab);
+    this.RenderChart();
   }
 
-  RenderChart(oMyLab) {
+  RenderChart() {
     // console.log("RenderChart --- " + (new Date().getMilliseconds() - this.timestamp.getMilliseconds()));
-    //this.mylab = oMyLab;
     let data = {
       labels: [],
       datasets: [
@@ -162,7 +161,7 @@ export class EquipmentUsageComponent implements OnInit {
 
     setTimeout(() => {
       this.bShowChart = true;
-    }, 10);
+    }, 0);
     this.changeRef.detectChanges();
   }
 }

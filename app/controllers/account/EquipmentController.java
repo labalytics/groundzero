@@ -108,4 +108,29 @@ public class EquipmentController extends Controller {
     }
     return ok(Json.toJson(oResponse));
   }
+
+  @Transactional
+  public Result UpdateEquipment() {
+    ResponseCore oResponse = new ResponseCore();
+    HashMap<String, Object> hash = new HashMap();
+    try {
+      JsonNode json = request().body().asJson();
+      long id = json.findPath("id").asLong();
+      String name= json.findPath("equipmentName").textValue();
+      String desc = json.findPath("description").textValue();
+      double workingrate = json.findPath("workingRate").asDouble();
+      double nonworkingrate = json.findPath("nonworkingRate").asDouble();
+      oResponse.status = EquipmentService.UpdateEquipment(jpaApi, id, name, desc, workingrate,nonworkingrate);
+      oResponse.message = oResponse.status;
+      return ok(Json.toJson(oResponse));
+
+    } catch (Exception e) {
+      logger.error("Authorize.save error", e);
+      flash("error", Messages.get("error.technical"));
+      oResponse.status = Constants.RESPONSE_EXCEPTION;
+      oResponse.message = Constants.REGISTRATION_FAILURE;
+      oResponse.response = null;
+    }
+    return ok(Json.toJson(oResponse));
+  }
 }

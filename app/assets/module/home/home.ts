@@ -31,13 +31,21 @@ export class HomeComponent implements OnInit {
             this.currentRouteHeader = "Equipment information";
             this.currentRouteDesc = "Manage equipments for your labs";
             break;
-          case "/billingreport":
+          case "/billing":
             this.currentRouteHeader = "Bills by lab";
             this.currentRouteDesc = "View billings for your all your labs";
             break;
-          case "/equipmentreport":
-            this.currentRouteHeader = "Equipment usage";
+          case "schedule":
+            this.currentRouteHeader = "Book equipments";
+            this.currentRouteDesc = "View or book equipments";
+            break;
+          case "/equipmentusage":
+            this.currentRouteHeader = "Equipment usage report";
             this.currentRouteDesc = "View usage of equipments";
+            break;
+          case "/labusage":
+            this.currentRouteHeader = "Lab usage report";
+            this.currentRouteDesc = "View overall bookings made within all your labs";
             break;
           default:
             this.currentRouteHeader = "";

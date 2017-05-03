@@ -1,5 +1,12 @@
-<title>Lab Usage</title>
-<div>
-  <p-growl [value]="msgs"></p-growl>
-  <p-chart type="line" [data]="data" (onDataSelect)="selectData($event)"></p-chart>
+<div class="LA_EquipUsage">
+  <div class="row">
+    <select [(ngModel)]="oBookingsByYear" (ngModelChange)="RenderChart()" class="form-control">
+      <option [ngValue]="oBookingByYear" *ngFor="let oBookingByYear of arrBookingsByYear">
+        <div>{{oBookingByYear.nYear}}</div>
+      </option>
+    </select>
+  </div>
+  <div class="row" *ngIf="bShowChart">
+    <p-chart type="line" [data]="data" (onDataSelect)="selectData($event)"></p-chart>
+  </div>
 </div>
