@@ -15,7 +15,8 @@ export class BillingComponent implements OnInit {
   mylab: any = {};
   ManagerLabs: any = [];
   roleId: any;
-  filteredLab : any = [];
+  filteredLabToPay : any = [];
+  filteredLabOwed : any = [];
   billing: any = {};
   labs : any = [];
   totalAmount : any = 0;
@@ -23,11 +24,13 @@ export class BillingComponent implements OnInit {
   constructor(public http: Http, private authService: AuthenticationService) {
   }
 
-  getEquipments()
+  getBookingsToPayByLabs()
   {
-    this.filteredLab = [];
+    this.filteredLabToPay = [];
+    this.totalAmount = 0;
+    this.paidId = [];
     console.log(this.mylab);
-    this.authService.getBookings(this.mylab , this.authService.username)
+    this.authService.getBookingToPayByLabs(this.authService.username)
       .subscribe((result) => {
       for(let i =0; i<(result as any).bookingList.length; i++)
       {
@@ -36,19 +39,50 @@ export class BillingComponent implements OnInit {
         (result as any).bookingList[i].endTime =  this.formatAMPM(new Date((result as any).bookingList[i].endTime));
 
       }
-        this.filterLabId((result as any).bookingList, this.mylab);
+        this.filterLabId((result as any).bookingList, this.mylab, this.filteredLabToPay, "pay");
+
+      });
+  }
+  getBookingOwedByLabs()
+  {
+    this.filteredLabOwed = [];
+    this.totalAmount = 0;
+    this.paidId = [];
+    console.log(this.mylab);
+    this.authService.getBookingOwedByLabs(this.authService.username)
+      .subscribe((result) => {
+        for(let i =0; i<(result as any).bookingList.length; i++)
+        {
+          (result as any).bookingList[i].cost = Math.round((((result as any).bookingList[i].endTime - (result as any).bookingList[i].startTime)/3600000)*(result as any).bookingList[i].workingRate);
+          (result as any).bookingList[i].startTime =  this.formatAMPM(new Date((result as any).bookingList[i].startTime));
+          (result as any).bookingList[i].endTime =  this.formatAMPM(new Date((result as any).bookingList[i].endTime));
+
+        }
+        this.filterLabId((result as any).bookingList, this.mylab , this.filteredLabOwed, "owed");
 
       });
   }
 
-  filterLabId(result : any , mylab: any)
+
+  filterLabId(result : any , mylab: any , filteredLab: any[], type: string)
   {
     for (let index in result) {
-      if(result[index].userLabId.id === mylab.labid){
-         this.filteredLab.push(result[index]);
 
+
+      if (type === "owed") {
+        if (result[index].equipmentUnitId.equipment.lab.id === mylab.labid) {
+          filteredLab.push(result[index]);
+
+        }
+      }
+      else {
+        if (result[index].userLabId.id === mylab.labid) {
+          filteredLab.push(result[index]);
+
+        }
       }
     }
+
 
   }
 
@@ -61,6 +95,22 @@ export class BillingComponent implements OnInit {
 
   markPayment(){
     console.log(this.paidId);
+    this.authService.makePayments(this.paidId)
+      .subscribe((result) => {
+       if(result.status === "Success")
+       {
+         this.getBookingsToPayByLabs();
+         // for (let index in this.filteredLabToPay) {
+         //    if(this.paidId.indexOf(this.filteredLabToPay[index].id) > -1)
+         //    {
+         //      this.filteredLabToPay.pop(this.filteredLabToPay[index]);
+         //      this.paidId.pop(this.filteredLabToPay[index].id);
+         //      this.totalAmount = 0;
+         //
+         //    }
+         // }
+         }
+      });
 
   }
 
