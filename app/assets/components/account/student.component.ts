@@ -34,8 +34,6 @@ export class StudentComponent implements OnInit {
   constructor(public http: Http, private authService: AuthenticationService) {
     this.val = 1;
     this.newstudents.push({'id': this.val, 'firstName':'', 'lastName': '', 'email':'', 'labid': '' });
-    console.log(this.val);
-
   }
 
   getStudents(labs: any) {
@@ -69,7 +67,6 @@ export class StudentComponent implements OnInit {
     //this.oServiceCall_GetAllLab =
     this.authService.getAllLabs(this.roleId, this.authService.username)
       .subscribe((result) => {
-        console.log(result);
         this.labs = (result as any).labs;
         this.getStudents((result as any).labs);
       });
@@ -79,13 +76,10 @@ export class StudentComponent implements OnInit {
     this.addStudents = 1;
     this.authService.getRoleandMenuData(this.authService.username)
       .subscribe((result) => {
-        // let labId = result.userDetails.labId.id;
-        //console.log(result);
         this.roleId = result.userDetails.roleId.id;
         this.getLabs();
       });
     this.events = [];
-    // this.authService.getEvents().then(events => {this.events = events;});
 
     this.header = {
       left: 'prev,next, today',

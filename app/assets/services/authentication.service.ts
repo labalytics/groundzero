@@ -11,6 +11,13 @@ export class AuthenticationService {
   private oRoleAndMenu: Object = null;
   private oRoleAndMenuObservable: Observable<any> = null;
 
+  private oLabs: Object = null;
+  private oLabsObservable: Observable<any> = null;
+  private oLabBooking: Object = null;
+  private oLabBookingObservable: Observable<any> = null;
+  private oEquipments: Object = null;
+  private oEquipmentsObservable: Observable<any> = null;
+
   private headers = new Headers({'Content-Type': 'application/json'});
   private options = new RequestOptions({headers: this.headers});
 
@@ -25,7 +32,6 @@ export class AuthenticationService {
     return this.http.post('/validate', JSON.stringify({email: username, password: password}), this.options)
       .map((response: Response) => {
         this.authenticated = true;
-        //localStorage.setItem('currentUser', JSON.stringify(response));
         let result: Object;
         result = JSON.parse((response as any)._body);
         localStorage.setItem('userEmail', (result as any).response.email);
@@ -62,18 +68,28 @@ export class AuthenticationService {
     }
   }
 
-  getAllLabs(roleid: any, managerEmail: string ) {
-    //this.http.post('/addLabs', JSON.stringify({email: managerEmail}), this.options)
-    return this.http.post('/getLabs', JSON.stringify({email: managerEmail, roleId: roleid}), this.options)
-      .map((response: Response) => {
-        let result: Object;
-        result = JSON.parse((response as any)._body);
-        return result;
-      });
+  getAllLabs(roleid: any, managerEmail: string) {
+    if (this.oLabs) {
+      return Observable.of(this.oLabs);
+    } else if (this.oLabsObservable) {
+      return this.oLabsObservable;
+    } else {
+      this.oLabsObservable = this.http.post('/getLabs', JSON.stringify({
+        email: managerEmail,
+        roleId: roleid
+      }), this.options)
+        .map((response: Response) => {
+          let result: Object;
+          result = JSON.parse((response as any)._body);
+          this.oLabs = result;
+          return result;
+        })
+        .share();
+      return this.oLabsObservable;
+    }
   }
 
-  getAvailables(reservation: any ) {
-    //this.http.post('/addLabs', JSON.stringify({email: managerEmail}), this.options)
+  getAvailables(reservation: any) {
     return this.http.post('/getAvailable', JSON.stringify(reservation), this.options)
       .map((response: Response) => {
         let result: Object;
@@ -82,24 +98,32 @@ export class AuthenticationService {
       });
   }
 
-  getBookings(reservation: any , username: string) {
-    //this.http.post('/addLabs', JSON.stringify({email: managerEmail}), this.options)
-    return this.http.post('/labReport', JSON.stringify({email: username}), this.options)
+  getBookings(username: string) {
+    if (this.oLabBooking) {
+      return Observable.of(this.oLabBooking);
+    } else if (this.oLabBookingObservable) {
+      return this.oLabBookingObservable;
+    } else {
+      this.oLabBookingObservable = this.http.post('/labReport', JSON.stringify({email: username}), this.options)
       .map((response: Response) => {
         let result: Object;
         result = JSON.parse((response as any)._body);
-        console.log(result);
+        this.oLabBooking = result;
         return result;
-      });
+      })
+        .share();
+      return this.oLabBookingObservable;
+    }
   }
 
 
   getEvents() {
-
     return this.http.get('showcase/resources/data/scheduleevents.json')
       .toPromise()
       .then(res => <any[]> res.json().data)
-      .then(data => { return data; });
+      .then(data => {
+        return data;
+      });
   }
 
   insertStudents(newstudents: any) {
@@ -115,8 +139,6 @@ export class AuthenticationService {
   addlabs(info: any = {}) {
     return this.http.post('/addLabs', JSON.stringify({info}), this.options)
       .map((response: Response) => {
-        //this.authenticated = true;
-        //localStorage.setItem('currentUser', JSON.stringify(response));
         let result: Object;
         result = JSON.parse((response as any)._body);
         return result;
@@ -162,20 +184,23 @@ export class AuthenticationService {
     localStorage.removeItem('currentUser');
   }
 
-  public getEquipments(userDetails: any) {
-    let id: any = [];
-    for (let i = 0; i < userDetails.length; i++) {
-      id.push(userDetails[i].labId.id);
+  public getEquipments(arrLabId: any []) {
+    if (this.oEquipments) {
+      return Observable.of(this.oEquipments);
+    } else if (this.oEquipmentsObservable) {
+      return this.oEquipmentsObservable;
+    } else {
+      let id = arrLabId;
+      this.oEquipmentsObservable = this.http.post('/getEquipments', JSON.stringify({id}), this.options)
+        .map((response: Response) => {
+          let result: Object;
+          result = JSON.parse((response as any)._body);
+          this.oEquipments = (result as any).response;
+          return (result as any).response;
+        })
+        .share();
+      return this.oEquipmentsObservable;
     }
-    return this.http.post('/getEquipments', JSON.stringify({id}), this.options)
-      .map((response: Response) => {
-        //this.authenticated = true;
-        //localStorage.setItem('currentUser', JSON.stringify(response));
-        let result: Object;
-        result = JSON.parse((response as any)._body);
-        console.log((result as any).response);
-        return (result as any).response;
-      });
   }
 
   public addEquipment(equipment: any) {
@@ -190,8 +215,7 @@ export class AuthenticationService {
       });
   }
 
-  public forgotpassword(email :any)
-  {
+  public forgotpassword(email: any) {
     return this.http.post('/forgotpassword', JSON.stringify({email}), this.options)
       .map((response: Response) => {
         let result: Object;
@@ -201,9 +225,8 @@ export class AuthenticationService {
       });
   }
 
-  public resetpassword(email :any, reset: any)
-  {
-    return this.http.post('/resetpassword', JSON.stringify({email,reset}), this.options)
+  public resetpassword(email: any, reset: any) {
+    return this.http.post('/resetpassword', JSON.stringify({email, reset}), this.options)
       .map((response: Response) => {
         let result: Object;
         result = JSON.parse((response as any)._body);
@@ -212,9 +235,8 @@ export class AuthenticationService {
       });
   }
 
-  public labAccessRequest(currentLabId :any, requestedLabId: any)
-  {
-    return this.http.post('/labAccessRequest', JSON.stringify({currentLabId,requestedLabId}), this.options)
+  public labAccessRequest(currentLabId: any, requestedLabId: any) {
+    return this.http.post('/labAccessRequest', JSON.stringify({currentLabId, requestedLabId}), this.options)
       .map((response: Response) => {
         let result: Object;
         result = JSON.parse((response as any)._body);
@@ -223,9 +245,12 @@ export class AuthenticationService {
       });
   }
 
-  public getUnrefferedLabs(LabId :any, email: any, roleId:any)
-  {
-    return this.http.post('/getUnrefferedLabs', JSON.stringify({LabidA: LabId, email: email, roleId: roleId}), this.options)
+  public getUnrefferedLabs(LabId: any, email: any, roleId: any) {
+    return this.http.post('/getUnrefferedLabs', JSON.stringify({
+      LabidA: LabId,
+      email: email,
+      roleId: roleId
+    }), this.options)
       .map((response: Response) => {
         let result: Object;
         result = JSON.parse((response as any)._body);
@@ -233,10 +258,17 @@ export class AuthenticationService {
       });
   }
 
-  public makeReservation(unitId : any, date: any, strtTime : any, endTime : any, isRef : any, refLab : any)
-  {
+  public makeReservation(unitId: any, date: any, strtTime: any, endTime: any, isRef: any, refLab: any) {
     console.log(this.username);
-    return this.http.post('/makeReservation', JSON.stringify({unitId: unitId,date: date, strtTime: strtTime, endTime: endTime, isRef: isRef, refLab: refLab, userId: this.username}), this.options)
+    return this.http.post('/makeReservation', JSON.stringify({
+      unitId: unitId,
+      date: date,
+      strtTime: strtTime,
+      endTime: endTime,
+      isRef: isRef,
+      refLab: refLab,
+      userId: this.username
+    }), this.options)
       .map((response: Response) => {
         let result: Object;
         result = JSON.parse((response as any)._body);
@@ -244,10 +276,9 @@ export class AuthenticationService {
       });
   }
 
-  public getSchedule(type:any, id: any)
-  {
+  public getSchedule(type: any, id: any) {
     console.log('Here');
-    return this.http.post('/getSchedule', JSON.stringify({type: type,id: id}), this.options)
+    return this.http.post('/getSchedule', JSON.stringify({type: type, id: id}), this.options)
       .map((response: Response) => {
         let result: Object;
         result = JSON.parse((response as any)._body);
@@ -255,8 +286,7 @@ export class AuthenticationService {
       });
   }
 
-  public getEquipmentNotification()
-  {
+  public getEquipmentNotification() {
     return this.http.post('/getEquipmentNotification', JSON.stringify({username: this.username}), this.options)
       .map((response: Response) => {
         let result: Object;
@@ -265,8 +295,7 @@ export class AuthenticationService {
       });
   }
 
-  public getSelfSchedule()
-  {
+  public getSelfSchedule() {
     return this.http.post('/getSelfSchedule', JSON.stringify({username: this.username}), this.options)
       .map((response: Response) => {
         let result: Object;
@@ -275,8 +304,7 @@ export class AuthenticationService {
       });
   }
 
-  public getLabRequests()
-  {
+  public getLabRequests() {
     return this.http.post('/getLabRequests', JSON.stringify({email: this.username}), this.options)
       .map((response: Response) => {
         let result: Object;
@@ -285,8 +313,7 @@ export class AuthenticationService {
       });
   }
 
-  public acceptLabRequest(id: any, value: any)
-  {
+  public acceptLabRequest(id: any, value: any) {
     return this.http.post('/acceptLabRequest', JSON.stringify({reqId: id, value: value}), this.options)
       .map((response: Response) => {
         let result: Object;
