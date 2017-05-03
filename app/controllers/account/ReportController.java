@@ -5,6 +5,7 @@ package controllers.account;
  */
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import core.ResponseCore;
 import models.Equipment;
 import models.EquipmentUnit;
@@ -19,15 +20,13 @@ import play.libs.mailer.MailerClient;
 import play.mvc.Controller;
 import play.mvc.Result;
 import service.ScheduleService;
+import service.StudentService;
 import utils.Constants;
 
 import javax.inject.Inject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class ReportController extends Controller {
 
@@ -54,6 +53,84 @@ public class ReportController extends Controller {
       ArrayList<Schedule> bookingList = ScheduleService.getBookingsForLabs(jpaApi,email);
       hash.put("bookingList",bookingList);
       return ok(Json.toJson(hash));
+
+    } catch (Exception e) {
+      logger.error("Authorize.save error", e);
+      flash("error", Messages.get("error.technical"));
+      oResponse.status = Constants.RESPONSE_EXCEPTION;
+      oResponse.message = Constants.REGISTRATION_FAILURE;
+      oResponse.response = null;
+    }
+    return ok(Json.toJson(oResponse));
+  }
+
+  @Transactional
+  public Result getBookingToPayByLabs() {
+    logger.debug("Getting Booking to pay by Labs");
+    ResponseCore oResponse = new ResponseCore();
+    HashMap<String, Object> hash = new HashMap();
+    try {
+      JsonNode json = request().body().asJson();
+      String email = json.findPath("email").asText();
+      ArrayList<Schedule> bookingList = ScheduleService.getBookingToPayByLabs(jpaApi,email);
+      hash.put("bookingList",bookingList);
+      return ok(Json.toJson(hash));
+
+    } catch (Exception e) {
+      logger.error("Authorize.save error", e);
+      flash("error", Messages.get("error.technical"));
+      oResponse.status = Constants.RESPONSE_EXCEPTION;
+      oResponse.message = Constants.REGISTRATION_FAILURE;
+      oResponse.response = null;
+    }
+    return ok(Json.toJson(oResponse));
+  }
+
+  @Transactional
+  public Result getBookingOwedByLabs() {
+    logger.debug("Getting Booking to Owed by Labs");
+    ResponseCore oResponse = new ResponseCore();
+    HashMap<String, Object> hash = new HashMap();
+    try {
+      JsonNode json = request().body().asJson();
+      String email = json.findPath("email").asText();
+      ArrayList<Schedule> bookingList = ScheduleService.getBookingOwedByLabs(jpaApi,email);
+      hash.put("bookingList",bookingList);
+      return ok(Json.toJson(hash));
+
+    } catch (Exception e) {
+      logger.error("Authorize.save error", e);
+      flash("error", Messages.get("error.technical"));
+      oResponse.status = Constants.RESPONSE_EXCEPTION;
+      oResponse.message = Constants.REGISTRATION_FAILURE;
+      oResponse.response = null;
+    }
+    return ok(Json.toJson(oResponse));
+  }
+
+  @Transactional
+  public Result makePaymentForLab() {
+    logger.debug("Adding Labs");
+    ResponseCore oResponse = new ResponseCore();
+    HashMap<String, Object> hash = new HashMap();
+    try {
+      JsonNode json = request().body().asJson();
+      Iterator<JsonNode> iterator = json.elements();
+      ArrayNode arrayNode = (ArrayNode) json.findPath("bookingIdList");
+      String result = ScheduleService.makePayments(jpaApi, arrayNode , mailerClient);
+      if(result.equalsIgnoreCase(Constants.RESPONSE_SUCCESS))
+      {
+        oResponse.status = Constants.RESPONSE_SUCCESS;
+        oResponse.message = "Payment made Successfully";
+        oResponse.response = hash;
+      }
+      else
+      {
+        oResponse.status = Constants.RESPONSE_FAILURE;
+        oResponse.message = result;
+        oResponse.response = hash;
+      }
+
 
     } catch (Exception e) {
       logger.error("Authorize.save error", e);

@@ -82,13 +82,45 @@ export class AuthenticationService {
       });
   }
 
-  getBookings(reservation: any , username: string) {
+  getBookings(username: string) {
     //this.http.post('/addLabs', JSON.stringify({email: managerEmail}), this.options)
     return this.http.post('/labReport', JSON.stringify({email: username}), this.options)
       .map((response: Response) => {
         let result: Object;
         result = JSON.parse((response as any)._body);
         console.log(result);
+        return result;
+      });
+  }
+
+  getBookingToPayByLabs(username: string) {
+    //this.http.post('/addLabs', JSON.stringify({email: managerEmail}), this.options)
+    return this.http.post('/getBills', JSON.stringify({email: username}), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse((response as any)._body);
+        console.log(result);
+        return result;
+      });
+  }
+
+  getBookingOwedByLabs(username: string) {
+    //this.http.post('/addLabs', JSON.stringify({email: managerEmail}), this.options)
+    return this.http.post('/getbillsOwed', JSON.stringify({email: username}), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse((response as any)._body);
+        console.log(result);
+        return result;
+      });
+  }
+
+  makePayments(bookingIdList: any ) {
+    //this.http.post('/addLabs', JSON.stringify({email: managerEmail}), this.options)
+    return this.http.post('/makePayment', JSON.stringify({bookingIdList: bookingIdList}), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse((response as any)._body);
         return result;
       });
   }

@@ -35,6 +35,10 @@ POST    /insertStudents                   controllers.account.StudentController.
 
 #Reports
 POST     /labReport                      controllers.account.ReportController.getBookingForLabs()
+POST     /getBills                      controllers.account.ReportController.getBookingToPayByLabs()
+POST     /getbillsOwed                    controllers.account.ReportController.getBookingOwedByLabs()
+POST     /makePayment                      controllers.account.ReportController.makePaymentForLab()
+
 
 #get userData and Dynamic Menu Items based on UserRole
 
