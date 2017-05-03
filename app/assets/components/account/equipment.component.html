@@ -204,11 +204,13 @@
 
                               <thead>
 
-                              <th>Total Units</th>
-                              <th>Available Units</th>
+                              <th *ngIf="equipment.equipmentType == 'Non-Reusable'">Total Units</th>
+                              <th *ngIf="equipment.equipmentType == 'Non-Reusable'">Available Units</th>
+                              <th *ngIf="equipment.equipmentType != 'Non-Reusable'">Total Hours</th>
+                              <th *ngIf="equipment.equipmentType != 'Non-Reusable'">Available Hours</th>
 
                               <th></th>
-                              <th>Delete</th>
+                              <th></th>
                               <th></th>
                               </thead>
                               <tbody *ngFor="let equipmentUnits of equipmentUnits">
@@ -340,8 +342,8 @@
                           </td>
                           <td align="right">
                             <select name="equipment_parName" class="form-control" [(ngModel)]="newequipment.equipment_parName" #equipment_parName="ngModel" required>
-                              <option *ngFor="let equip of equipments" [ngValue]= "equip.equipment.id"  >
-                                <div *ngIf="equip.equipment.lab.id == labid.value && equip.type =='Equipment'">{{equip.equipment.equipmentName}}</div>
+                              <option *ngFor="let equip of equipments" [ngValue]= "equip.id"  >
+                                <div *ngIf="equip.lab.id == labid.value && equip.type =='Equipment'">{{equip.equipmentName}}</div>
                               </option>
                             </select>
                           </td>

@@ -79,13 +79,11 @@ export class EquipmentComponent implements OnInit {
     this.authService.addEquipment(this.newequipment)
       .subscribe((result) => {
         // let labId = result.userDetails.labId.id;
-        console.log(result);
         this.ngOnInit();
       });
   }
 
   dropChange(val: any) {
-    console.log(val);
   }
 
   addEquipmentsClick() {
@@ -97,7 +95,6 @@ export class EquipmentComponent implements OnInit {
   }
 
   getUnits(id: any) {
-    console.log(id);
   }
 
   getSchedule(id: any) {
@@ -128,7 +125,6 @@ export class EquipmentComponent implements OnInit {
     alert("Updated Succesfull");
     // this.authService.updateEquipment(equipment)
     //   .subscribe((result) => {
-    //     console.log(result);
     //     if((result as any).status === "Success"){
     //       alert("Updated Succesfull");
     //     }

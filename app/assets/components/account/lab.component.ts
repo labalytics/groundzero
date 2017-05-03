@@ -48,7 +48,6 @@ export class LabComponent implements OnInit, OnDestroy {
     this.authService.getAllLabs(this.roleId, this.authService.username)
       .subscribe((result) => {
         this.labs = (result  as any).labs;
-        console.log(this.labs);
         this.managerLabId = [];
         for(let i =0; i<this.labs.length;i++)
         {
@@ -58,7 +57,6 @@ export class LabComponent implements OnInit, OnDestroy {
             this.managerLabId.push(this.labs[i].labId.id);
           }
         }
-        console.log(this.managerLabId);
         this.refinlabs = (result  as any).refInLabs;
         this.refoutlabs = (result  as any).refOutLabs;
 
@@ -74,15 +72,11 @@ export class LabComponent implements OnInit, OnDestroy {
   }
 
   insertlab() {
-    console.log(this.authService.username);
     if(this.roleId === 1) {
-      console.log("here");
       this.model.email = this.authService.username;
     }
-    console.log(this.model);
     this.authService.addlabs(this.model)
       .subscribe((result) => {
-          console.log(result);
           this.router.navigate(['/labs']);
           this.ngOnInit();
           //window.location.href = window.location.origin + "/home";
@@ -95,7 +89,6 @@ export class LabComponent implements OnInit, OnDestroy {
     this.authService.labAccessRequest(currentLab,requestedLab)
       .subscribe((result) => {
         // let labId = result.userDetails.labId.id;
-        console.log(result);
       });
   }
 
@@ -103,7 +96,6 @@ export class LabComponent implements OnInit, OnDestroy {
     this.authService.getRoleandMenuData(this.authService.username)
       .subscribe((result) => {
        // let labId = result.userDetails.labId.id;
-        console.log(result);
         this.roleId = result.userDetails.roleId.id;
         this.getLabs();
       });
@@ -125,7 +117,6 @@ export class LabComponent implements OnInit, OnDestroy {
   {
     this.refSelect = true;
     this.currentLab = labId;
-    console.log(labId);
     if(labId!==-1) {
       this.authService.getUnrefferedLabs(labId, this.authService.username, this.roleId)
         .subscribe((result) => {
@@ -136,7 +127,6 @@ export class LabComponent implements OnInit, OnDestroy {
 
   deleteLab(labId: any)
   {
-    console.log(labId);
   }
   setReferedLab(labId: any)
   {
@@ -151,7 +141,6 @@ export class LabComponent implements OnInit, OnDestroy {
       .subscribe((result) => {
         let schedule = (result  as any).schedule;
         this.events = [];
-        console.log(schedule);
         for(let i = 0; i<schedule.length; i++)
         {
           this.events.push({"title": schedule[i].equipmentUnitId.equipment.equipmentName+" to " +schedule[i].userLabId.labName,"start": new Date(schedule[i].startTime).toJSON(), "end": new Date(schedule[i].endTime).toJSON()});
@@ -164,19 +153,16 @@ export class LabComponent implements OnInit, OnDestroy {
 
   }
 
-<<<<<<< HEAD
   revertAccess()
   {
     this.refSelect = false;
   }
 
-=======
   UpdateLab(lab: any)
   {
     this.authService.udpateLab(lab)
       .subscribe((result) => {
-        console.log(result);
-        if(result.status === "Success"){
+        if((result as any).status === "Success"){
           alert("Updated Succesfull");
         }
         else {
@@ -184,5 +170,4 @@ export class LabComponent implements OnInit, OnDestroy {
         }
       });
   }
->>>>>>> origin/master
 }

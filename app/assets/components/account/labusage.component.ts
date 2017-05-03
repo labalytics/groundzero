@@ -98,7 +98,6 @@ export class LabUsageComponent implements OnInit {
     arrBookings.forEach(function (oE) {
       for (let i = 0; i < arrLabEquipmentGrouped.length; i++) {
         if (arrLabEquipmentGrouped[i].nLabId === oE.equipmentUnitId.equipment.lab.id) {
-          console.log("starttime is -" + new Date(oE.startTime));
           let dStartTime = oE.startTime ? new Date(oE.startTime) : null;
           let arrYearlyBookings = arrLabEquipmentGrouped[i].arrYearlyBookings;
           let bFound = false;
@@ -193,7 +192,6 @@ export class LabUsageComponent implements OnInit {
     });
 
     this.oBookingsByYear = this.arrBookingsByYear[this.arrBookingsByYear.length - 1];
-    console.log(this.arrBookingsByYear);
     this.RenderChart();
   }
 
@@ -233,27 +231,7 @@ export class LabUsageComponent implements OnInit {
     return '#' + (Math.random() * 0xFFFFFF << 0).toString(16);
   }
 
-  ngOnInit1() {
-    this.getBookings();
-    return;
-    this.data = {
-      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-      datasets: [
-        {
-          label: 'Jake Labs',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          fill: false,
-          borderColor: '#4bc0c0'
-        },
-        {
-          label: 'Chemistry lab',
-          data: [28, 48, 40, 19, 86, 27, 90],
-          fill: false,
-          borderColor: '#565656'
-        }
-      ]
-    }
-  }
+
 
   selectData(event: Event) {
     this.msgs = [];
