@@ -21,15 +21,25 @@ export class BillingComponent implements OnInit {
   labs: any = [];
   totalAmount: any = 0;
   paidId: any = [];
+  bookings : any =[];
+  filteredLab :any = [];
+  page1Lab : any = -1;
+  page2Lab : any = -1;
+  bookingsOwed : any =[];
 
   constructor(private authService: AuthenticationService) {
   }
 
-  getBookingsToPayByLabs() {
+  getBookingsToPayByLabs(id : any) {
     this.filteredLabToPay = [];
     this.totalAmount = 0;
     this.paidId = [];
-    console.log(this.mylab);
+    this.page1Lab = id;
+    this.filteredLabToPay = this.filterLabId((this.bookings).bookingList, id,  "pay");
+  }
+
+  getBookings()
+  {
     this.authService.getBookingToPayByLabs(this.authService.username)
       .subscribe((result) => {
         for (let i = 0; i < (result as any).bookingList.length; i++) {
@@ -38,16 +48,12 @@ export class BillingComponent implements OnInit {
           (result as any).bookingList[i].endTime = this.formatAMPM(new Date((result as any).bookingList[i].endTime));
 
         }
-        this.filterLabId((result as any).bookingList, this.mylab, this.filteredLabToPay, "pay");
+        this.bookings = result;
+        if(this.page1Lab !== -1) {
+          this.getBookingOwedByLabs(this.page1Lab);
+        }
 
       });
-  }
-
-  getBookingOwedByLabs() {
-    this.filteredLabOwed = [];
-    this.totalAmount = 0;
-    this.paidId = [];
-    console.log(this.mylab);
     this.authService.getBookingOwedByLabs(this.authService.username)
       .subscribe((result) => {
         for (let i = 0; i < (result as any).bookingList.length; i++) {
@@ -56,44 +62,58 @@ export class BillingComponent implements OnInit {
           (result as any).bookingList[i].endTime = this.formatAMPM(new Date((result as any).bookingList[i].endTime));
 
         }
-        this.filterLabId((result as any).bookingList, this.mylab, this.filteredLabOwed, "owed");
-
+        this.bookingsOwed = result;
+        if(this.page2Lab!== -1) {
+          this.getBookingsToPayByLabs(this.page2Lab);
+        }
       });
   }
 
+  getBookingOwedByLabs(labid : any) {
+    this.filteredLabOwed = [];
+    this.totalAmount = 0;
+    this.paidId = [];
+    this.page2Lab = labid;
+    this.filteredLabOwed = this.filterLabId((this.bookingsOwed as any).bookingList, labid, "owed");
 
-  filterLabId(result: any, mylab: any, filteredLab: any[], type: string) {
+  }
+
+
+  filterLabId(result: any, mylab: any, type: string) {
+    this.filteredLab = []
     for (let index in result) {
-
-
       if (type === "owed") {
-        if (result[index].equipmentUnitId.equipment.lab.id === mylab.labid) {
-          filteredLab.push(result[index]);
+        if (result[index].equipmentUnitId.equipment.lab.id.toString() === mylab.toString()) {
+          this.filteredLab.push(result[index]);
 
         }
       }
       else {
-        if (result[index].userLabId.id === mylab.labid) {
-          filteredLab.push(result[index]);
+        if (result[index].userLabId.id.toString() === mylab.toString()) {
+          this.filteredLab.push(result[index]);
 
         }
       }
     }
+    return this.filteredLab;
 
 
   }
 
 
   ngOnInit() {
+    this.totalAmount = 0;
+    this.paidId = [];
     this.getLabs();
+    this.getBookings();
   }
 
   markPayment() {
     console.log(this.paidId);
     this.authService.makePayments(this.paidId)
       .subscribe((result) => {
-        if (result.status === "Success") {
-          this.getBookingsToPayByLabs();
+        if ((result as any).status === "Success") {
+          this.ngOnInit();
           // for (let index in this.filteredLabToPay) {
           //    if(this.paidId.indexOf(this.filteredLabToPay[index].id) > -1)
           //    {

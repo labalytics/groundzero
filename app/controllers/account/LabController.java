@@ -154,4 +154,19 @@ public class LabController extends Controller {
     return ok(Json.toJson(oResponse));
   }
 
+  @Transactional
+  public Result UpdateLab()
+  {
+    ResponseCore oResponse = new ResponseCore();
+    HashMap<String, Object> hash = new HashMap();
+    JsonNode json = request().body().asJson();
+    long id = json.findPath("id").asLong();
+    String name= json.findPath("labName").textValue();
+    String PIname = json.findPath("labPi").textValue();
+    String desc = json.findPath("description").textValue();
+    oResponse.status = LabService.UpdateLab(jpaApi, id, name, desc, PIname);
+    oResponse.message = oResponse.status;
+    return ok(Json.toJson(oResponse));
+  }
+
 }
