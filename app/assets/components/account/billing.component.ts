@@ -92,7 +92,7 @@ export class BillingComponent implements OnInit {
     console.log(this.paidId);
     this.authService.makePayments(this.paidId)
       .subscribe((result) => {
-        if (result.status === "Success") {
+        if ((result as any).status === "Success") {
           this.getBookingsToPayByLabs();
           // for (let index in this.filteredLabToPay) {
           //    if(this.paidId.indexOf(this.filteredLabToPay[index].id) > -1)

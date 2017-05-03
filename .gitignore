@@ -44,3 +44,5 @@ testem.log
 conf/application.conf
 
 conf/application.conf
+
+conf/application.conf
