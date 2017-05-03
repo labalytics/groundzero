@@ -373,5 +373,14 @@ export class AuthenticationService {
         return result;
       });
   }
-  udpateLab
+
+  public updateEquipment(equipment: any)
+  {
+    return this.http.post('/updateEquipment', JSON.stringify(equipment), this.options)
+      .map((response: Response) => {
+        let result: Object;
+        result = JSON.parse((response as any)._body);
+        return result;
+      });
+  }
 }

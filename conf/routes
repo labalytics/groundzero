@@ -58,6 +58,7 @@ POST    /getstudents                   controllers.account.StudentController.get
 #Equipment Controller
 POST     /getEquipments                  controllers.account.EquipmentController.GetEquipments()
 POST     /addEquipment                  controllers.account.EquipmentController.AddEquipment()
+POST  /updateEquipment                 controllers.account.EquipmentController.UpdateEquipment()
 
 #Schedule
 POST    /getAvailable                 controllers.account.ScheduleController.GetAvailable()
