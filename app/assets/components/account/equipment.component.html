@@ -128,6 +128,7 @@
                   <th>Lab Name</th>
                   <th>Working Rate</th>
                   <th>Non-Working Rate</th>
+                  <th>Update</th>
                   </thead>
                   <tbody *ngFor="let equipment of equipments">
 
@@ -150,6 +151,48 @@
                     <td>{{equipment.lab.labName}}</td>
                     <td>{{equipment.workingRate}}$</td>
                     <td>{{equipment.nonworkingRate}}$</td>
+                    <td>
+                      <div>
+                        <p data-placement="top" data-toggle="tooltip" title="Edit">
+                          <button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" attr.data-target="#edit_{{equipment.id}}"><span
+                            class="glyphicon glyphicon-pencil"></span></button>
+                        </p>
+
+                        <div class="modal fade" id="edit_{{equipment.id}}" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span
+                                  class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                                <h4 class="modal-title custom_align" id="Heading">Edit Equipment Detail</h4>
+                              </div>
+                              <div class="modal-body">
+                                <div class="form-group">
+                                  <input class="form-control " type="text" placeholder="Equipment Name" value="" [(ngModel)]="equipment.equipmentName" #labName="ngModel" required>
+                                </div>
+                                <div class="form-group">
+                                  <textarea rows="2" class="form-control"
+                                  placeholder="Description" [(ngModel)]="equipment.description" #description="ngModel" required>{{equipment.description}}></textarea>
+                                </div>
+                                <div class="form-group">
+                                  <input class="form-control " type="text" placeholder="Equipment Working Hour Rate" value="" [(ngModel)]="equipment.workingRate" #labName="ngModel" required>
+                                </div>
+                                <div class="form-group">
+                                  <input class="form-control " type="text" placeholder="Equipment Non-Working Hour Rate" value="" [(ngModel)]="equipment.nonworkingRate" #labName="ngModel" required>
+                                </div>
+                              </div>
+                              <div class="modal-footer ">
+                                <button (click)="UpdateEquipment(equipment)" type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span
+                                  class="glyphicon glyphicon-ok-sign"></span> Update
+                                </button>
+                              </div>
+                            </div>
+                            <!-- /.modal-content -->
+                          </div>
+                          <!-- /.modal-dialog -->
+                        </div>
+                      </div>
+                    </td>
 
                   </tr>
                   <tr style="column-span: 6">

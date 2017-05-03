@@ -117,4 +117,14 @@ public class LabService {
   {
     return LabCore.AcceptLabRequest(jpaApi, id, value);
   }
+
+  public static String UpdateLab(JPAApi jpaApi, long id, String name, String desc, String PIName)
+  {
+    Lab lab = LabCore.getLabById(jpaApi, id);
+    lab.description= desc;
+    lab.labName = name;
+    lab.labPi = PIName;
+    LabCore.insert(jpaApi, lab);
+    return Constants.RESPONSE_SUCCESS;
+  }
 }

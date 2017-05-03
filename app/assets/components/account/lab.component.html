@@ -161,18 +161,18 @@
                     </div>
                     <div class="modal-body">
                       <div class="form-group">
-                        <input class="form-control " type="text" placeholder="Name">
+                        <input class="form-control " type="text" placeholder="Name" value="{{lab.labId.labName}}" [(ngModel)]="lab.labId.labName" #labName="ngModel" required>
                       </div>
                       <div class="form-group">
-                        <input class="form-control " type="text" placeholder="Manager">
+                        <input class="form-control " type="text" placeholder="PI name" value="{{lab.labId.labPi}}" [(ngModel)]="lab.labId.labPi" #labPi="ngModel" required>
                       </div>
                       <div class="form-group">
-                  <textarea rows="2" class="form-control"
-                            placeholder="Description"></textarea>
+                      <textarea rows="2" class="form-control"
+                            placeholder="Description" [(ngModel)]="lab.labId.description" #description="ngModel" required>{{lab.labId.description}}</textarea>
                       </div>
                     </div>
                     <div class="modal-footer ">
-                      <button type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span
+                      <button (click)="UpdateLab(lab.labId)" type="button" class="btn btn-warning btn-lg" style="width: 100%;"><span
                         class="glyphicon glyphicon-ok-sign"></span> Update
                       </button>
                     </div>

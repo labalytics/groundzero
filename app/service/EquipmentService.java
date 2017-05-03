@@ -93,5 +93,16 @@ public class EquipmentService {
     return EquipmentCore.GetNotifications(jpaApi,username);
   }
 
+  public static String UpdateEquipment(JPAApi jpaApi, long id, String name, String desc, double workingrate, double nonworkingrate)
+  {
+    Equipment equipment = EquipmentCore.getEquipmentById(jpaApi, id);
+    equipment.description= desc;
+    equipment.equipmentName = name;
+    equipment.workingRate = workingrate;
+    equipment.nonworkingRate = nonworkingrate;
+    EquipmentCore.addEquipment(jpaApi, equipment);
+    return Constants.RESPONSE_SUCCESS;
+  }
+
 }
 
