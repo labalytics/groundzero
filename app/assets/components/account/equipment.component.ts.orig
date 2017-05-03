@@ -115,6 +115,9 @@ export class EquipmentComponent implements OnInit {
         }
       });
   }
+<<<<<<< HEAD
+=======
+
   search(): void {
     let term = this.searchTerm;
     this.equipments = this.equipmentsCopy.filter(function (tag : any) {
@@ -122,4 +125,6 @@ export class EquipmentComponent implements OnInit {
         || tag.equipmentType.toLowerCase().indexOf(term.toLowerCase()) >= 0 || tag.lab.labName.toLowerCase().indexOf(term.toLowerCase()) >= 0 ;
     });
   }
+
+>>>>>>> origin/master
 }

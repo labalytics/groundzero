@@ -162,7 +162,7 @@ export class EquipmentUsageComponent implements OnInit {
 
     setTimeout(() => {
       this.bShowChart = true;
-    }, 100);
+    }, 10);
     this.changeRef.detectChanges();
   }
 }

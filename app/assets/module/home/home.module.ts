@@ -16,10 +16,8 @@ import {ScheduleComponent} from "../../components/account/schedule.component"
 import {AuthenticationService} from  "../../services/authentication.service"
 import {HelperService} from  "../../services/helper.service"
 
-import {AdminComponent} from "../../components/account/admin.component"
 import {StudentComponent} from "../../components/account/student.component"
 import {LabComponent} from "../../components/account/lab.component"
-import {DeveloperComponent} from "../../components/account/developer.component"
 import {EquipmentComponent} from "../../components/account/equipment.component"
 import {DashBoardComponent} from "../../components/account/dashboard.component"
 import {LabUsageComponent} from "../../components/account/labusage.component"
@@ -28,10 +26,8 @@ import {BillingComponent} from "../../components/account/billing.component"
 
 
 const routes: Routes = [
-  {path: 'admin', pathMatch: 'full', component: AdminComponent},
   {path: 'students', pathMatch: 'full', component: StudentComponent},
   {path: 'labs', pathMatch: 'full', component: LabComponent},
-  {path: 'dev', pathMatch: 'full', component: DeveloperComponent},
   {path: 'equipments', pathMatch: 'full', component: EquipmentComponent},
   {path: 'schedule', pathMatch: 'full', component: ScheduleComponent},
   {path: 'dashboard', pathMatch: 'full', component: DashBoardComponent},
@@ -54,7 +50,7 @@ const routes: Routes = [
     , ChartModule
     , GrowlModule
   ],
-  declarations: [HomeComponent, HeadComponent, MenuComponent, FooterComponent, AdminComponent, StudentComponent,LabComponent, DeveloperComponent, EquipmentComponent, ScheduleComponent, DashBoardComponent, LabUsageComponent, EquipmentUsageComponent , BillingComponent],
+  declarations: [HomeComponent, HeadComponent, MenuComponent, FooterComponent, StudentComponent,LabComponent, EquipmentComponent, ScheduleComponent, DashBoardComponent, LabUsageComponent, EquipmentUsageComponent , BillingComponent],
   bootstrap: [HomeComponent],
   providers: [
     AuthenticationService,

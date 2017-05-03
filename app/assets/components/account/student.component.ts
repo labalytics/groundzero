@@ -30,6 +30,7 @@ export class StudentComponent implements OnInit {
   events: any =[];
   header: any = {};
   addStudents: number  = 1;
+  managerLabId : any =[];
 
   constructor(public http: Http, private authService: AuthenticationService) {
     this.val = 1;
@@ -47,7 +48,8 @@ export class StudentComponent implements OnInit {
   search(): void {
     let term = this.searchTerm;
     this.students = this.studentCopy.filter(function (tag : any) {
-      return tag.userId.firstName.indexOf(term) >= 0;
+      return tag.userId.firstName.toLowerCase().indexOf(term.toLowerCase()) >= 0 || tag.userId.lastName.toLowerCase().indexOf(term.toLowerCase()) >= 0
+        || tag.userId.email.toLowerCase().indexOf(term.toLowerCase()) >= 0 || tag.labId.labName.toLowerCase().indexOf(term.toLowerCase()) >= 0 || tag.roleId.roleName.toLowerCase().indexOf(term.toLowerCase()) >= 0;
     });
   }
 
@@ -68,7 +70,15 @@ export class StudentComponent implements OnInit {
     this.authService.getAllLabs(this.roleId, this.authService.username)
       .subscribe((result) => {
         this.labs = (result as any).labs;
-        this.getStudents((result as any).labs);
+        this.managerLabId = [];
+        for(let i =0; i<this.labs.length;i++)
+        {
+          if(this.labs[i].roleId.id === 1)
+          {
+            this.managerLabId.push(this.labs[i].labId.id);
+          }
+        }
+        this.getStudents(this.managerLabId);
       });
   }
 

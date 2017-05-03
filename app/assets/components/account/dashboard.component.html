@@ -1,5 +1,91 @@
+<title>Home</title>
+
+<div class="container">
+  <div class="row" style="position: absolute; width: 82%">
+
+    <div class="panel-group" id="accordion">
+
+      <div class="panel panel-default col-lg-3 no-padding" style="width: 100%">
+        <div class="panel-heading" style="right: 0;">
+          <h4 class="panel-title" style="right: 0;margin-left: 88%">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapseProfile">
+              <i class="more-less glyphicon glyphicon-plus"></i>
+              Update Profile</a>
+          </h4>
+        </div>
+        <div id="collapseProfile" class="panel-collapse collapse" style="width: 100%">
+          <div class="panel-body" style="background-color: #e9e9e9">
+            <table width="100%">
+              <tr>
+                <td width="50%">
+                  <div class="login-box">
+                    <div class="login-box-body" style="height:270px">
+                      <p class="login-box-msg">Update profile</p>
+
+                      <form name="form" (ngSubmit)="f1.form.valid && profileUpdate()" #f1="ngForm" novalidate>
+                        <div class="form-group has-feedback">
+                          <input type="text" class="form-control" placeholder="First Name" name="firstName" [(ngModel)]="userDetails.firstName" #firstName="ngModel" required>
+                          <div *ngIf="f1.submitted && !firstName.valid" class="help-block">First Name is required</div>
+                        </div>
+                        <div class="form-group has-feedback">
+                          <input type="text" class="form-control" placeholder="Last Name" name="lastName" [(ngModel)]="userDetails.lastName" #lastName="ngModel" required />
+                          <div *ngIf="f1.submitted && !lastName.valid" class="help-block">Last Name is required</div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-xs-offset-8 col-xs-4">
+                            <button class="btn btn-primary btn-block btn-flat">Update</button>
+                          </div>
+                        </div>
+                      </form></div>
+                  </div>
+                </td>
+                <td>
+                  <div class="login-box" style="height:270px">
+                    <div class="login-box-body">
+                      <p class="login-box-msg">Change your password</p>
+
+                      <form name="form" (ngSubmit)="f.form.valid && passwordReset()" #f="ngForm" novalidate>
+                        <div class="form-group has-feedback">
+                          <input type="password" class="form-control" placeholder="Old password" name="oldpassword" [(ngModel)]="reset.oldpassword" #oldpassword="ngModel" required>
+                          <div *ngIf="f.submitted && !oldpassword.valid" class="help-block">Old password is required</div>
+                          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        </div>
+                        <div class="form-group has-feedback">
+                          <input type="password" class="form-control" placeholder="New password" name="newpassword" [(ngModel)]="reset.newpassword" #newpassword="ngModel" required />
+                          <div *ngIf="f.submitted && !newpassword.valid" class="help-block">New password is required</div>
+                          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        </div>
+                        <div class="form-group has-feedback">
+                          <input type="password" name="repeatpassword" id="repeatpassword" class="form-control"
+                                 placeholder="Confirm password" [(ngModel)]="reset.repeatpassword"
+                                 #repeatpassword="ngModel" required>
+                          <div *ngIf="f.submitted && !repeatpassword.valid" class="help-block">Confirm password is required
+                          </div>
+                          <div *ngIf="f.submitted && repeatpassword == newpassword" class="help-block">Password's does not match
+                          </div>
+                          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                        </div>
+                        <div class="row">
+                          <div class="col-xs-offset-8 col-xs-4">
+                            <button [disabled]="loading" class="btn btn-primary btn-block btn-flat">Update</button>
+                          </div>
+                        </div>
+                      </form></div>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
 
 
+
+    </div>
+  </div>
+</div>
+<div style="height: 40px"></div>
 <div class="container">
   <table *ngIf="roleId==1">
     <tr>
@@ -7,14 +93,14 @@
         <div class="row">
           <div >
             <div class="panel panel-default">
-              <div class="panel panel-primary">
+              <div class="panel panel-primary" style="width: 1100px">
 
                 <h4>
                   Notifications</h4>
 
                 <div *ngIf="notifications.length>0 || requests.length>0">
                   <div *ngIf="notifications.length>0" class="panel-body" >
-                    <table class="table table-striped table-condensed" style="width: 1000px">
+                    <table class="table table-striped table-condensed">
                       <thead>
                       <tr>
                         <th>Unit Id</th>
@@ -93,7 +179,7 @@
       <td>
         <div class="row">
             <div class="panel panel-default">
-              <div class="panel panel-primary">
+              <div class="panel panel-primary" style="width: 1100px">
 
                 <h4>
                   Upcoming Events</h4>

@@ -2,18 +2,22 @@ package service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import core.EquipmentCore;
-import core.LabCore;
-import core.ScheduleCore;
-import core.UserCore;
+import core.*;
 import models.*;
+import org.apache.commons.mail.EmailException;
 import play.db.jpa.JPA;
 import play.db.jpa.JPAApi;
+import play.libs.mailer.MailerClient;
 import utils.Constants;
+import utils.Hash;
+import utils.Mailer;
+import utils.UtilCommons;
 
+import java.net.MalformedURLException;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by skalyanmoguloju on 3/27/17.
@@ -80,6 +84,23 @@ public class ScheduleService {
 
   public static ArrayList<Schedule> getBookingsForLabs(JPAApi jpaApi , String email){
     return ScheduleCore.getBookingForLabs(jpaApi,email);
+  }
+
+  public static ArrayList<Schedule> getBookingToPayByLabs(JPAApi jpaApi , String email){
+    return ScheduleCore.getBookingToPayByLabs(jpaApi,email);
+  }
+
+  public static ArrayList<Schedule> getBookingOwedByLabs(JPAApi jpaApi , String email){
+    return ScheduleCore.getBookingOwedByLabs(jpaApi,email);
+  }
+
+  public static String makePayments(JPAApi jpaApi, ArrayNode arrayNode, MailerClient mailerClient){
+    try {
+      ScheduleCore.makePayments(jpaApi,arrayNode);
+      return Constants.RESPONSE_SUCCESS;
+    } catch (Exception e) {
+      return Constants.RESPONSE_EXCEPTION;
+    }
   }
 
 }

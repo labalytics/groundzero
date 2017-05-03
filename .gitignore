@@ -42,3 +42,5 @@ testem.log
 #System Files
 .DS_Store
 conf/application.conf
+
+conf/application.conf
