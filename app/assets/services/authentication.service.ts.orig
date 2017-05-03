@@ -99,12 +99,17 @@ export class AuthenticationService {
   }
 
   getBookings(username: string) {
+<<<<<<< HEAD
     if (this.oLabBooking) {
       return Observable.of(this.oLabBooking);
     } else if (this.oLabBookingObservable) {
       return this.oLabBookingObservable;
     } else {
       this.oLabBookingObservable = this.http.post('/labReport', JSON.stringify({email: username}), this.options)
+=======
+    //this.http.post('/addLabs', JSON.stringify({email: managerEmail}), this.options)
+    return this.http.post('/labReport', JSON.stringify({email: username}), this.options)
+>>>>>>> origin/master
       .map((response: Response) => {
         let result: Object;
         result = JSON.parse((response as any)._body);

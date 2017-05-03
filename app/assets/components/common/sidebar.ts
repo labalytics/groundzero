@@ -51,27 +51,6 @@ export class MenuComponent implements OnInit {
   ngOnInit() {
     this.authService.getRoleandMenuData(this.authService.username)
       .subscribe((result) => {
-        const barRep = {
-          id: 6,
-          menu_name: "BillingReport",
-          role: {
-            id: 1,
-            roleName: "Manager",
-            status: "Active"
-          }
-        }
-        const equipRep = {
-          id: 7,
-          menu_name: "EquipmentReport",
-          role: {
-            id: 1,
-            roleName: "Manager",
-            status: "Active"
-          }
-        }
-        //result.navItems.push(equipRep);
-        //result.navItems.push(barRep);
-
         result.navItems.forEach(function (oItem: any) {
           oItem.menu_display_name = oItem.menu_name;
           oItem.menu_name = oItem.menu_name.replace(/ /g, '').toLowerCase();

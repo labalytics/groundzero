@@ -1,4 +1,21 @@
 <title>Equipment Usage</title>
 <div>
-  <p-chart type="bar" [data]="data"></p-chart>
+  <div class="row">
+    <!--<select style="width: 150px" name="labid" class="form-control" [(ngModel)]="mylab.labid" #labid="ngModel" required>-->
+      <!--<option *ngFor="let role of labs" [ngValue]="role.labId.id">-->
+        <!--<div *ngIf="role.roleId.id==1">{{role.labId.labName}}</div>-->
+      <!--</option>-->
+    <!--</select>-->
+
+    <select [(ngModel)]="mylab" (ngModelChange)="RenderChart($event)">
+      <option [ngValue]="role" *ngFor="let role of labs">
+        <div *ngIf="role.roleId.id==1">{{role.labId.labName}}</div>
+      </option>
+    </select>
+
+    <a (click)="showEquipmentUsageByLab()" style="height: 30px; font-size:medium" class = "btn btn-primary btn-xs"> Search </a>
+  </div>
+  <div class="row" *ngIf="bShowChart">
+    <p-chart type="bar" [data]="data"></p-chart>
+  </div>
 </div>
