@@ -50,7 +50,6 @@ export class ScheduleComponent implements OnInit {
     this.authService.getRoleandMenuData(this.authService.username)
       .subscribe((result) => {
         // let labId = result.userDetails.labId.id;
-        console.log(result);
         this.roleId = result.userDetails.roleId.id;
         this.getLabs();
       });
@@ -143,10 +142,8 @@ export class ScheduleComponent implements OnInit {
     this.authService.getAllLabs(this.roleId, this.authService.username)
       .subscribe((result) => {
         this.labs = (result  as any).labs;
-        console.log(result);
         this.refinlabs = (result  as any).refInLabs;
         this.refoutlabs = (result  as any).refOutLabs;
-        console.log(this.refoutlabs.length);
         for(let i =0; i<this.labs.length;i++)
         {
           this.completeLabsids.push(this.labs[i].id);
@@ -154,7 +151,6 @@ export class ScheduleComponent implements OnInit {
         }
         for(let i =0; i<this.refinlabs.length;i++)
         {
-          console.log(i);
           this.externallabId.push(this.refinlabs[i].currentLab.id);
           if(this.completeLabsids.indexOf(this.refinlabs[i].currentLab.id) === -1)
           {
@@ -162,16 +158,13 @@ export class ScheduleComponent implements OnInit {
             this.completeLabs.push(this.refinlabs[i].currentLab);
           }
         }
-        console.log(this.completeLabs);
       });
   }
   getEquipments()
   {
-    console.log(this.reservation);
     this.authService.getAvailables(this.reservation)
       .subscribe((result) => {
 
-        console.log(result);
         this.availableUnits = (result  as any).units;
         this.availableEquipments = (result  as any).equipments;
         this.refoutlabs = (result  as any).refOutLabs;
@@ -188,7 +181,6 @@ export class ScheduleComponent implements OnInit {
       this.authService.makeReservation(unitId, this.reservation.date, this.reservation.strtTime, this.reservation.endTime, isRef, this.refLab)
         .subscribe((result) => {
 
-          console.log(result);
           this.availableUnits = (result  as any).units;
           this.availableEquipments = (result  as any).equipments;
           this.refoutlabs = (result  as any).refOutLabs;

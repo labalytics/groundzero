@@ -45,7 +45,6 @@ export class DashBoardComponent implements OnInit {
     this.authService.getRoleandMenuData(this.authService.username)
       .subscribe((result) => {
         // let labId = result.userDetails.labId.id;
-        console.log(result);
         this.userDetails = (result as any).userDetails.userId;
         this.roleId = result.userDetails.roleId.id;
         this.getSelfSchedule();
@@ -101,10 +100,8 @@ export class DashBoardComponent implements OnInit {
 
   passwordReset()
   {
-    console.log("here");
     this.authService.resetpassword(this.authService.username, this.reset)
       .subscribe((result) => {
-          console.log(result);
           if(result === "Success")
           {
 
@@ -124,7 +121,6 @@ export class DashBoardComponent implements OnInit {
   {
     this.authService.profileUpdate(this.userDetails)
       .subscribe((result) => {
-          console.log(result);
           if((result as any).status === "Success")
           {
 

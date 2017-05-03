@@ -109,7 +109,6 @@ export class BillingComponent implements OnInit {
   }
 
   markPayment() {
-    console.log(this.paidId);
     this.authService.makePayments(this.paidId)
       .subscribe((result) => {
         if ((result as any).status === "Success") {

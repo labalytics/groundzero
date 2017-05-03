@@ -100,12 +100,10 @@ export class StudentComponent implements OnInit {
 
 
   editStudent(student: any) {
-    console.log(student);
   }
 
   reset() {
     this.students = JSON.parse(localStorage.getItem('students'));
-    console.log(this.students);
   }
 
   insertStudents()
@@ -113,7 +111,6 @@ export class StudentComponent implements OnInit {
     this.authService.insertStudents(this.newstudents)
       .subscribe((result) => {
         // let labId = result.userDetails.labId.id;
-        console.log(result);
         this.ngOnInit();
         //this.getLabs(labId);
       });
@@ -123,16 +120,13 @@ export class StudentComponent implements OnInit {
   newrow()
   {
     this.val = this.val+1;
-    console.log(this.val)
     this.newstudents.push({ 'id': this.val, 'firstName':'', 'lastName': '', 'email':'', 'labId': '' });
   }
 
   deleterow(row: any)
   {
-    console.log(row);
     let index = this.newstudents.indexOf(row);
     this.newstudents.splice(index, 1);
-    console.log(this.newstudents)
   }
 
   getSchedule(id: any)
@@ -142,7 +136,6 @@ export class StudentComponent implements OnInit {
       .subscribe((result) => {
         let schedule = (result  as any).schedule;
         this.events = [];
-        console.log(schedule);
         for(let i = 0; i<schedule.length; i++)
         {
           this.events.push({"title": schedule[i].equipmentUnitId.equipment.equipmentName+" - " +schedule[i].equipmentUnitId.equipment.lab.labName,"start": new Date(schedule[i].startTime).toJSON(), "end": new Date(schedule[i].endTime).toJSON()});
