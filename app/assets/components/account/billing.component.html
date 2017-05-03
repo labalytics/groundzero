@@ -277,14 +277,12 @@
                       <input style="border: none; text-align: left;width: 40px; margin-right: 20px" type="text" value="Lab" readonly>
                     </td>
                     <td width="200px">
-                      <select style="width: 150px" name="labid" class="form-control" [(ngModel)]="mylab.labid" #labid="ngModel" required>
-                        <option *ngFor="let role of labs" [ngValue]= "role.labId.id"  >
+                      <select name="labidA" class="form-control" #labidA (change)="getBookingsToPayByLabs(labidA.value)">
+                        <option>-select-</option>
+                        <option *ngFor="let role of labs" [value]= "role.labId.id" >
                           <div *ngIf="role.roleId.id==1">{{role.labId.labName}}</div>
                         </option>
                       </select>
-                    </td>
-                    <td>
-                      <a (click)="getBookingsToPayByLabs()" style="height: 30px; font-size:medium" class = "btn btn-primary btn-xs"> Search </a>
                     </td>
                   </tr>
                 </table>
@@ -336,15 +334,14 @@
                       <input style="border: none; text-align: left;width: 40px; margin-right: 20px" type="text" value="Lab" readonly>
                     </td>
                     <td width="200px">
-                      <select style="width: 150px" name="labid" class="form-control" [(ngModel)]="mylab.labid" #labid="ngModel" required>
-                        <option *ngFor="let role of labs" [ngValue]= "role.labId.id"  >
+                      <select name="labidO" class="form-control" #labidO (change)="getBookingOwedByLabs(labidO.value)">
+                        <option>-select-</option>
+                        <option *ngFor="let role of labs" [value]= "role.labId.id" >
                           <div *ngIf="role.roleId.id==1">{{role.labId.labName}}</div>
                         </option>
                       </select>
                     </td>
-                    <td>
-                      <a (click)="getBookingOwedByLabs()" style="height: 30px; font-size:medium" class = "btn btn-primary btn-xs"> Search </a>
-                    </td>
+
                   </tr>
                 </table>
               </div>
