@@ -16,6 +16,7 @@ export class EquipmentComponent implements OnInit {
 
 
   equipments: any = [];
+  equipmentsCopy: any = [];
   equipmentUnits: any = [];
   addEquipments: number = 1;
   newequipment: any = {};
@@ -28,7 +29,7 @@ export class EquipmentComponent implements OnInit {
   events: any =[];
 
   header: any = {};
-
+  searchTerm : any;
   event: MyEvent;
 
   constructor(public http: Http, private authService: AuthenticationService) {
@@ -52,6 +53,7 @@ export class EquipmentComponent implements OnInit {
           .subscribe((result) => {
             // let labId = result.userDetails.labId.id;
             this.equipments = result.equipments;
+            this.equipmentsCopy = result.equipments;
             this.equipmentUnits = result.units;
           });
       });
@@ -119,6 +121,12 @@ export class EquipmentComponent implements OnInit {
       });
   }
 
-
+  search(): void {
+    let term = this.searchTerm;
+    this.equipments = this.equipmentsCopy.filter(function (tag : any) {
+      return tag.equipmentName.toLowerCase().indexOf(term.toLowerCase()) >= 0 || tag.type.toLowerCase().indexOf(term.toLowerCase()) >= 0
+        || tag.equipmentType.toLowerCase().indexOf(term.toLowerCase()) >= 0 || tag.lab.labName.toLowerCase().indexOf(term.toLowerCase()) >= 0 ;
+    });
+  }
 
 }

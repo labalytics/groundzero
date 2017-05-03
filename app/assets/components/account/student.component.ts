@@ -50,7 +50,8 @@ export class StudentComponent implements OnInit {
   search(): void {
     let term = this.searchTerm;
     this.students = this.studentCopy.filter(function (tag : any) {
-      return tag.userId.firstName.indexOf(term) >= 0;
+      return tag.userId.firstName.toLowerCase().indexOf(term.toLowerCase()) >= 0 || tag.userId.lastName.toLowerCase().indexOf(term.toLowerCase()) >= 0
+        || tag.userId.email.toLowerCase().indexOf(term.toLowerCase()) >= 0 || tag.labId.labName.toLowerCase().indexOf(term.toLowerCase()) >= 0 || tag.roleId.roleName.toLowerCase().indexOf(term.toLowerCase()) >= 0;
     });
   }
 
